@@ -12,12 +12,12 @@ class LightThemeState extends ThemeState {
           ThemeData(
             useMaterial3: true,
             colorScheme: ColorScheme.light(
-                // surface: Color.fromARGB(1, 91, 53, 175),
-                // primary: Colors.grey.shade500,
-                // secondary: Colors.grey.shade100,
-                // tertiary: Colors.white,
-                // inversePrimary: Colors.grey.shade700,
-                ),
+              // surface: Color.fromARGB(1, 91, 53, 175),
+              primary: const Color.fromARGB(255, 255, 255, 255),
+              secondary: const Color.fromARGB(1, 91, 53, 175),
+              tertiary: const Color.fromARGB(1, 91, 53, 175),
+              inversePrimary: Colors.grey.shade700,
+            ),
             textTheme: TextTheme(
               bodyLarge: TextStyle(),
             ),
@@ -31,12 +31,12 @@ class DarkThemeState extends ThemeState {
           ThemeData(
             useMaterial3: true,
             colorScheme: ColorScheme.dark(
-                // surface: const Color.fromARGB(255, 20, 20, 20),
-                // primary: const Color.fromARGB(255, 122, 122, 122),
-                // secondary: const Color.fromARGB(255, 30, 30, 30),
-                // tertiary: Color.fromARGB(255, 47, 47, 47),
-                // inversePrimary: Colors.grey.shade300,
-                ),
+              // surface: const Color.fromARGB(255, 20, 20, 20),
+              primary: const Color.fromARGB(1, 18, 18, 18),
+              secondary: const Color.fromARGB(1, 48, 42, 42),
+              tertiary: Color.fromARGB(1, 29, 27, 32),
+              inversePrimary: Colors.grey.shade300,
+            ),
           ),
         );
 }
