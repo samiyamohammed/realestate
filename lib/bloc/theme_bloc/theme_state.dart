@@ -12,14 +12,17 @@ class LightThemeState extends ThemeState {
           ThemeData(
             useMaterial3: true,
             colorScheme: ColorScheme.light(
-              // surface: Color.fromARGB(1, 91, 53, 175),
-              primary: const Color.fromARGB(255, 255, 255, 255),
+              surface: Color.fromARGB(255, 255, 255, 255),
+              primary: Color.fromARGB(255, 215, 215, 215),
+              // background: Color.fromARGB(1, 232, 232, 232),
               secondary: const Color.fromARGB(1, 91, 53, 175),
+              secondaryContainer: Color.fromARGB(1, 0, 0, 0),
               tertiary: const Color.fromARGB(1, 91, 53, 175),
               inversePrimary: Colors.grey.shade700,
             ),
             textTheme: TextTheme(
               bodyLarge: TextStyle(),
+              bodySmall: TextStyle(),
             ),
           ),
         );

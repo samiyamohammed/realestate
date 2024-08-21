@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:real_estate_marketplace/bloc/theme_bloc/theme_bloc.dart';
-import 'package:real_estate_marketplace/pages/favoritesPage.dart';
+import 'package:real_estate_marketplace/pages/favorites_page.dart';
 import 'package:real_estate_marketplace/pages/home_page.dart';
 
 void main() {
