@@ -4,6 +4,7 @@ import 'package:real_estate_marketplace/bloc/favorite_bloc/favorite_bloc.dart';
 import 'package:real_estate_marketplace/bloc/theme_bloc/theme_bloc.dart';
 import 'package:real_estate_marketplace/pages/favorites_page.dart';
 import 'package:real_estate_marketplace/pages/home_page.dart';
+import 'package:real_estate_marketplace/pages/notification_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
         builder: (context, themeState) {
           return MaterialApp(
             theme: themeState.themeData,
-            home: FavoritesPage(),
+            home: const HomePage(),
           );
         },
       ),
