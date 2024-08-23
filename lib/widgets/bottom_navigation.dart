@@ -13,21 +13,13 @@ class BottomNavigation extends StatefulWidget {
 class _BottomNavigationState extends State<BottomNavigation> {
   int _selectedIndex = 0;
 
-  final List<String> _pageTitles = [
-    'Home',
-    'Favorites',
-    'Chat',
-    'Notifications',
-    'Profile',
-  ];
-
   @override
   Widget build(BuildContext context) {
     return CurvedNavigationBar(
       color: const Color.fromARGB(255, 91, 53, 175),
       backgroundColor: Colors.transparent,
       buttonBackgroundColor: Colors.white,
-      height: 70, // Increased height to accommodate the text
+      height: 70,
       items: <Widget>[
         _buildNavItem(Icons.home, 0),
         _buildNavItem(Icons.favorite, 1),
@@ -47,33 +39,19 @@ class _BottomNavigationState extends State<BottomNavigation> {
   Widget _buildNavItem(IconData icon, int index) {
     bool isSelected = _selectedIndex == index;
 
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Container(
-          decoration: isSelected
-              ? const BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Color.fromARGB(255, 91, 53, 175),
-                )
-              : null,
-          padding: const EdgeInsets.all(8.0),
-          child: Icon(
-            icon,
-            size: 30,
-            color: isSelected ? Colors.white : Colors.white,
-          ),
-        ),
-        if (isSelected)
-          Text(
-            _pageTitles[index],
-            style: const TextStyle(
-              fontSize: 12,
+    return Container(
+      decoration: isSelected
+          ? const BoxDecoration(
+              shape: BoxShape.circle,
               color: Color.fromARGB(255, 91, 53, 175),
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-      ],
+            )
+          : null,
+      padding: const EdgeInsets.all(8.0),
+      child: Icon(
+        icon,
+        size: 30,
+        color: Colors.white,
+      ),
     );
   }
 }
