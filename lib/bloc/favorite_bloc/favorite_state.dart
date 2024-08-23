@@ -1,27 +1,23 @@
+// Initial state
 import 'package:real_estate_marketplace/models/favorite_model.dart';
 
-enum FavoritesStatus { initial, success, failure }
+abstract class FavoriteState {}
 
-class FavoritesState {
-  FavoritesStatus status;
-  List<FavoriteModel> favorites;
+class FavoritesInitialState extends FavoriteState {}
 
-  FavoritesState({
-    required this.status,
-    required this.favorites,
-  });
+// Loading state
+class FavoritesLoadingState extends FavoriteState {}
 
-  List<FavoriteModel> _favorites = [];
+// Loaded state with the list of favorites
+class FavoritesLoadedState extends FavoriteState {
+  final List<FavoriteModel> favorites;
 
-  Future<void> addFavorite(FavoriteModel favorite) async {
-    _favorites.add(favorite);
-  }
+  FavoritesLoadedState({required this.favorites});
+}
 
-  Future<void> removeFavorite(FavoriteModel favorite) async {
-    _favorites.remove(favorite);
-  }
+// Error state
+class FavoritesErrorState extends FavoriteState {
+  final String message;
 
-  Future<List<FavoriteModel>> fetchFavorites() async {
-    return _favorites;
-  }
+  FavoritesErrorState({required this.message});
 }
