@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:real_estate_marketplace/bloc/favorite_bloc/favorite_bloc.dart';
 import 'package:real_estate_marketplace/bloc/theme_bloc/theme_bloc.dart';
+import 'package:real_estate_marketplace/pages/account_page/account_page.dart';
 import 'package:real_estate_marketplace/pages/favorites_page.dart';
 import 'package:real_estate_marketplace/pages/home_page.dart';
 import 'package:real_estate_marketplace/pages/notification_page.dart';
@@ -21,8 +22,9 @@ class MyApp extends StatelessWidget {
       child: BlocBuilder<ThemeBloc, ThemeState>(
         builder: (context, themeState) {
           return MaterialApp(
+            debugShowCheckedModeBanner: false,
             theme: themeState.themeData,
-            home: const HomePage(),
+            home: const AccountPage(),
           );
         },
       ),

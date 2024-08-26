@@ -19,39 +19,39 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-  leading: IconButton(
-    icon: const Icon(Icons.menu),
-    onPressed: () {
-      // Implement menu functionality here
-    },
-  ),
-  title: Row(
-    mainAxisAlignment: MainAxisAlignment.end,
-    children: [
-      GestureDetector(
-        onTap: () {
-          // Navigate to the profile page
-        },
-        child: const Row(
+        leading: IconButton(
+          icon: const Icon(Icons.menu),
+          onPressed: () {
+            // Implement menu functionality here
+          },
+        ),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            CircleAvatar(
-              backgroundImage: AssetImage('assets/images/profile_icon.png'),
-              radius: 16,
+            GestureDetector(
+              onTap: () {
+                // Navigate to the profile page
+              },
+              child: const Row(
+                children: [
+                  CircleAvatar(
+                    backgroundImage:
+                        AssetImage('assets/images/profile_icon.png'),
+                    radius: 16,
+                  ),
+                  SizedBox(width: 8),
+                  Text(
+                    'Name',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                  ),
+                ],
+              ),
             ),
-            SizedBox(width: 8),
-            Text(
-              'Name',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-            ),
+            const SizedBox(width: 8),
           ],
         ),
+        centerTitle: false,
       ),
-      const SizedBox(width: 8),
-    ],
-  ),
-  centerTitle: false,
-),
-
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -143,7 +143,8 @@ class _HomePageState extends State<HomePage> {
                     margin: const EdgeInsets.symmetric(horizontal: 8.0),
                     child: PropertyCard(
                       property: properties[index],
-                      showStatusTag: true, // Show status tag in Featured Properties
+                      showStatusTag:
+                          true, // Show status tag in Featured Properties
                     ),
                   );
                 },
@@ -162,15 +163,20 @@ class _HomePageState extends State<HomePage> {
               height: 165,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                itemCount: properties.where((property) => property.status == 'For Rent').length,
+                itemCount: properties
+                    .where((property) => property.status == 'For Rent')
+                    .length,
                 itemBuilder: (context, index) {
-                  final rentProperties = properties.where((property) => property.status == 'For Rent').toList();
+                  final rentProperties = properties
+                      .where((property) => property.status == 'For Rent')
+                      .toList();
                   return Container(
                     width: 150,
                     margin: const EdgeInsets.symmetric(horizontal: 8.0),
                     child: PropertyCard(
                       property: rentProperties[index],
-                      showStatusTag: false, // Hide status tag in For Rent section
+                      showStatusTag:
+                          false, // Hide status tag in For Rent section
                     ),
                   );
                 },
@@ -189,15 +195,20 @@ class _HomePageState extends State<HomePage> {
               height: 165,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                itemCount: properties.where((property) => property.status == 'For Sale').length,
+                itemCount: properties
+                    .where((property) => property.status == 'For Sale')
+                    .length,
                 itemBuilder: (context, index) {
-                  final saleProperties = properties.where((property) => property.status == 'For Sale').toList();
+                  final saleProperties = properties
+                      .where((property) => property.status == 'For Sale')
+                      .toList();
                   return Container(
                     width: 150,
                     margin: const EdgeInsets.symmetric(horizontal: 8.0),
                     child: PropertyCard(
                       property: saleProperties[index],
-                      showStatusTag: false, // Hide status tag in For Sale section
+                      showStatusTag:
+                          false, // Hide status tag in For Sale section
                     ),
                   );
                 },
@@ -234,34 +245,41 @@ class _HomePageState extends State<HomePage> {
                           Text(
                             "Reach more buyers. Showcase your home. Free and easy.",
                             style: TextStyle(
-                                fontSize: 14, fontWeight: FontWeight.normal, color: Color.fromARGB(255, 0, 0, 0)),
+                                fontSize: 14,
+                                fontWeight: FontWeight.normal,
+                                color: Color.fromARGB(255, 0, 0, 0)),
                           ),
                         ],
                       ),
                     ),
                     ElevatedButton.icon(
-  onPressed: () {
-    // Implement add property functionality
-  },
-  icon: const Icon(Icons.add, color: Color.fromARGB(255, 238, 235, 235)), // Set the icon color to true white
-  label: const Text(
-    "Add Property",
-    style: TextStyle(color: Color.fromARGB(255, 226, 223, 223)), // Set the text color to true white
-  ),
-  style: ElevatedButton.styleFrom(
-    backgroundColor: const Color.fromARGB(255, 91, 53, 175),
-    foregroundColor: Colors.white, // Ensures the icon and text color are white
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(20),
-    ),
-  ),
-),
-
+                      onPressed: () {
+                        // Implement add property functionality
+                      },
+                      icon: const Icon(Icons.add,
+                          color: Color.fromARGB(255, 238, 235,
+                              235)), // Set the icon color to true white
+                      label: const Text(
+                        "Add Property",
+                        style: TextStyle(
+                            color: Color.fromARGB(255, 226, 223,
+                                223)), // Set the text color to true white
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color.fromARGB(255, 91, 53, 175),
+                        foregroundColor: Colors
+                            .white, // Ensures the icon and text color are white
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
             ),
-            const SizedBox(height: 30), // Add some space before the bottom navigation
+            const SizedBox(
+                height: 30), // Add some space before the bottom navigation
           ],
         ),
       ),
