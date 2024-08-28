@@ -22,8 +22,6 @@ class Property {
     required this.bathroom,
     required this.dateAdded,
   });
-
-  Null get title => null;
 }
 
 List<Property> properties = [
@@ -164,7 +162,7 @@ List<Property> properties = [
     price: 300000.00,
     locationName: 'Jemo',
     status: 'For Rent',
-    image: 'assets/images/commercial_space.png',
+    image: 'assets/images/commercial_space.pngs',
     type: 'commercial',
     bedroom: 4,
     bathroom: 2,
