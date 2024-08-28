@@ -1,6 +1,7 @@
+// ignore_for_file: unnecessary_import, unused_import
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 

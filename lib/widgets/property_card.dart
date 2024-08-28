@@ -21,44 +21,51 @@ class PropertyCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Stack(
-            children: [
-              ClipRRect(
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(15.0),
-                  topRight: Radius.circular(15.0),
-                ),
-                child: Image.asset(
-                  property.image,
-                  width: double.infinity,
-                  height: 70,
-                  fit: BoxFit.cover,
+          Container(
+  height: 70,
+  decoration: BoxDecoration(
+    borderRadius: const BorderRadius.only(
+      topLeft: Radius.circular(15.0),
+      topRight: Radius.circular(15.0),
+    ),
+    image: DecorationImage(
+      image: AssetImage(property.image),
+      fit: BoxFit.cover,
+    ),
+  ),
+  child: Column(
+    crossAxisAlignment: CrossAxisAlignment.stretch,
+    children: [
+      if (showStatusTag)
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Align(
+            alignment: Alignment.topRight,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Text(
+                property.status,
+                style: const TextStyle(
+                  fontSize: 12,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-              if (showStatusTag) // Conditionally show the status tag
-                Positioned(
-                  top: 8,
-                  right: 8,
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Text(
-                      property.status,
-                      style: const TextStyle(
-                        fontSize: 12,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-            ],
+            ),
           ),
+        ),
+      // This Spacer pushes the status tag to the top
+      const Spacer(),
+    ],
+  ),
+),
+
           Padding(
-            padding: const EdgeInsets.all(1.0),
+            padding: const EdgeInsets.all(2.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

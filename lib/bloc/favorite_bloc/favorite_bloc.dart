@@ -4,7 +4,7 @@ import 'package:real_estate_marketplace/bloc/favorite_bloc/favorite_state.dart';
 import 'package:real_estate_marketplace/models/favorite_model.dart';
 
 class FavoritesBloc extends Bloc<FavoritesEvent, FavoriteState> {
-  List<FavoriteModel> _favorites = [];
+  final List<FavoriteModel> _favorites = [];
 
   FavoritesBloc() : super(FavoritesInitialState()) {
     on<ToggleFavorite>((event, emit) {
