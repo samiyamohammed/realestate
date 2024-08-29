@@ -26,19 +26,19 @@ class MessagePage extends StatelessWidget {
 
             switch (index) {
               case 0:
-                context.go('/home'); // Navigate to Home Page
+                context.go('/home'); 
                 break;
               case 1:
-                context.go('/favorite'); // Navigate to Favorite Page
+                context.go('/favorite'); 
                 break;
               case 2:
                 // Current page, no navigation needed
                 break;
               case 3:
-                context.go('/notifications'); // Navigate to Notification Page
+                context.go('/notifications'); 
                 break;
               case 4:
-                context.go('/profile'); // Navigate to Profile Page
+                context.go('/profile'); 
                 break;
             }
           }
