@@ -11,10 +11,10 @@ class NotificationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => HomeBloc(), // Provide the HomeBloc
+      create: (context) => HomeBloc(), 
       child: BlocBuilder<HomeBloc, HomeState>(
         builder: (context, state) {
-          int selectedIndex = 3; // Default to the notifications index
+          int selectedIndex = 3; 
 
           if (state is HomeLoaded) {
             selectedIndex = state.selectedIndex;
