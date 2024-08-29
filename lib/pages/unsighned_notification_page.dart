@@ -23,25 +23,25 @@ class NotificationPage extends StatelessWidget {
           // Function to handle navigation based on selected index
           // ignore: no_leading_underscores_for_local_identifiers
           void _onItemTapped(int index) {
-            // Update the index in the Bloc
+            
             context.read<HomeBloc>().add(HomeIndexChanged(index));
 
             // Navigate to the appropriate page based on the selected index
             switch (index) {
               case 0:
-                context.go('/home'); // Navigate to Home Page
+                context.go('/home'); 
                 break;
               case 1:
-                context.go('/favorite'); // Navigate to Favorite Page
+                context.go('/favorite');
                 break;
               case 2:
-                context.go('/chat'); // Navigate to Chat Page
+                context.go('/chat'); 
                 break;
               case 3:
                 // Stay on the Notification page
                 break;
               case 4:
-                context.go('/profile'); // Navigate to Profile Page
+                context.go('/profile');
                 break;
             }
           }
@@ -111,8 +111,8 @@ class NotificationPage extends StatelessWidget {
               ),
             ),
             bottomNavigationBar: BottomNavigation(
-              currentIndex: selectedIndex, // Pass the current selected index
-              onItemSelected: _onItemTapped, // Pass the onTap function
+              currentIndex: selectedIndex, 
+              onItemSelected: _onItemTapped, 
             ),
           );
         },
