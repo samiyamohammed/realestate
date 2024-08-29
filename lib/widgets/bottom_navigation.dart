@@ -2,17 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 
 class BottomNavigation extends StatefulWidget {
+  final int currentIndex;
   final ValueChanged<int> onItemSelected;
 
-  const BottomNavigation({super.key, required this.onItemSelected});
+  const BottomNavigation({
+    super.key,
+    required this.currentIndex,
+    required this.onItemSelected,
+  });
 
   @override
   State<BottomNavigation> createState() => _BottomNavigationState();
 }
 
 class _BottomNavigationState extends State<BottomNavigation> {
-  int _selectedIndex = 0;
-
   @override
   Widget build(BuildContext context) {
     return CurvedNavigationBar(
@@ -27,17 +30,13 @@ class _BottomNavigationState extends State<BottomNavigation> {
         _buildNavItem(Icons.notifications, 3),
         _buildNavItem(Icons.person, 4),
       ],
-      onTap: (index) {
-        setState(() {
-          _selectedIndex = index;
-          widget.onItemSelected(index);
-        });
-      },
+      index: widget.currentIndex, // Set the current index
+      onTap: widget.onItemSelected, // Set the onTap function
     );
   }
 
   Widget _buildNavItem(IconData icon, int index) {
-    bool isSelected = _selectedIndex == index;
+    bool isSelected = widget.currentIndex == index;
 
     return Container(
       decoration: isSelected
