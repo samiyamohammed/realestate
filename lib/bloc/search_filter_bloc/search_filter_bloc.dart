@@ -21,6 +21,7 @@ class SearchFilterBloc extends Bloc<SearchFilterEvent, SearchFilterState> {
     on<UpdateSearchQuery>(_onUpdateSearchQuery);
     on<UpdateFilters>(_onUpdateFilters);
     on<ClearFilters>(_onClearFilters);
+    on<SaveSearchCriteriaEvent>(_onSaveSearchCriteria);
   }
 
   void _onUpdateSearchQuery(
@@ -74,6 +75,18 @@ class SearchFilterBloc extends Bloc<SearchFilterEvent, SearchFilterState> {
       bedrooms: 0,
       bathrooms: 0,
     ));
+  }
+
+  void _onSaveSearchCriteria(
+      SaveSearchCriteriaEvent event, Emitter<SearchFilterState> emit) {
+    // Logic to either save locally or send to backend
+    print('Search Criteria Saved:');
+    print('Type: ${event.selectedType}');
+    print('Sort: ${event.selectedSort}');
+    print('Sale/Rent: ${event.selectedSaleRent}');
+    print('Price Range: ${event.priceRange.start} - ${event.priceRange.end}');
+    print('Bedrooms: ${event.bedrooms}');
+    print('Bathrooms: ${event.bathrooms}');
   }
 
   List<Property> _filterProperties({
