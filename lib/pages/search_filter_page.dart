@@ -1,15 +1,12 @@
+// ignore_for_file: unused_import
+
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:real_estate_marketplace/bloc/search_filter_bloc/search_filter_bloc.dart';
-// ignore: unused_import
-import 'package:real_estate_marketplace/bloc/search_filter_bloc/search_filter_bloc.dart';
-// ignore: unused_import
 import 'package:real_estate_marketplace/models/properties_list_model.dart';
 import 'package:real_estate_marketplace/bloc/search_filter_bloc/search_filter_event.dart';
 import 'package:real_estate_marketplace/bloc/search_filter_bloc/search_filter_state.dart';
-
 import '../widgets/vertical_listing.dart';
 
 class SearchAndFilterPage extends StatefulWidget {
@@ -20,21 +17,6 @@ class SearchAndFilterPage extends StatefulWidget {
 class _SearchAndFilterPageState extends State<SearchAndFilterPage> {
   TextEditingController _searchController = TextEditingController();
 
-  @override
-  void initState() {
-    super.initState();
-    _searchController.addListener(() {
-      context
-          .read<SearchFilterBloc>()
-          .add(UpdateSearchQuery(_searchController.text));
-    });
-  }
-
-  @override
-  void dispose() {
-    _searchController.removeListener(() {});
-    _searchController.dispose();
-    super.dispose();
   @override
   void initState() {
     super.initState();

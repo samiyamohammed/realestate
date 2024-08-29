@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
+// ignore: unused_import
 import 'package:real_estate_marketplace/pages/account_page/Signin_page.dart';
 
 class SignUpPage extends StatefulWidget {
