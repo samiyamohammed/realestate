@@ -11,7 +11,7 @@ class HomeIndexChanged extends HomeEvent {
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc() : super(HomeInitial()) {
-    // Registering the event handler for HomeIndexChanged
+    
     on<HomeIndexChanged>((event, emit) {
       emit(HomeLoaded(selectedIndex: event.index));
     });
