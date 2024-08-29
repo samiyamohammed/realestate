@@ -46,3 +46,31 @@ class ClearFilters extends SearchFilterEvent {
   @override
   List<Object?> get props => [];
 }
+
+class SaveSearchCriteriaEvent extends SearchFilterEvent {
+  final String selectedType;
+  final String selectedSort;
+  final String selectedSaleRent;
+  final RangeValues priceRange;
+  final int bedrooms;
+  final int bathrooms;
+
+  const SaveSearchCriteriaEvent({
+    required this.selectedType,
+    required this.selectedSort,
+    required this.selectedSaleRent,
+    required this.priceRange,
+    required this.bedrooms,
+    required this.bathrooms,
+  });
+
+  @override
+  List<Object?> get props => [
+        selectedType,
+        selectedSort,
+        selectedSaleRent,
+        priceRange,
+        bedrooms,
+        bathrooms,
+      ];
+}
