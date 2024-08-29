@@ -11,10 +11,10 @@ class FavoritePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => HomeBloc(), // Ensure you provide HomeBloc here
+      create: (context) => HomeBloc(), 
       child: BlocBuilder<HomeBloc, HomeState>(
         builder: (context, state) {
-          int selectedIndex = 1; // Default to the favorite index
+          int selectedIndex = 1;
 
           if (state is HomeLoaded) {
             selectedIndex = state.selectedIndex;
@@ -22,25 +22,25 @@ class FavoritePage extends StatelessWidget {
 
           // ignore: no_leading_underscores_for_local_identifiers
           void _onItemTapped(int index) {
-            // Update the index in the Bloc
+          
             context.read<HomeBloc>().add(HomeIndexChanged(index));
 
             // Navigate to the appropriate page based on the selected index
             switch (index) {
               case 0:
-                context.go('/home'); // Navigate to Home Page
+                context.go('/home');
                 break;
               case 1:
-                // Stay on the Favorite page
+             
                 break;
               case 2:
-                context.go('/chat'); // Navigate to Chat Page
+                context.go('/chat'); 
                 break;
               case 3:
-                context.go('/notifications'); // Navigate to Notification Page
+                context.go('/notifications'); 
                 break;
               case 4:
-                context.go('/profile'); // Navigate to Profile Page
+                context.go('/profile'); 
                 break;
             }
           }
@@ -109,8 +109,8 @@ class FavoritePage extends StatelessWidget {
               ),
             ),
             bottomNavigationBar: BottomNavigation(
-              currentIndex: selectedIndex, // Pass the current selected index
-              onItemSelected: _onItemTapped, // Pass the onTap function
+              currentIndex: selectedIndex, 
+              onItemSelected: _onItemTapped, 
             ),
           );
         },
