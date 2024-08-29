@@ -624,34 +624,42 @@ class _SearchAndFilterPageState extends State<SearchAndFilterPage> {
                 ],
               ),
             ),
-            floatingActionButton: FloatingActionButton(
-              onPressed: () {
-                final currentState = context.read<SearchFilterBloc>().state;
+            floatingActionButton: Align(
+              alignment: Alignment.bottomCenter,
+              child: SizedBox(
+                width: 170,
+                height: 50,
+                child: FloatingActionButton(
+                  onPressed: () {
+                    final currentState = context.read<SearchFilterBloc>().state;
 
-                if (currentState is SearchFilterUpdated) {
-                  context.read<SearchFilterBloc>().add(
-                        SaveSearchCriteriaEvent(
-                          selectedType: currentState.selectedType,
-                          selectedSort: currentState.selectedSort,
-                          selectedSaleRent: currentState.selectedSaleRent,
-                          priceRange: currentState.priceRange,
-                          bedrooms: currentState.bedrooms,
-                          bathrooms: currentState.bathrooms,
-                        ),
+                    if (currentState is SearchFilterUpdated) {
+                      context.read<SearchFilterBloc>().add(
+                            SaveSearchCriteriaEvent(
+                              selectedType: currentState.selectedType,
+                              selectedSort: currentState.selectedSort,
+                              selectedSaleRent: currentState.selectedSaleRent,
+                              priceRange: currentState.priceRange,
+                              bedrooms: currentState.bedrooms,
+                              bathrooms: currentState.bathrooms,
+                            ),
+                          );
+
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                            content: Text(
+                                'Search criteria saved, You will be notified!')),
                       );
-
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                        content: Text(
-                            'Search criteria saved, You will be notified!')),
-                  );
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Unable to save search criteria.')),
-                  );
-                }
-              },
-              child: Icon(Icons.save),
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                            content: Text('Unable to save search criteria.')),
+                      );
+                    }
+                  },
+                  child: Text('Save Search'),
+                ),
+              ),
             ),
           );
         }
