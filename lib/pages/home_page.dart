@@ -15,7 +15,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => BottomNavigationBloc(), // Provide BottomNavigationBloc
+      create: (context) => BottomNavigationBloc(), 
       child: Scaffold(
         appBar: AppBar(
           leading: IconButton(

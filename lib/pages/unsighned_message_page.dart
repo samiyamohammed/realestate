@@ -14,7 +14,7 @@ class MessagePage extends StatelessWidget {
       create: (context) => BottomNavigationBloc(),
       child: BlocBuilder<BottomNavigationBloc, BottomNavigationState>(
         builder: (context, state) {
-          int selectedIndex = 2; // Default to the message index
+          int selectedIndex = 2; 
 
           if (state is BottomNavigationUpdated) {
             selectedIndex = state.selectedIndex;
@@ -26,19 +26,19 @@ class MessagePage extends StatelessWidget {
 
             switch (index) {
               case 0:
-                context.go('/home'); // Navigate to Home Page
+                context.go('/home'); 
                 break;
               case 1:
-                context.go('/favorite'); // Navigate to Favorite Page
+                context.go('/favorite'); 
                 break;
               case 2:
                 // Current page, no navigation needed
                 break;
               case 3:
-                context.go('/notifications'); // Navigate to Notification Page
+                context.go('/notifications'); 
                 break;
               case 4:
-                context.go('/profile'); // Navigate to Profile Page
+                context.go('/profile'); 
                 break;
             }
           }
@@ -49,7 +49,7 @@ class MessagePage extends StatelessWidget {
              leading: IconButton(
   icon: const Icon(Icons.arrow_back),
   onPressed: () {
-    // Use GoRouter to navigate to the Home page
+    
     context.go('/home');
   },
 ),
@@ -86,7 +86,7 @@ class MessagePage extends StatelessWidget {
                   const SizedBox(height: 40),
                   ElevatedButton(
                     onPressed: () {
-                      // Add your logic here for when the "Join" button is pressed
+                      //implement Join button navigation here
                     },
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 15),
@@ -107,8 +107,8 @@ class MessagePage extends StatelessWidget {
               ),
             ),
             bottomNavigationBar: BottomNavigation(
-              currentIndex: selectedIndex, // Pass the current selected index
-              onItemSelected: _onItemTapped, // Pass the onTap function
+              currentIndex: selectedIndex,
+              onItemSelected: _onItemTapped, 
             ),
           );
         },

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:real_estate_marketplace/bloc/search_filter_bloc/search_filter_bloc.dart';
+// ignore: unused_import
 import 'package:real_estate_marketplace/bloc/search_filter_bloc/search_filter_bloc.dart';
 // ignore: unused_import
 import 'package:real_estate_marketplace/models/properties_list_model.dart';
@@ -17,6 +20,21 @@ class SearchAndFilterPage extends StatefulWidget {
 class _SearchAndFilterPageState extends State<SearchAndFilterPage> {
   TextEditingController _searchController = TextEditingController();
 
+  @override
+  void initState() {
+    super.initState();
+    _searchController.addListener(() {
+      context
+          .read<SearchFilterBloc>()
+          .add(UpdateSearchQuery(_searchController.text));
+    });
+  }
+
+  @override
+  void dispose() {
+    _searchController.removeListener(() {});
+    _searchController.dispose();
+    super.dispose();
   @override
   void initState() {
     super.initState();
@@ -602,27 +620,6 @@ class _SearchAndFilterPageState extends State<SearchAndFilterPage> {
           body: Center(child: Text('Unexpected State')),
         );
       },
-    );
-  }
-}
-
-void main() {
-  runApp(SearchFilterApp());
-}
-
-class SearchFilterApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) => SearchFilterBloc(),
-        ),
-      ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: SearchAndFilterPage(),
-      ),
     );
   }
 }
