@@ -11,7 +11,7 @@ import 'package:real_estate_marketplace/pages/unsignedin_favorites_page.dart';
 import 'package:real_estate_marketplace/pages/unsighned_message_page.dart';
 
 final GoRouter router = GoRouter(
-  initialLocation: '/posted-properties',
+  initialLocation: '/aboutus',
   routes: [
     GoRoute(
       path: '/home',

@@ -92,7 +92,8 @@ class NotificationPage extends StatelessWidget {
                         // Add your logic here for when the "Join" button is pressed
                       },
                       style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 15),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 80, vertical: 15),
                         backgroundColor: const Color.fromARGB(255, 91, 53, 175),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),

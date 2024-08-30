@@ -5,7 +5,7 @@ class Property {
   final String status; // "Rent" or "Sale"
   bool isFavourite;
   final String image;
-  final String type; // "villa", "land", "commercial", "condo"
+  final String type; // "villa", "land", "commercial", "condo", "apartment"
   final double bedroom;
   final double bathroom;
   final DateTime dateAdded;

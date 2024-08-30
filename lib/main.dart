@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:real_estate_marketplace/bloc/home_bloc.dart';
-import 'package:real_estate_marketplace/config/router.dart'; // Import the router file here
+import 'package:real_estate_marketplace/config/router.dart'; 
 
 void main() {
   runApp(const RealEstateApp());
