@@ -162,7 +162,7 @@ List<Property> properties = [
     price: 300000.00,
     locationName: 'Jemo',
     status: 'For Rent',
-    image: 'assets/images/commercial_space.pngs',
+    image: 'assets/images/commercial_space.png',
     type: 'commercial',
     bedroom: 4,
     bathroom: 2,

@@ -16,6 +16,7 @@ class RealEstateApp extends StatelessWidget {
       create: (context) => HomeBloc(),
       child: MaterialApp.router(
         title: 'Real Estate Marketplace',
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primarySwatch: Colors.purple,
           visualDensity: VisualDensity.adaptivePlatformDensity,

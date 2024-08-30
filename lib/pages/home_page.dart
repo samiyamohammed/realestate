@@ -2,21 +2,55 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:real_estate_marketplace/bloc/BottomNavigationBloc.dart';
-// ignore: unused_import
-import 'package:real_estate_marketplace/bloc/HomeState.dart';
 import 'package:real_estate_marketplace/bloc/home_bloc.dart';
 import '../widgets/bottom_navigation.dart';
 import '../models/properties_list_model.dart';
 import '../widgets/property_card.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  // ignore: library_private_types_in_public_api
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final Map<String, bool> selectedFilters = {
+    'Commercial': false,
+    'Apartment': false,
+    'Villa': false,
+    'Land': false,
+    'Condo': false,
+  };
+
+  List<Property> filteredProperties = properties;
+
+  @override
+  void initState() {
+    super.initState();
+    applyFilters(); // Apply filters initially
+  }
+
+  void applyFilters() {
+    setState(() {
+      filteredProperties = properties.where((property) {
+        if (selectedFilters.values.every((isSelected) => !isSelected)) {
+          // If no filters are selected, show all properties
+          return true;
+        }
+        // Filter properties based on selected filters
+        return selectedFilters.entries.any((filter) =>
+            filter.value &&
+            property.type.toLowerCase() == filter.key.toLowerCase());
+      }).toList();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) =>
-          BottomNavigationBloc(), // Provide BottomNavigationBloc
+      create: (context) => BottomNavigationBloc(),
       child: Scaffold(
         appBar: AppBar(
           leading: IconButton(
@@ -114,13 +148,13 @@ class HomePage extends StatelessWidget {
                 child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
-                    children: [
-                      _buildFilterChip(Icons.business, 'Commercial'),
-                      _buildFilterChip(Icons.apartment, 'Apartment'),
-                      _buildFilterChip(Icons.house, 'Villa'),
-                      _buildFilterChip(Icons.landscape, 'Land'),
-                      _buildFilterChip(Icons.business, 'Condo'),
-                    ],
+                    children: selectedFilters.keys.map((label) {
+                      return _buildFilterChip(
+                        _getIconForLabel(label),
+                        label,
+                        selectedFilters[label]!,
+                      );
+                    }).toList(),
                   ),
                 ),
               ),
@@ -138,13 +172,13 @@ class HomePage extends StatelessWidget {
                 height: 164,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount: properties.length,
+                  itemCount: filteredProperties.length,
                   itemBuilder: (context, index) {
                     return Container(
                       width: 193,
                       margin: const EdgeInsets.symmetric(horizontal: 8.0),
                       child: PropertyCard(
-                        property: properties[index],
+                        property: filteredProperties[index],
                         showStatusTag:
                             true, // Show status tag in Featured Properties
                       ),
@@ -165,11 +199,11 @@ class HomePage extends StatelessWidget {
                 height: 165,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount: properties
+                  itemCount: filteredProperties
                       .where((property) => property.status == 'For Rent')
                       .length,
                   itemBuilder: (context, index) {
-                    final rentProperties = properties
+                    final rentProperties = filteredProperties
                         .where((property) => property.status == 'For Rent')
                         .toList();
                     return Container(
@@ -197,11 +231,11 @@ class HomePage extends StatelessWidget {
                 height: 165,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount: properties
+                  itemCount: filteredProperties
                       .where((property) => property.status == 'For Sale')
                       .length,
                   itemBuilder: (context, index) {
-                    final saleProperties = properties
+                    final saleProperties = filteredProperties
                         .where((property) => property.status == 'For Sale')
                         .toList();
                     return Container(
@@ -259,19 +293,16 @@ class HomePage extends StatelessWidget {
                           // Implement add property functionality
                         },
                         icon: const Icon(Icons.add,
-                            color: Color.fromARGB(255, 238, 235,
-                                235)), // Set the icon color to true white
+                            color: Color.fromARGB(255, 238, 235, 235)),
                         label: const Text(
                           "Add Property",
                           style: TextStyle(
-                              color: Color.fromARGB(255, 226, 223,
-                                  223)), // Set the text color to true white
+                              color: Color.fromARGB(255, 226, 223, 223)),
                         ),
                         style: ElevatedButton.styleFrom(
                           backgroundColor:
                               const Color.fromARGB(255, 91, 53, 175),
-                          foregroundColor: Colors
-                              .white, // Ensures the icon and text color are white
+                          foregroundColor: Colors.white,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
                           ),
@@ -326,26 +357,45 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget _buildFilterChip(IconData icon, String label) {
+  Widget _buildFilterChip(IconData icon, String label, bool isSelected) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      padding: const EdgeInsets.symmetric(horizontal: 4.0),
       child: FilterChip(
-        avatar: Icon(icon, color: const Color.fromARGB(255, 0, 0, 0), size: 16),
+        avatar: Icon(icon, color: isSelected ? Colors.white : Colors.grey),
         label: Text(
           label,
-          style: const TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
+          style: TextStyle(
+              color: isSelected ? Colors.white : Colors.black,
+              fontWeight: FontWeight.bold),
         ),
-        selected: false, // You might want to control this based on filter state
-        backgroundColor:
-            const Color.fromARGB(255, 114, 48, 255).withOpacity(0.2),
-        selectedColor: const Color.fromARGB(255, 114, 48, 255).withOpacity(0.5),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
+        selected: isSelected,
         onSelected: (bool selected) {
-          // Implement filter selection logic here
+          setState(() {
+            selectedFilters[label] = selected;
+            applyFilters(); // Reapply filters when chip is selected
+          });
         },
+        selectedColor: const Color.fromARGB(255, 111, 71, 197),
+        backgroundColor: Colors.white,
+        checkmarkColor: Colors.white,
       ),
     );
+  }
+
+  IconData _getIconForLabel(String label) {
+    switch (label) {
+      case 'Commercial':
+        return Icons.business;
+      case 'Apartment':
+        return Icons.apartment;
+      case 'Villa':
+        return Icons.villa;
+      case 'Land':
+        return Icons.landscape;
+      case 'Condo':
+        return Icons.location_city;
+      default:
+        return Icons.home;
+    }
   }
 }
