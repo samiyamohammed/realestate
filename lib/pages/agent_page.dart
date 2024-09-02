@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:real_estate_marketplace/models/properties_list_model.dart';
+import 'package:real_estate_marketplace/widgets/property_card.dart';
 
 class AgentPage extends StatelessWidget {
   const AgentPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    List<Property> filteredProperties = properties;
+
     return Scaffold(
       appBar: AppBar(),
-      body: Container(
+      body: SingleChildScrollView(
         // padding: EdgeInsets.all(10),
         child: Column(
           children: [
@@ -131,7 +135,7 @@ class AgentPage extends StatelessWidget {
                             lineWidth: 7.0,
                             animation: true,
                             percent: 0.75,
-                            center: Text(
+                            center: const Text(
                               "75.0%",
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
@@ -144,7 +148,8 @@ class AgentPage extends StatelessWidget {
                             //       TextStyle(decoration: TextDecoration.underline),
                             // ),
                             circularStrokeCap: CircularStrokeCap.round,
-                            progressColor: Color.fromARGB(255, 0, 143, 238),
+                            progressColor:
+                                const Color.fromARGB(255, 0, 143, 238),
                           ),
                         ),
                         const Text(
@@ -184,21 +189,88 @@ class AgentPage extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
-            Align(
+            const Align(
               alignment: Alignment.centerLeft,
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: EdgeInsets.all(8.0),
                 child: Text(
                   'Properties listed by agent',
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
               ),
             ),
-            Text('For Rent'),
-            Text('For Sale'),
+            // For Rent Section
+            const Align(
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: EdgeInsets.only(left: 20.0, bottom: 8),
+                child: Text(
+                  'For Rent',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 165,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: filteredProperties
+                    .where((property) => property.status == 'For Rent')
+                    .length,
+                itemBuilder: (context, index) {
+                  final rentProperties = filteredProperties
+                      .where((property) => property.status == 'For Rent')
+                      .toList();
+                  return Container(
+                    width: 150,
+                    margin: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: PropertyCard(
+                      property: rentProperties[index],
+                      showStatusTag:
+                          false, // Hide status tag in For Rent section
+                    ),
+                  );
+                },
+              ),
+            ),
+
+            // For Sale Section
+            const Align(
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: EdgeInsets.only(left: 20.0, bottom: 8, top: 8),
+                child: Text(
+                  'For Sale',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 165,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: filteredProperties
+                    .where((property) => property.status == 'For Sale')
+                    .length,
+                itemBuilder: (context, index) {
+                  final saleProperties = filteredProperties
+                      .where((property) => property.status == 'For Sale')
+                      .toList();
+                  return Container(
+                    width: 150,
+                    margin: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: PropertyCard(
+                      property: saleProperties[index],
+                      showStatusTag:
+                          false, // Hide status tag in For Sale section
+                    ),
+                  );
+                },
+              ),
+            ),
           ],
         ),
       ),
