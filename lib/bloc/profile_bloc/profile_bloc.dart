@@ -17,7 +17,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   void _onLoadProfile(LoadProfile event, Emitter<ProfileState> emit) async {
     emit(ProfileLoading());
     try {
-      final Users user = demousers.first;
+      final Users user = demousers.first as Users;
       emit(ProfileLoaded(
           name: user.name,
           email: user.email,
@@ -77,7 +77,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       ValidatePassword event, Emitter<ProfileState> emit) async {
     emit(PasswordValidating());
     try {
-      final Users user = demousers.first;
+      final Users user = demousers.first as Users;
       bool isPasswordCorrect = user.password == event.enteredPassword;
 
       if (isPasswordCorrect) {

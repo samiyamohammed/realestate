@@ -1,5 +1,7 @@
-// ignore_for_file: unused_field, unused_import
+// ignore: unused_import
+// ignore_for_file: file_names
 
+// ignore: unused_import
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -16,6 +18,7 @@ class SignInPage extends StatefulWidget {
 class _SignInPageState extends State<SignInPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _obscureText = true;
+  // ignore: prefer_final_fields, unused_field
   bool _obscureConfirmationText = true;
 
   String? selectedValue;
@@ -188,7 +191,6 @@ class _SignInPageState extends State<SignInPage> {
                       padding: const EdgeInsets.all(8),
                       height: 60,
                       width: 60,
-                      child: Image.asset("assets/images/google.png"),
                       decoration: BoxDecoration(
                         borderRadius:
                             const BorderRadius.all(Radius.circular(20)),
@@ -197,15 +199,12 @@ class _SignInPageState extends State<SignInPage> {
                           width: 1.0, // Set border width
                         ),
                       ),
+                      child: Image.asset("assets/images/google.png"),
                     ),
                     Container(
                       padding: const EdgeInsets.all(8),
                       height: 60,
                       width: 60,
-                      child: Image.asset(
-                        "assets/images/apple.png",
-                        fit: BoxFit.scaleDown,
-                      ),
                       decoration: BoxDecoration(
                         // color: Colors.red,
                         border: Border.all(
@@ -216,14 +215,15 @@ class _SignInPageState extends State<SignInPage> {
                           Radius.circular(20),
                         ),
                       ),
+                      child: Image.asset(
+                        "assets/images/apple.png",
+                        fit: BoxFit.scaleDown,
+                      ),
                     ),
                     Container(
                       padding: const EdgeInsets.all(8),
                       height: 60,
                       width: 60,
-                      child: Image.asset(
-                        "assets/images/call.png",
-                      ),
                       decoration: BoxDecoration(
                         borderRadius:
                             const BorderRadius.all(Radius.circular(20)),
@@ -232,6 +232,9 @@ class _SignInPageState extends State<SignInPage> {
                           color: Colors.black, // Set border color
                           width: 1.0, // Set border width
                         ),
+                      ),
+                      child: Image.asset(
+                        "assets/images/call.png",
                       ),
                     ),
                   ],

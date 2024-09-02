@@ -1,6 +1,9 @@
+// ignore_for_file: unnecessary_import
+
 import 'package:flutter/material.dart';
 
 import 'package:bloc/bloc.dart';
+// ignore: duplicate_ignore
 // ignore: unnecessary_import
 import 'package:meta/meta.dart';
 

@@ -12,7 +12,7 @@ class PropertyCard extends StatelessWidget {
       height: 153,
       child: Card(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15.0),
+          borderRadius: BorderRadius.circular(30.0),
         ),
         margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
         elevation: 4.0,

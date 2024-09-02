@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_final_fields, avoid_print
+
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:real_estate_marketplace/models/properties_list_model.dart';
@@ -14,7 +16,7 @@ class SearchFilterBloc extends Bloc<SearchFilterEvent, SearchFilterState> {
       selectedType: 'All',
       selectedSort: 'Old to New',
       selectedSaleRent: 'All',
-      priceRange: RangeValues(3000, 100000000),
+      priceRange: const RangeValues(3000, 100000000),
       bedrooms: 0,
       bathrooms: 0,
     ));
@@ -35,7 +37,7 @@ class SearchFilterBloc extends Bloc<SearchFilterEvent, SearchFilterState> {
         selectedType: 'All',
         selectedSort: 'Old to New',
         selectedSaleRent: 'All',
-        priceRange: RangeValues(3000, 100000000),
+        priceRange: const RangeValues(3000, 100000000),
         bedrooms: 0,
         bathrooms: 0,
       ),
@@ -71,7 +73,7 @@ class SearchFilterBloc extends Bloc<SearchFilterEvent, SearchFilterState> {
       selectedType: 'All',
       selectedSort: 'Old to New',
       selectedSaleRent: 'All',
-      priceRange: RangeValues(3000, 100000000),
+      priceRange: const RangeValues(3000, 100000000),
       bedrooms: 0,
       bathrooms: 0,
     ));

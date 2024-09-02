@@ -11,10 +11,10 @@ class NotificationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => HomeBloc(), 
+      create: (context) => HomeBloc(), // Provide the HomeBloc
       child: BlocBuilder<HomeBloc, HomeState>(
         builder: (context, state) {
-          int selectedIndex = 3; 
+          int selectedIndex = 3; // Default to the notifications index
 
           if (state is HomeLoaded) {
             selectedIndex = state.selectedIndex;
@@ -23,25 +23,25 @@ class NotificationPage extends StatelessWidget {
           // Function to handle navigation based on selected index
           // ignore: no_leading_underscores_for_local_identifiers
           void _onItemTapped(int index) {
-            
+            // Update the index in the Bloc
             context.read<HomeBloc>().add(HomeIndexChanged(index));
 
             // Navigate to the appropriate page based on the selected index
             switch (index) {
               case 0:
-                context.go('/home'); 
+                context.go('/home'); // Navigate to Home Page
                 break;
               case 1:
-                context.go('/favorite');
+                context.go('/favorite'); // Navigate to Favorite Page
                 break;
               case 2:
-                context.go('/chat'); 
+                context.go('/chat'); // Navigate to Chat Page
                 break;
               case 3:
                 // Stay on the Notification page
                 break;
               case 4:
-                context.go('/profile');
+                context.go('/profile'); // Navigate to Profile Page
                 break;
             }
           }
@@ -92,7 +92,8 @@ class NotificationPage extends StatelessWidget {
                         // Add your logic here for when the "Join" button is pressed
                       },
                       style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 15),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 80, vertical: 15),
                         backgroundColor: const Color.fromARGB(255, 91, 53, 175),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
@@ -111,8 +112,8 @@ class NotificationPage extends StatelessWidget {
               ),
             ),
             bottomNavigationBar: BottomNavigation(
-              currentIndex: selectedIndex, 
-              onItemSelected: _onItemTapped, 
+              currentIndex: selectedIndex, // Pass the current selected index
+              onItemSelected: _onItemTapped, // Pass the onTap function
             ),
           );
         },

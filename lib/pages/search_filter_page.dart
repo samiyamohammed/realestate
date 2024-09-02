@@ -1,21 +1,24 @@
-// ignore_for_file: unused_import
+// ignore_for_file: unused_import, library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:real_estate_marketplace/bloc/search_filter_bloc/search_filter_bloc.dart';
 import 'package:real_estate_marketplace/models/properties_list_model.dart';
+import 'package:real_estate_marketplace/widgets/vertical_listing.dart';
 import 'package:real_estate_marketplace/bloc/search_filter_bloc/search_filter_event.dart';
 import 'package:real_estate_marketplace/bloc/search_filter_bloc/search_filter_state.dart';
-
 import '../widgets/vertical_listing.dart';
 
 class SearchAndFilterPage extends StatefulWidget {
+  const SearchAndFilterPage({super.key});
+
   @override
   _SearchAndFilterPageState createState() => _SearchAndFilterPageState();
 }
 
 class _SearchAndFilterPageState extends State<SearchAndFilterPage> {
+  // ignore: prefer_final_fields
   TextEditingController _searchController = TextEditingController();
 
   @override
@@ -41,7 +44,6 @@ class _SearchAndFilterPageState extends State<SearchAndFilterPage> {
       builder: (BuildContext context) {
         return BlocBuilder<SearchFilterBloc, SearchFilterState>(
           builder: (context, state) {
-            print('Current state: $state');
             if (state is SearchFilterUpdated) {
               return StatefulBuilder(
                 builder: (BuildContext context, StateSetter setState) {
@@ -73,17 +75,17 @@ class _SearchAndFilterPageState extends State<SearchAndFilterPage> {
                                     Align(
                                       alignment: Alignment.topRight,
                                       child: IconButton(
-                                        icon: Icon(Icons.close),
+                                        icon: const Icon(Icons.close),
                                         onPressed: () => Navigator.pop(context),
                                       ),
                                     ),
-                                    Text(
+                                    const Text(
                                       'Search Filter',
                                       style: TextStyle(
                                           fontSize: 18,
                                           fontWeight: FontWeight.bold),
                                     ),
-                                    SizedBox(height: 10.0),
+                                    const SizedBox(height: 10.0),
                                     Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
@@ -128,7 +130,7 @@ class _SearchAndFilterPageState extends State<SearchAndFilterPage> {
                                             });
                                           },
                                         ),
-                                        SizedBox(height: 16.0),
+                                        const SizedBox(height: 16.0),
                                         DropdownButtonFormField<String>(
                                           value: state.selectedSort,
                                           decoration: InputDecoration(
@@ -167,7 +169,7 @@ class _SearchAndFilterPageState extends State<SearchAndFilterPage> {
                                             });
                                           },
                                         ),
-                                        SizedBox(height: 16.0),
+                                        const SizedBox(height: 16.0),
                                         DropdownButtonFormField<String>(
                                           value: state.selectedSaleRent,
                                           decoration: InputDecoration(
@@ -208,8 +210,8 @@ class _SearchAndFilterPageState extends State<SearchAndFilterPage> {
                                         ),
                                       ],
                                     ),
-                                    SizedBox(height: 16.0),
-                                    Text('Price Range'),
+                                    const SizedBox(height: 16.0),
+                                    const Text('Price Range'),
                                     RangeSlider(
                                       values: state.priceRange,
                                       min: 3000,
@@ -273,16 +275,16 @@ class _SearchAndFilterPageState extends State<SearchAndFilterPage> {
                                       activeColor: Colors.green,
                                       inactiveColor: Colors.grey,
                                     ),
-                                    SizedBox(height: 16.0),
+                                    const SizedBox(height: 16.0),
                                     Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Text('Number of Bedrooms'),
+                                        const Text('Number of Bedrooms'),
                                         Row(
                                           children: [
                                             IconButton(
-                                              icon: Icon(Icons.add_circle,
+                                              icon: const Icon(Icons.add_circle,
                                                   color: Color.fromARGB(
                                                       255, 91, 53, 175)),
                                               onPressed: () {
@@ -308,7 +310,8 @@ class _SearchAndFilterPageState extends State<SearchAndFilterPage> {
                                             ),
                                             Text('${state.bedrooms}'),
                                             IconButton(
-                                              icon: Icon(Icons.remove_circle,
+                                              icon: const Icon(
+                                                  Icons.remove_circle,
                                                   color: Color.fromARGB(
                                                       255, 91, 53, 175)),
                                               onPressed: () {
@@ -339,16 +342,16 @@ class _SearchAndFilterPageState extends State<SearchAndFilterPage> {
                                         ),
                                       ],
                                     ),
-                                    SizedBox(height: 16.0),
+                                    const SizedBox(height: 16.0),
                                     Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Text('Number of Bathrooms'),
+                                        const Text('Number of Bathrooms'),
                                         Row(
                                           children: [
                                             IconButton(
-                                              icon: Icon(Icons.add_circle,
+                                              icon: const Icon(Icons.add_circle,
                                                   color: Color.fromARGB(
                                                       255, 91, 53, 175)),
                                               onPressed: () {
@@ -374,7 +377,8 @@ class _SearchAndFilterPageState extends State<SearchAndFilterPage> {
                                             ),
                                             Text('${state.bathrooms}'),
                                             IconButton(
-                                              icon: Icon(Icons.remove_circle,
+                                              icon: const Icon(
+                                                  Icons.remove_circle,
                                                   color: Color.fromARGB(
                                                       255, 91, 53, 175)),
                                               onPressed: () {
@@ -406,7 +410,7 @@ class _SearchAndFilterPageState extends State<SearchAndFilterPage> {
                                         ),
                                       ],
                                     ),
-                                    SizedBox(height: 16.0),
+                                    const SizedBox(height: 16.0),
                                     Padding(
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 8.0),
@@ -425,7 +429,7 @@ class _SearchAndFilterPageState extends State<SearchAndFilterPage> {
                                                   borderRadius:
                                                       BorderRadius.circular(
                                                           10.0),
-                                                  side: BorderSide(
+                                                  side: const BorderSide(
                                                       color: Colors.grey),
                                                 ),
                                               ),
@@ -436,7 +440,7 @@ class _SearchAndFilterPageState extends State<SearchAndFilterPage> {
                                                   .add(ClearFilters());
                                               Navigator.pop(context);
                                             },
-                                            child: Text(
+                                            child: const Text(
                                               'Clear',
                                               style:
                                                   TextStyle(color: Colors.grey),
@@ -447,7 +451,7 @@ class _SearchAndFilterPageState extends State<SearchAndFilterPage> {
                                               backgroundColor:
                                                   WidgetStateProperty.all<
                                                           Color>(
-                                                      Color.fromARGB(
+                                                      const Color.fromARGB(
                                                           255, 91, 53, 175)),
                                               shape: WidgetStateProperty.all<
                                                   RoundedRectangleBorder>(
@@ -461,7 +465,7 @@ class _SearchAndFilterPageState extends State<SearchAndFilterPage> {
                                             onPressed: () {
                                               Navigator.pop(context);
                                             },
-                                            child: Text(
+                                            child: const Text(
                                               'Search',
                                               style: TextStyle(
                                                   color: Colors.white),
@@ -502,7 +506,36 @@ class _SearchAndFilterPageState extends State<SearchAndFilterPage> {
                     fontSize: 18.0, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.right,
               ),
-              leading: BackButton(),
+              leading: const BackButton(),
+            ),
+            floatingActionButton: FloatingActionButton(
+              onPressed: () {
+                final currentState = context.read<SearchFilterBloc>().state;
+
+                if (currentState is SearchFilterUpdated) {
+                  context.read<SearchFilterBloc>().add(
+                        SaveSearchCriteriaEvent(
+                          selectedType: currentState.selectedType,
+                          selectedSort: currentState.selectedSort,
+                          selectedSaleRent: currentState.selectedSaleRent,
+                          priceRange: currentState.priceRange,
+                          bedrooms: currentState.bedrooms,
+                          bathrooms: currentState.bathrooms,
+                        ),
+                      );
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                        content: Text(
+                            'Search criteria saved, You will be notified')),
+                  );
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                        content: Text('Unable to save search criteria.')),
+                  );
+                }
+              },
+              child: const Icon(Icons.save),
             ),
             floatingActionButton: FloatingActionButton(
               onPressed: () {
@@ -542,7 +575,7 @@ class _SearchAndFilterPageState extends State<SearchAndFilterPage> {
                     fontSize: 18.0, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.right,
               ),
-              leading: BackButton(),
+              leading: const BackButton(),
             ),
             body: Padding(
               padding: const EdgeInsets.all(8.0),
@@ -560,47 +593,46 @@ class _SearchAndFilterPageState extends State<SearchAndFilterPage> {
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(20.0),
                               ),
-                              prefixIcon: Icon(Icons.search),
-                              suffixIcon: Icon(Icons.map),
+                              prefixIcon: const Icon(Icons.search),
+                              suffixIcon: const Icon(Icons.map),
                               contentPadding:
-                                  EdgeInsets.symmetric(vertical: 15.0),
+                                  const EdgeInsets.symmetric(vertical: 15.0),
                               fillColor: Colors.white,
                               filled: true,
                             ),
                           ),
                         ),
                       ),
-                      SizedBox(width: 8.0),
+                      const SizedBox(width: 8.0),
                       SizedBox(
                         height: 48.0,
                         child: ElevatedButton(
                           style: ButtonStyle(
                             backgroundColor: WidgetStateProperty.all<Color>(
-                                Color.fromARGB(255, 255, 255, 255)),
+                                const Color.fromARGB(255, 255, 255, 255)),
                             shape:
                                 WidgetStateProperty.all<RoundedRectangleBorder>(
                               RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20.0),
-                                side: BorderSide(
-                                  color: const Color.fromARGB(255, 0, 0, 0),
+                                side: const BorderSide(
+                                  color: Color.fromARGB(255, 0, 0, 0),
                                   width: 0.7,
                                 ),
                               ),
                             ),
                           ),
                           onPressed: _showFilterPopup,
-                          child: Center(
+                          child: const Center(
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 Icon(Icons.filter_list,
-                                    color: const Color.fromARGB(255, 0, 0, 0)),
+                                    color: Color.fromARGB(255, 0, 0, 0)),
                                 SizedBox(width: 8.0),
                                 Text(
                                   'Filter',
                                   style: TextStyle(
-                                      color:
-                                          const Color.fromARGB(255, 64, 62, 62),
+                                      color: Color.fromARGB(255, 64, 62, 62),
                                       fontSize: 16.0,
                                       fontWeight: FontWeight.bold),
                                 ),
@@ -611,7 +643,7 @@ class _SearchAndFilterPageState extends State<SearchAndFilterPage> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 10.0),
+                  const SizedBox(height: 10.0),
                   Expanded(
                     child: ListView.builder(
                       itemCount: state.filteredProperties.length,
@@ -623,43 +655,6 @@ class _SearchAndFilterPageState extends State<SearchAndFilterPage> {
                     ),
                   ),
                 ],
-              ),
-            ),
-            floatingActionButton: Align(
-              alignment: Alignment.bottomCenter,
-              child: SizedBox(
-                width: 170,
-                height: 50,
-                child: FloatingActionButton(
-                  onPressed: () {
-                    final currentState = context.read<SearchFilterBloc>().state;
-
-                    if (currentState is SearchFilterUpdated) {
-                      context.read<SearchFilterBloc>().add(
-                            SaveSearchCriteriaEvent(
-                              selectedType: currentState.selectedType,
-                              selectedSort: currentState.selectedSort,
-                              selectedSaleRent: currentState.selectedSaleRent,
-                              priceRange: currentState.priceRange,
-                              bedrooms: currentState.bedrooms,
-                              bathrooms: currentState.bathrooms,
-                            ),
-                          );
-
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                            content: Text(
-                                'Search criteria saved, You will be notified!')),
-                      );
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                            content: Text('Unable to save search criteria.')),
-                      );
-                    }
-                  },
-                  child: Text('Save Search'),
-                ),
               ),
             ),
           );
