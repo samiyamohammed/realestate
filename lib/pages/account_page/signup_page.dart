@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
+// ignore: unused_import
 import 'package:real_estate_marketplace/pages/account_page/Signin_page.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -28,17 +29,17 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Container(
-        padding: EdgeInsets.all(8),
+        padding: const EdgeInsets.all(8),
         child: Form(
           key: _formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 30),
+              const Padding(
+                padding: EdgeInsets.only(left: 30),
                 child: Text("Full Name"),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 15,
               ),
               // const SizedBox(height: 5),
@@ -76,11 +77,11 @@ class _SignUpPageState extends State<SignUpPage> {
                 height: 16,
               ),
               // Email
-              Padding(
-                padding: const EdgeInsets.only(left: 30),
+              const Padding(
+                padding: EdgeInsets.only(left: 30),
                 child: Text("Email Address"),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 15,
               ),
               // const SizedBox(height: 5),
@@ -118,11 +119,11 @@ class _SignUpPageState extends State<SignUpPage> {
                 height: 16,
               ),
               //password
-              Padding(
-                padding: const EdgeInsets.only(left: 30),
+              const Padding(
+                padding: EdgeInsets.only(left: 30),
                 child: Text("Password"),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 15,
               ),
               // const SizedBox(height: 5),
@@ -172,11 +173,11 @@ class _SignUpPageState extends State<SignUpPage> {
                 height: 16,
               ),
               //confirm password
-              Padding(
-                padding: const EdgeInsets.only(left: 30),
+              const Padding(
+                padding: EdgeInsets.only(left: 30),
                 child: Text("Confirm Password"),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 15,
               ),
               // const SizedBox(height: 5),
@@ -225,11 +226,11 @@ class _SignUpPageState extends State<SignUpPage> {
               const SizedBox(
                 height: 16,
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 30),
+              const Padding(
+                padding: EdgeInsets.only(left: 30),
                 child: Text("Sign Up as"),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 15,
               ),
               // const SizedBox(height: 5),
@@ -328,11 +329,11 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 25,
               ),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 50),
+                padding: const EdgeInsets.symmetric(horizontal: 50),
                 child: ElevatedButton(
                   style: ButtonStyle(
                     // fixedSize: MaterialStatePropertyAll(),
@@ -342,7 +343,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     //     WidgetStatePropertyAll(Colors.blueAccent[700]),
                     shape: WidgetStatePropertyAll(
                       RoundedRectangleBorder(
-                        side: BorderSide(color: Colors.black),
+                        side: const BorderSide(color: Colors.black),
                         borderRadius: BorderRadius.circular(15),
                       ),
                     ),
@@ -354,7 +355,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     style: GoogleFonts.poppins(
                         // fontWeight: FontWeight.w400,
                         fontSize: 16,
-                        color: Color.fromARGB(255, 173, 157, 247)),
+                        color: const Color.fromARGB(255, 173, 157, 247)),
                   )),
 
                   // child: _isSending ? const SizedBox(
@@ -372,51 +373,53 @@ class _SignUpPageState extends State<SignUpPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                      padding: EdgeInsets.all(8),
+                      padding: const EdgeInsets.all(8),
                       height: 60,
                       width: 60,
-                      child: Image.asset("assets/images/google.png"),
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(20)),
                         border: Border.all(
                           color: Colors.black, // Set border color
                           width: 1.0, // Set border width
                         ),
                       ),
+                      child: Image.asset("assets/images/google.png"),
                     ),
                     Container(
-                      padding: EdgeInsets.all(8),
+                      padding: const EdgeInsets.all(8),
                       height: 60,
                       width: 60,
-                      child: Image.asset(
-                        "assets/images/apple.png",
-                        fit: BoxFit.scaleDown,
-                      ),
                       decoration: BoxDecoration(
                         // color: Colors.red,
                         border: Border.all(
                           color: Colors.black, // Set border color
                           width: 1.0, // Set border width
                         ),
-                        borderRadius: BorderRadius.all(
+                        borderRadius: const BorderRadius.all(
                           Radius.circular(20),
                         ),
                       ),
+                      child: Image.asset(
+                        "assets/images/apple.png",
+                        fit: BoxFit.scaleDown,
+                      ),
                     ),
                     Container(
-                      padding: EdgeInsets.all(8),
+                      padding: const EdgeInsets.all(8),
                       height: 60,
                       width: 60,
-                      child: Image.asset(
-                        "assets/images/call.png",
-                      ),
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(20)),
                         color: Colors.white,
                         border: Border.all(
                           color: Colors.black, // Set border color
                           width: 1.0, // Set border width
                         ),
+                      ),
+                      child: Image.asset(
+                        "assets/images/call.png",
                       ),
                     ),
                   ],
@@ -428,13 +431,13 @@ class _SignUpPageState extends State<SignUpPage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("Already have an account? "),
+                    const Text("Already have an account? "),
                     InkWell(
                       onTap: () {
                         widget.tabController
                             .animateTo(1); // Switch back to Sign In page
                       },
-                      child: Text(
+                      child: const Text(
                         "Log in",
                         style: TextStyle(
                             color: Colors.brown,

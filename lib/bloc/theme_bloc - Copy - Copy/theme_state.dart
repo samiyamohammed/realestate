@@ -11,12 +11,12 @@ class LightThemeState extends ThemeState {
       : super(
           ThemeData(
             colorScheme: ColorScheme.light(
-                surface: Color.fromARGB(1, 91, 53, 175),
+                surface: const Color.fromARGB(1, 91, 53, 175),
                 primary: Colors.grey.shade500,
                 secondary: Colors.grey.shade100,
                 tertiary: Colors.white,
                 inversePrimary: Colors.grey.shade700),
-            textTheme: TextTheme(
+            textTheme: const TextTheme(
               bodyLarge: TextStyle(),
             ),
           ),
@@ -31,7 +31,7 @@ class DarkThemeState extends ThemeState {
               surface: const Color.fromARGB(255, 20, 20, 20),
               primary: const Color.fromARGB(255, 122, 122, 122),
               secondary: const Color.fromARGB(255, 30, 30, 30),
-              tertiary: Color.fromARGB(255, 47, 47, 47),
+              tertiary: const Color.fromARGB(255, 47, 47, 47),
               inversePrimary: Colors.grey.shade300,
             ),
           ),
