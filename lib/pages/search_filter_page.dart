@@ -7,6 +7,7 @@ import 'package:real_estate_marketplace/bloc/search_filter_bloc/search_filter_bl
 import 'package:real_estate_marketplace/models/properties_list_model.dart';
 import 'package:real_estate_marketplace/bloc/search_filter_bloc/search_filter_event.dart';
 import 'package:real_estate_marketplace/bloc/search_filter_bloc/search_filter_state.dart';
+
 import '../widgets/vertical_listing.dart';
 
 class SearchAndFilterPage extends StatefulWidget {
@@ -503,6 +504,34 @@ class _SearchAndFilterPageState extends State<SearchAndFilterPage> {
               ),
               leading: BackButton(),
             ),
+            floatingActionButton: FloatingActionButton(
+              onPressed: () {
+                final currentState = context.read<SearchFilterBloc>().state;
+
+                if (currentState is SearchFilterUpdated) {
+                  context.read<SearchFilterBloc>().add(
+                        SaveSearchCriteriaEvent(
+                          selectedType: currentState.selectedType,
+                          selectedSort: currentState.selectedSort,
+                          selectedSaleRent: currentState.selectedSaleRent,
+                          priceRange: currentState.priceRange,
+                          bedrooms: currentState.bedrooms,
+                          bathrooms: currentState.bathrooms,
+                        ),
+                      );
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                        content: Text(
+                            'Search criteria saved, You will be notified')),
+                  );
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Unable to save search criteria.')),
+                  );
+                }
+              },
+              child: Icon(Icons.save),
+            ),
           );
         } else if (state is SearchFilterUpdated) {
           return Scaffold(
@@ -594,6 +623,43 @@ class _SearchAndFilterPageState extends State<SearchAndFilterPage> {
                     ),
                   ),
                 ],
+              ),
+            ),
+            floatingActionButton: Align(
+              alignment: Alignment.bottomCenter,
+              child: SizedBox(
+                width: 170,
+                height: 50,
+                child: FloatingActionButton(
+                  onPressed: () {
+                    final currentState = context.read<SearchFilterBloc>().state;
+
+                    if (currentState is SearchFilterUpdated) {
+                      context.read<SearchFilterBloc>().add(
+                            SaveSearchCriteriaEvent(
+                              selectedType: currentState.selectedType,
+                              selectedSort: currentState.selectedSort,
+                              selectedSaleRent: currentState.selectedSaleRent,
+                              priceRange: currentState.priceRange,
+                              bedrooms: currentState.bedrooms,
+                              bathrooms: currentState.bathrooms,
+                            ),
+                          );
+
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                            content: Text(
+                                'Search criteria saved, You will be notified!')),
+                      );
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                            content: Text('Unable to save search criteria.')),
+                      );
+                    }
+                  },
+                  child: Text('Save Search'),
+                ),
               ),
             ),
           );
