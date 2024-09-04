@@ -61,7 +61,7 @@ class PropertyCard extends StatelessWidget {
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                         child: Text(
-                          property.status, // "For Rent" or "For Sale"
+                          property.status, // "For Rent" , "For Sale" or "Sold"
                           style: const TextStyle(
                             fontSize: 10.0,
                             fontWeight: FontWeight.bold,
@@ -135,7 +135,7 @@ class PropertyCard extends StatelessWidget {
                                 : const Color.fromARGB(255, 255, 0, 0),
                           ),
                           onPressed: () {
-                            // Handle favourite toggle
+                            property.isFavourite = !property.isFavourite;
                           },
                         ),
                         IconButton(
