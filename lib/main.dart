@@ -26,6 +26,9 @@ class RealEstateApp extends StatelessWidget {
         BlocProvider(create: (context) => FavoritesBloc()),
         BlocProvider(create: (context) => ThemeBloc()),
         BlocProvider(create: (context) => HomeBloc()),
+        BlocProvider(create: (context) => ProfileBloc()..add(LoadProfile())),
+        BlocProvider(create: (context) => BottomNavigationBloc()),
+        BlocProvider(create: (context) => SearchFilterBloc()),
       ],
       child: BlocBuilder<ThemeBloc, ThemeState>(
         builder: (context, themeState) {
@@ -35,7 +38,7 @@ class RealEstateApp extends StatelessWidget {
             theme: themeState.themeData,
             home: const AgentPage(),
             // routerConfig:
-            //     router, // Use the router from the imported router file
+            //     router, 
           );
         },
       ),
