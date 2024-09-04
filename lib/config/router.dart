@@ -12,7 +12,7 @@ import 'package:real_estate_marketplace/pages/unsighned_message_page.dart';
 import 'package:real_estate_marketplace/pages/agent_page.dart';
 
 final GoRouter router = GoRouter(
-  initialLocation: '/aboutus',
+  initialLocation: '/home',
   routes: [
     GoRoute(
       path: '/home',
@@ -50,7 +50,22 @@ final GoRouter router = GoRouter(
       path: '/agent',
       builder: (context, state) => const AgentPage(),
     ),
-
-    /// Add other routes here as needed
+     GoRoute(
+      path: '/profile',
+      builder: (context, state) => ProfilePage(),
+    ),
+    GoRoute(
+      path: '/settings',
+      builder: (context, state) => SettingsScreen(),
+    ),
+    GoRoute(
+      path: '/language-preferences',
+      builder: (context, state) => LanguagePreferencesPage(),
+    ),
+    GoRoute(
+      path: '/searchandfilter',
+      builder: (context, state) => SearchAndFilterPage(),
+    ),
+    // Add other routes here as needed
   ],
 );
