@@ -18,19 +18,24 @@ class RealEstateApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider(create: (context) => FavoritesBloc()),
+        BlocProvider(create: (context) => ThemeBloc()),
         BlocProvider(create: (context) => HomeBloc()),
         BlocProvider(create: (context) => ProfileBloc()..add(LoadProfile())),
         BlocProvider(create: (context) => BottomNavigationBloc()),
         BlocProvider(create: (context) => SearchFilterBloc()),
       ],
-      child: MaterialApp.router(
-        title: 'Real Estate Marketplace',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          primarySwatch: Colors.purple,
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-        ),
-        routerConfig: router,
+      child: BlocBuilder<ThemeBloc, ThemeState>(
+        builder: (context, themeState) {
+          // return MaterialApp.router(
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            theme: themeState.themeData,
+            home: const AgentPage(),
+            // routerConfig:
+            //     router,
+          );
+        },
       ),
     );
   }

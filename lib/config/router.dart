@@ -12,9 +12,10 @@ import 'package:real_estate_marketplace/pages/settings_page.dart';
 import 'package:real_estate_marketplace/pages/unsighned_notification_page.dart';
 import 'package:real_estate_marketplace/pages/unsignedin_favorites_page.dart';
 import 'package:real_estate_marketplace/pages/unsighned_message_page.dart';
+import 'package:real_estate_marketplace/pages/agent_page.dart';
 
 final GoRouter router = GoRouter(
-  initialLocation: '/searchandfilter',
+  initialLocation: '/home',
   routes: [
     GoRoute(
       path: '/home',
@@ -53,6 +54,10 @@ final GoRouter router = GoRouter(
       builder: (context, state) => const DraftPropertiesPage(),
     ),
     GoRoute(
+      path: '/agent',
+      builder: (context, state) => const AgentPage(),
+    ),
+    GoRoute(
       path: '/profile',
       builder: (context, state) => ProfilePage(),
     ),
@@ -64,7 +69,10 @@ final GoRouter router = GoRouter(
       path: '/language-preferences',
       builder: (context, state) => LanguagePreferencesPage(),
     ),
-
-    /// Add other routes here as needed
+    GoRoute(
+      path: '/searchandfilter',
+      builder: (context, state) => SearchAndFilterPage(),
+    ),
+    // Add other routes here as needed
   ],
 );

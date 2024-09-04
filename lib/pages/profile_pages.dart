@@ -590,24 +590,3 @@ void _pickImageFromGallery(BuildContext context) async {
     print('No image selected.');
   }
 }
-
-// void main() {
-//   runApp(MyApp());
-// }
-
-// class MyApp extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: 'Real Estate Marketplace',
-//       debugShowCheckedModeBanner: false,
-//       theme: ThemeData(
-//         primarySwatch: Colors.blue,
-//       ),
-//       home: BlocProvider(
-//         create: (context) => ProfileBloc()..add(LoadProfile()),
-//         child: ProfilePage(),
-//       ),
-//     );
-//   }
-// }

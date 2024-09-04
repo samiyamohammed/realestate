@@ -24,7 +24,7 @@ List<Users> demousers = [
     password: 'abc123@dot',
     email: 'myname2001@gmail.com',
     status: 'User',
-    image: 'assets/images/profile_icon.png',
+    image: 'assets/images/profile_image.jpeg',
     phonenumber: '1234567890',
     bio: '',
   ),

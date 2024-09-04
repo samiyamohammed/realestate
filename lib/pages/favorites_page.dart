@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:real_estate_marketplace/bloc/favorite_bloc/favorite_bloc.dart';
 import 'package:real_estate_marketplace/bloc/favorite_bloc/favorite_state.dart';
 import 'package:real_estate_marketplace/samples/favorite_sample.dart';
+// ignore: unused_import
+import 'package:real_estate_marketplace/models/favorite_model.dart';
 import 'package:real_estate_marketplace/utility/date_difference_calculator.dart';
 
 class FavoritesPage extends StatefulWidget {
@@ -25,9 +27,9 @@ class _FavoritesPageState extends State<FavoritesPage> {
       body: BlocBuilder<FavoritesBloc, FavoriteState>(
         builder: (context, state) {
           if (state is FavoritesInitialState) {
-            return const Center(child: Text('refresh'));
+            return Center(child: Text('refresh'));
           } else if (state is FavoritesLoadedState) {
-            return const Center(child: CircularProgressIndicator());
+            return Center(child: CircularProgressIndicator());
           } else if (state is FavoritesLoadedState) {
             return ListView.builder(
               itemCount: sampleHouses.length,
@@ -116,7 +118,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                                   ),
                                   Row(
                                     children: [
-                                      const Icon(Icons.location_on_outlined),
+                                      Icon(Icons.location_on_outlined),
                                       Text(
                                         house.location,
                                       ),
@@ -127,7 +129,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                                   ),
                                   Row(
                                     children: [
-                                      const Icon(Icons.attach_money_rounded),
+                                      Icon(Icons.attach_money_rounded),
                                       Text(
                                         house.price.toString(),
                                       )
@@ -171,6 +173,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
           } else if (state is FavoritesErrorState) {
             return Center(child: Text(state.message));
           }
+
           return ListView.builder(
             itemCount: sampleHouses.length,
             itemBuilder: (context, index) {
@@ -258,7 +261,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                                 ),
                                 Row(
                                   children: [
-                                    const Icon(Icons.location_on_outlined),
+                                    Icon(Icons.location_on_outlined),
                                     Text(
                                       house.location,
                                     ),
@@ -269,7 +272,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                                 ),
                                 Row(
                                   children: [
-                                    const Icon(Icons.attach_money_rounded),
+                                    Icon(Icons.attach_money_rounded),
                                     Text(
                                       house.price.toString(),
                                     )
