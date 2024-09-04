@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class SettingsScreen extends StatefulWidget {
   @override
@@ -14,9 +15,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
       appBar: AppBar(
         title: Text('Settings'),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.of(context).pop();
+            context.go('/home');
           },
         ),
       ),
@@ -30,7 +31,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             title: Text('Language Preference'),
             trailing: Icon(Icons.arrow_forward_ios),
             onTap: () {
-              // Navigate to Language Preference screen
+              context.go('/language-preferences');
             },
           ),
           ListTile(
@@ -68,6 +69,49 @@ class _SettingsScreenState extends State<SettingsScreen> {
             },
           ),
         ],
+      ),
+    );
+  }
+}
+
+class LanguagePreferencesPage extends StatelessWidget {
+  final List<String> languages = [
+    'English',
+    'Amharic',
+    'Afar',
+    'Arabic',
+    'Oromifa',
+    'Somali',
+    'Tigray',
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Language Preferences'),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            context.go('/settings');
+          },
+        ),
+      ),
+      body: ListView.builder(
+        itemCount: languages.length,
+        itemBuilder: (context, index) {
+          return Column(
+            children: [
+              ListTile(
+                title: Text(languages[index]),
+                onTap: () {
+                  // Handle language selection here
+                },
+              ),
+              Divider(),
+            ],
+          );
+        },
       ),
     );
   }
