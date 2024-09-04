@@ -1,14 +1,14 @@
 // ignore_for_file: unused_import, library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:real_estate_marketplace/bloc/search_filter_bloc/search_filter_bloc.dart';
-import 'package:real_estate_marketplace/models/properties_list_model.dart';
 import 'package:real_estate_marketplace/widgets/vertical_listing.dart';
+import 'package:real_estate_marketplace/models/properties_list_model.dart';
 import 'package:real_estate_marketplace/bloc/search_filter_bloc/search_filter_event.dart';
 import 'package:real_estate_marketplace/bloc/search_filter_bloc/search_filter_state.dart';
-import '../widgets/vertical_listing.dart';
+import 'package:real_estate_marketplace/bloc/search_filter_bloc/search_filter_bloc.dart';
 
 class SearchAndFilterPage extends StatefulWidget {
   const SearchAndFilterPage({super.key});
@@ -211,7 +211,21 @@ class _SearchAndFilterPageState extends State<SearchAndFilterPage> {
                                       ],
                                     ),
                                     const SizedBox(height: 16.0),
-                                    const Text('Price Range'),
+                                    const Text(
+                                      'Price Range',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                            'From: \$${state.priceRange.start.round()}'),
+                                        Text(
+                                            'To: \$${state.priceRange.end.round()}'),
+                                      ],
+                                    ),
                                     RangeSlider(
                                       values: state.priceRange,
                                       min: 3000,
@@ -506,65 +520,13 @@ class _SearchAndFilterPageState extends State<SearchAndFilterPage> {
                     fontSize: 18.0, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.right,
               ),
-              leading: const BackButton(),
+              leading: IconButton(
+                icon: const Icon(Icons.arrow_back),
+                onPressed: () {
+                  context.go('/home');
+                },
+              ),
             ),
-            floatingActionButton: FloatingActionButton(
-              onPressed: () {
-                final currentState = context.read<SearchFilterBloc>().state;
-
-                if (currentState is SearchFilterUpdated) {
-                  context.read<SearchFilterBloc>().add(
-                        SaveSearchCriteriaEvent(
-                          selectedType: currentState.selectedType,
-                          selectedSort: currentState.selectedSort,
-                          selectedSaleRent: currentState.selectedSaleRent,
-                          priceRange: currentState.priceRange,
-                          bedrooms: currentState.bedrooms,
-                          bathrooms: currentState.bathrooms,
-                        ),
-                      );
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                        content: Text(
-                            'Search criteria saved, You will be notified')),
-                  );
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                        content: Text('Unable to save search criteria.')),
-                  );
-                }
-              },
-              child: const Icon(Icons.save),
-            ),
-            // floatingActionButton: FloatingActionButton(
-            //   onPressed: () {
-            //     final currentState = context.read<SearchFilterBloc>().state;
-
-            //     if (currentState is SearchFilterUpdated) {
-            //       context.read<SearchFilterBloc>().add(
-            //             SaveSearchCriteriaEvent(
-            //               selectedType: currentState.selectedType,
-            //               selectedSort: currentState.selectedSort,
-            //               selectedSaleRent: currentState.selectedSaleRent,
-            //               priceRange: currentState.priceRange,
-            //               bedrooms: currentState.bedrooms,
-            //               bathrooms: currentState.bathrooms,
-            //             ),
-            //           );
-            //       ScaffoldMessenger.of(context).showSnackBar(
-            //         SnackBar(
-            //             content: Text(
-            //                 'Search criteria saved, You will be notified')),
-            //       );
-            //     } else {
-            //       ScaffoldMessenger.of(context).showSnackBar(
-            //         SnackBar(content: Text('Unable to save search criteria.')),
-            //       );
-            //     }
-            //   },
-            //   child: Icon(Icons.save),
-            // ),
           );
         } else if (state is SearchFilterUpdated) {
           return Scaffold(
@@ -575,7 +537,53 @@ class _SearchAndFilterPageState extends State<SearchAndFilterPage> {
                     fontSize: 18.0, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.right,
               ),
-              leading: const BackButton(),
+              leading: IconButton(
+                icon: const Icon(Icons.arrow_back),
+                onPressed: () {
+                  context.go('/home');
+                },
+              ),
+            ),
+            floatingActionButton: Align(
+              alignment: Alignment.bottomCenter,
+              child: SizedBox(
+                width: 170,
+                height: 50,
+                child: FloatingActionButton.extended(
+                  onPressed: () {
+                    final currentState = context.read<SearchFilterBloc>().state;
+
+                    if (currentState is SearchFilterUpdated) {
+                      context.read<SearchFilterBloc>().add(
+                            SaveSearchCriteriaEvent(
+                              selectedType: currentState.selectedType,
+                              selectedSort: currentState.selectedSort,
+                              selectedSaleRent: currentState.selectedSaleRent,
+                              priceRange: currentState.priceRange,
+                              bedrooms: currentState.bedrooms,
+                              bathrooms: currentState.bathrooms,
+                            ),
+                          );
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                            content: Text(
+                                'Search criteria saved. You will be notified.')),
+                      );
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                            content: Text('Unable to save search criteria.')),
+                      );
+                    }
+                  },
+                  label: Text(
+                    'Save Search',
+                    style: TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.bold),
+                  ),
+                  backgroundColor: const Color.fromARGB(255, 91, 53, 175),
+                ),
+              ),
             ),
             body: Padding(
               padding: const EdgeInsets.all(8.0),
