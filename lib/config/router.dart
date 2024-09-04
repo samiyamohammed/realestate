@@ -6,12 +6,15 @@ import 'package:real_estate_marketplace/pages/draft_properties_page.dart';
 import 'package:real_estate_marketplace/pages/faq_page.dart';
 import 'package:real_estate_marketplace/pages/home_page.dart';
 import 'package:real_estate_marketplace/pages/posted_properties_page.dart';
+import 'package:real_estate_marketplace/pages/profile_pages.dart';
+import 'package:real_estate_marketplace/pages/search_filter_page.dart';
+import 'package:real_estate_marketplace/pages/settings_page.dart';
 import 'package:real_estate_marketplace/pages/unsighned_notification_page.dart';
 import 'package:real_estate_marketplace/pages/unsignedin_favorites_page.dart';
 import 'package:real_estate_marketplace/pages/unsighned_message_page.dart';
 
 final GoRouter router = GoRouter(
-  initialLocation: '/aboutus',
+  initialLocation: '/searchandfilter',
   routes: [
     GoRoute(
       path: '/home',
@@ -42,8 +45,24 @@ final GoRouter router = GoRouter(
       builder: (context, state) => const PostedPropertiesPage(),
     ),
     GoRoute(
+      path: '/searchandfilter',
+      builder: (context, state) => SearchAndFilterPage(),
+    ),
+    GoRoute(
       path: '/draft-properties',
       builder: (context, state) => const DraftPropertiesPage(),
+    ),
+    GoRoute(
+      path: '/profile',
+      builder: (context, state) => ProfilePage(),
+    ),
+    GoRoute(
+      path: '/settings',
+      builder: (context, state) => SettingsScreen(),
+    ),
+    GoRoute(
+      path: '/language-preferences',
+      builder: (context, state) => LanguagePreferencesPage(),
     ),
 
     /// Add other routes here as needed

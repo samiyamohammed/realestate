@@ -12,12 +12,13 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     on<LogOutUser>(_onLogOutUser);
     on<ValidatePassword>(_onValidatePassword);
     on<SubmitNewPassword>(_onSubmitNewPassword);
+    on<UpdateProfilePage>(_onUpdateProfilePage);
   }
 
   void _onLoadProfile(LoadProfile event, Emitter<ProfileState> emit) async {
     emit(ProfileLoading());
     try {
-      final Users user = demousers.first as Users;
+      final Users user = demousers.first;
       emit(ProfileLoaded(
           name: user.name,
           email: user.email,
@@ -66,7 +67,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         await _updatePassword(event.newPassword);
         emit(PasswordChangeSuccess());
       } else {
-        emit(PasswordChangeFailure('New passwords do not match'));
+        emit(PasswordChangeFailure('[Passwords do not match'));
       }
     } catch (e) {
       emit(PasswordChangeFailure(e.toString()));
@@ -77,7 +78,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       ValidatePassword event, Emitter<ProfileState> emit) async {
     emit(PasswordValidating());
     try {
-      final Users user = demousers.first as Users;
+      final Users user = demousers.first;
       bool isPasswordCorrect = user.password == event.enteredPassword;
 
       if (isPasswordCorrect) {
@@ -100,5 +101,10 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     await Future.delayed(Duration(seconds: 1)); // Simulate network delay
     final user = demousers.first;
     user.password = newPassword; // Update
+  }
+
+  void _onUpdateProfilePage(
+      UpdateProfilePage event, Emitter<ProfileState> emit) {
+    emit(LoadProfile() as ProfileState);
   }
 }

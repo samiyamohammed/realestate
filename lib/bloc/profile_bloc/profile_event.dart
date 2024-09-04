@@ -64,3 +64,8 @@ class ValidatePassword extends ProfileEvent {
   @override
   List<Object> get props => [enteredPassword];
 }
+
+class UpdateProfilePage extends ProfileEvent {
+  final int index;
+  UpdateProfilePage({required this.index});
+}
