@@ -83,6 +83,7 @@ class ProfilePage extends StatelessWidget {
                             backgroundColor: Colors.white,
                             child: IconButton(
                               icon: Icon(Icons.camera_alt),
+                              color: Colors.grey,
                               onPressed: () {
                                 _pickImageFromGallery(context);
                               },
