@@ -27,13 +27,12 @@ class RealEstateApp extends StatelessWidget {
       ],
       child: BlocBuilder<ThemeBloc, ThemeState>(
         builder: (context, themeState) {
-          // return MaterialApp.router(
-          return MaterialApp(
-            debugShowCheckedModeBanner: false,
-            theme: themeState.themeData,
-            home: const AgentPage(),
-            // routerConfig:
-            //     router,
+          return MaterialApp.router(
+          // return MaterialApp(
+             debugShowCheckedModeBanner: false,
+             theme: themeState.themeData,
+          //   home: const AgentPage(),
+            routerConfig: router,
           );
         },
       ),
