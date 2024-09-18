@@ -1,15 +1,29 @@
 import 'package:flutter/material.dart';
 import '../models/properties_list_model.dart';
 
-class PropertyCard extends StatelessWidget {
+class PropertyCard extends StatefulWidget {
   final Property property;
-  final bool showStatusTag; // New parameter to control the visibility of the status tag
+  final bool showStatusTag;
 
   const PropertyCard({
     super.key,
     required this.property,
-    this.showStatusTag = true, // Default value is true
+    this.showStatusTag = true,
   });
+
+  @override
+  // ignore: library_private_types_in_public_api
+  _PropertyCardState createState() => _PropertyCardState();
+}
+
+class _PropertyCardState extends State<PropertyCard> {
+  bool isFavorited = false;
+
+  void toggleFavorite() {
+    setState(() {
+      isFavorited = !isFavorited;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,59 +35,37 @@ class PropertyCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-  height: 70,
-  decoration: BoxDecoration(
-    borderRadius: const BorderRadius.only(
-      topLeft: Radius.circular(15.0),
-      topRight: Radius.circular(15.0),
-    ),
-    image: DecorationImage(
-      image: AssetImage(property.image),
-      fit: BoxFit.cover,
-    ),
-  ),
-  child: Column(
-    crossAxisAlignment: CrossAxisAlignment.stretch,
-    children: [
-      if (showStatusTag)
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Align(
-            alignment: Alignment.topRight,
+          // Image Container with padding and rounded corners
+          Padding(
+            padding: const EdgeInsets.all(4.0),
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              height: 65,
               decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Text(
-                property.status,
-                style: const TextStyle(
-                  fontSize: 12,
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
+                borderRadius: BorderRadius.circular(15.0),
+                image: DecorationImage(
+                  image: AssetImage(widget.property.image),
+                  fit: BoxFit.cover,
                 ),
               ),
             ),
           ),
-        ),
-      // This Spacer pushes the status tag to the top
-      const Spacer(),
-    ],
-  ),
-),
+          const SizedBox(height: 0),
 
+          // Property details
           Padding(
-            padding: const EdgeInsets.all(2.0),
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                // Property name and favorite button in a single row
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment:
+                      CrossAxisAlignment.center, // Align to center
                   children: [
                     Expanded(
                       child: Text(
-                        property.name,
+                        widget.property.name,
                         style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
@@ -83,45 +75,64 @@ class PropertyCard extends StatelessWidget {
                       ),
                     ),
                     IconButton(
-                      icon: const Icon(Icons.favorite_border_outlined, color: Colors.red, size: 20),
-                      onPressed: () {
-                        // Implement your favorite functionality here
-                      },
+                      icon: Icon(
+                        isFavorited ? Icons.favorite : Icons.favorite_border,
+                      ),
+                      color: isFavorited ? Colors.red : Colors.red,
+                      onPressed: toggleFavorite,
                     ),
                   ],
                 ),
-                Row(
-                  children: [
-                    const Icon(Icons.location_on, size: 12, color: Color.fromARGB(255, 0, 0, 0)),
-                    const SizedBox(width: 4),
-                    Expanded(
-                      child: Text(
-                        property.locationName,
+
+                // Property location
+                Padding(
+                  padding: const EdgeInsets.only(top: 0),
+                  child: Row(
+                    children: [
+                      const Icon(
+                        Icons.location_on,
+                        size: 12,
+                        color: Color.fromARGB(255, 190, 190, 190),
+                      ),
+                      const SizedBox(width: 4),
+                      Expanded(
+                        child: Text(
+                          widget.property.locationName,
+                          style: const TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.grey,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                // Property price
+                Padding(
+                  padding: const EdgeInsets.only(top: 2.0),
+                  child: Row(
+                    children: [
+                      const Icon(
+                        Icons.monetization_on,
+                        size: 12,
+                        color: Color.fromARGB(255, 0, 0, 0),
+                      ),
+                      const SizedBox(width: 4),
+                      Text(
+                        '${widget.property.price.toStringAsFixed(2)} ETB',
                         style: const TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.bold,
-                          color: Color.fromARGB(255, 0, 0, 0),
                         ),
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
                       ),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    const Icon(Icons.monetization_on, size: 12, color: Color.fromARGB(255, 0, 0, 0)),
-                    const SizedBox(width: 4),
-                    Text(
-                      '${property.price.toStringAsFixed(2)} ETB',
-                      style: const TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ],
             ),

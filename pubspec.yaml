@@ -76,6 +76,7 @@ flutter:
     - assets\images\Luxury_villa.png
     - assets\images\profile_icon.png
     - assets\images\banner_image.png
+    - assets\images\city_skyline.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

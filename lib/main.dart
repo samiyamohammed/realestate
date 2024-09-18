@@ -5,7 +5,7 @@ import 'package:real_estate_marketplace/config/router.dart';
 
 void main() {
   runApp(const RealEstateApp());
-}
+} 
 
 class RealEstateApp extends StatelessWidget {
   const RealEstateApp({super.key});
