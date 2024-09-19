@@ -42,26 +42,13 @@ class FeaturedPropertyCard extends StatefulWidget {
 }
 
 class _FeaturedPropertyCardState extends State<FeaturedPropertyCard> {
-  bool isFavorited = false;
+  bool isFavourite = false;
 
   @override
   void initState() {
     super.initState();
-    // Check if the property is already in the favorites list
-    isFavorited = favoriteProperties.contains(widget.property);
-  }
-
-  void toggleFavorite() {
-    setState(() {
-      if (isFavorited) {
-        // Remove from favorite list
-        favoriteProperties.remove(widget.property);
-      } else {
-        // Add to favorite list
-        favoriteProperties.add(widget.property);
-      }
-      isFavorited = !isFavorited; // Toggle the state
-    });
+    isFavourite =
+        widget.property.isFavourite; // Initialize with the current state
   }
 
   @override
@@ -125,13 +112,20 @@ class _FeaturedPropertyCardState extends State<FeaturedPropertyCard> {
                               // Favorite Button
                               IconButton(
                                 icon: Icon(
-                                  isFavorited
+                                  isFavourite
                                       ? Icons.favorite
                                       : Icons.favorite_border,
+                                  color: isFavourite
+                                      ? Colors.red
+                                      : const Color.fromARGB(
+                                          255, 255, 255, 255),
                                 ),
-                                color: isFavorited ? Colors.red : Colors.white,
-                                onPressed: toggleFavorite,
-                                
+                                onPressed: () {
+                                  setState(() {
+                                    isFavourite = !isFavourite;
+                                    widget.property.isFavourite = isFavourite;
+                                  });
+                                },
                               ),
                               // Share Button
                               IconButton(

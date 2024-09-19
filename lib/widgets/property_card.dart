@@ -17,12 +17,13 @@ class PropertyCard extends StatefulWidget {
 }
 
 class _PropertyCardState extends State<PropertyCard> {
-  bool isFavorited = false;
+  bool isFavourite = false;
 
-  void toggleFavorite() {
-    setState(() {
-      isFavorited = !isFavorited;
-    });
+  @override
+  void initState() {
+    super.initState();
+    isFavourite =
+        widget.property.isFavourite; // Initialize with the current state
   }
 
   @override
@@ -76,10 +77,17 @@ class _PropertyCardState extends State<PropertyCard> {
                     ),
                     IconButton(
                       icon: Icon(
-                        isFavorited ? Icons.favorite : Icons.favorite_border,
+                        isFavourite ? Icons.favorite : Icons.favorite_border,
+                        color: isFavourite
+                            ? Colors.red
+                            : const Color.fromARGB(255, 255, 0, 0),
                       ),
-                      color: isFavorited ? Colors.red : Colors.red,
-                      onPressed: toggleFavorite,
+                      onPressed: () {
+                        setState(() {
+                          isFavourite = !isFavourite;
+                          widget.property.isFavourite = isFavourite;
+                        });
+                      },
                     ),
                   ],
                 ),

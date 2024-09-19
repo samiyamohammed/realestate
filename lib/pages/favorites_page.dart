@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:real_estate_marketplace/bloc/favorite_bloc/favorite_bloc.dart';
 import 'package:real_estate_marketplace/bloc/favorite_bloc/favorite_state.dart';
 import 'package:real_estate_marketplace/samples/favorite_sample.dart';
+// ignore: unused_import
+import 'package:real_estate_marketplace/models/favorite_model.dart';
 import 'package:real_estate_marketplace/utility/date_difference_calculator.dart';
 
 class FavoritesPage extends StatefulWidget {
@@ -171,6 +173,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
           } else if (state is FavoritesErrorState) {
             return Center(child: Text(state.message));
           }
+
           return ListView.builder(
             itemCount: sampleHouses.length,
             itemBuilder: (context, index) {

@@ -14,11 +14,14 @@ import 'package:real_estate_marketplace/pages/Home%20page/for_rent_properties.da
 import 'package:real_estate_marketplace/pages/Home%20page/for_sale_properties.dart';
 import 'package:real_estate_marketplace/pages/Home%20page/home_page.dart';
 import 'package:real_estate_marketplace/pages/posted_properties_page.dart';
+import 'package:real_estate_marketplace/pages/profile_pages.dart';
 import 'package:real_estate_marketplace/pages/search_filter_page.dart';
+import 'package:real_estate_marketplace/pages/settings_page.dart';
 import 'package:real_estate_marketplace/pages/side_bar_menu.dart';
 import 'package:real_estate_marketplace/pages/unsighned_notification_page.dart';
 import 'package:real_estate_marketplace/pages/unsignedin_favorites_page.dart';
 import 'package:real_estate_marketplace/pages/unsighned_message_page.dart';
+import 'package:real_estate_marketplace/pages/agent_page.dart';
 
 final GoRouter router = GoRouter(
   initialLocation: '/home',
@@ -56,6 +59,10 @@ final GoRouter router = GoRouter(
       builder: (context, state) => const PostedPropertiesPage(),
     ),
     GoRoute(
+      path: '/searchandfilter',
+      builder: (context, state) => const SearchAndFilterPage(),
+    ),
+    GoRoute(
       path: '/draft-properties',
       builder: (context, state) => const DraftPropertiesPage(),
     ),
@@ -79,20 +86,15 @@ final GoRouter router = GoRouter(
       path: '/investmentProperties',
       builder: (context, state) => const ForInvestmentPropertiesPage(),
     ),
-    // Catch-all route
     GoRoute(
-      path: '/error',
-      builder: (context, state) => Scaffold(
-        appBar: AppBar(title: const Text('Error')),
-        body: const Center(child: Text('Page not found!')),
-      ),
+      path: '/profile',
+      builder: (context, state) => ProfilePage(),
     ),
+    GoRoute(
+      path: '/settings',
+      builder: (context, state) => SettingsScreen(),
+    ),
+
+    /// Add other routes here as needed SignInPage
   ],
-  errorPageBuilder: (context, state) => MaterialPage(
-    key: state.pageKey,
-    child: Scaffold(
-      appBar: AppBar(title: const Text('Error')),
-      body: const Center(child: Text('Page not found!')),
-    ),
-  ),
 );

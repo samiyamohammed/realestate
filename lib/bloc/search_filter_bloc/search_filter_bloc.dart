@@ -143,7 +143,6 @@ class SearchFilterBloc extends Bloc<SearchFilterEvent, SearchFilterState> {
           .toList();
     }
 
-    // Apply sorting
     if (selectedSort != null) {
       if (selectedSort == 'Price (High to Low)') {
         filteredProperties.sort((a, b) => b.price.compareTo(a.price));

@@ -44,7 +44,10 @@ dependencies:
   go_router: ^14.2.7
   lucide_icons: ^0.257.0
   dropdown_button2: ^2.3.9
-  #go_router: ^14.2.7
+  percent_indicator: ^4.2.3
+  intl_phone_field: ^3.2.0
+  intl_phone_number_input: ^0.7.4
+  image_picker: ^1.1.2
 
 dev_dependencies:
   flutter_test:
@@ -77,6 +80,7 @@ flutter:
     - assets\images\profile_icon.png
     - assets\images\banner_image.png
     - assets\images\city_skyline.png
+
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
