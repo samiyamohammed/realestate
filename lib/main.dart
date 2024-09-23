@@ -8,13 +8,19 @@ import 'package:real_estate_marketplace/bloc/profile_bloc/profile_event.dart';
 import 'package:real_estate_marketplace/bloc/search_filter_bloc/search_filter_bloc.dart';
 import 'package:real_estate_marketplace/bloc/theme_bloc/theme_bloc.dart';
 import 'package:real_estate_marketplace/config/router.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
-  runApp(const RealEstateApp());
-} 
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  bool isOnboardingCompleted = prefs.getBool('onboardingCompleted') ?? false;
+  runApp(RealEstateApp(isOnboardingCompleted: isOnboardingCompleted));
+}
 
 class RealEstateApp extends StatelessWidget {
-  const RealEstateApp({super.key});
+  final bool isOnboardingCompleted;
+
+  const RealEstateApp({super.key, required this.isOnboardingCompleted});
 
   @override
   Widget build(BuildContext context) {
@@ -30,11 +36,9 @@ class RealEstateApp extends StatelessWidget {
       child: BlocBuilder<ThemeBloc, ThemeState>(
         builder: (context, themeState) {
           return MaterialApp.router(
-          // return MaterialApp(
-             debugShowCheckedModeBanner: false,
-             theme: themeState.themeData,
-          //   home: const AgentPage(),
-            routerConfig: router,
+            debugShowCheckedModeBanner: false,
+            theme: themeState.themeData,
+            routerConfig: router(isOnboardingCompleted),
           );
         },
       ),
