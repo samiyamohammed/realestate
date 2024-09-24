@@ -283,7 +283,8 @@ class CircularIconButton extends StatelessWidget {
   final VoidCallback onPressed;
   final Color color;
 
-  CircularIconButton(
+  // ignore: use_key_in_widget_constructors
+  const CircularIconButton(
       {required this.color, required this.icon, required this.onPressed});
 
   @override

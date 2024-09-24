@@ -28,9 +28,9 @@ class _FavoritesPageState extends State<FavoritesPage> {
       body: BlocBuilder<FavoritesBloc, FavoriteState>(
         builder: (context, state) {
           if (state is FavoritesInitialState) {
-            return Center(child: Text('refresh'));
+            return const Center(child: Text('refresh'));
           } else if (state is FavoritesLoadedState) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else if (state is FavoritesLoadedState) {
             return ListView.builder(
               itemCount: properties.length,
@@ -119,7 +119,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                                   ),
                                   Row(
                                     children: [
-                                      Icon(Icons.location_on_outlined),
+                                      const Icon(Icons.location_on_outlined),
                                       Text(
                                         house.locationName,
                                       ),
@@ -130,7 +130,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                                   ),
                                   Row(
                                     children: [
-                                      Icon(Icons.attach_money_rounded),
+                                      const Icon(Icons.attach_money_rounded),
                                       Text(
                                         house.price.toString(),
                                       )
@@ -264,7 +264,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                                 ),
                                 Row(
                                   children: [
-                                    Icon(Icons.location_on_outlined),
+                                    const Icon(Icons.location_on_outlined),
                                     Text(
                                       house.locationName,
                                     ),
@@ -275,7 +275,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                                 ),
                                 Row(
                                   children: [
-                                    Icon(Icons.attach_money_rounded),
+                                    const Icon(Icons.attach_money_rounded),
                                     Text(
                                       house.price.toString(),
                                     )

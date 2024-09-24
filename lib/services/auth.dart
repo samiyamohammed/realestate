@@ -1,7 +1,5 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
+// import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 import 'package:real_estate_marketplace/utility/constants.dart';
@@ -86,7 +84,7 @@ class Auth {
     Logger().f('all data is cleared');
 
     return http.post(
-      Uri.parse('$base_url/api/login'),
+      Uri.parse('$baseUrl/api/login'),
       // Uri.parse('http://192.168.100.40:8000/api/regisetr'),
       headers: <String, String>{'Accept': 'application/json'},
       body: <String, String>{

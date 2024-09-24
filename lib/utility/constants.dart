@@ -1,1 +1,1 @@
-const String base_url = 'https://realestateadmin.redshiftbusinessgroup.com';
+const String baseUrl = 'https://realestateadmin.redshiftbusinessgroup.com';

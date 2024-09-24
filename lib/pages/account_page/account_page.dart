@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:real_estate_marketplace/pages/account_page/Signin_page.dart';
-import 'package:real_estate_marketplace/pages/account_page/signup_page.dart';
+// import 'package:real_estate_marketplace/pages/account_page/signup_page.dart';
 import 'package:real_estate_marketplace/pages/account_page/signup_page2.dart';
 
 class AccountPage extends StatefulWidget {
@@ -42,7 +42,7 @@ class _AccountPageState extends State<AccountPage>
           child: Scaffold(
             appBar: AppBar(
               flexibleSpace: Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(30),
                     bottomRight: Radius.circular(30),
@@ -76,8 +76,8 @@ class _AccountPageState extends State<AccountPage>
                       labelColor: const Color.fromARGB(255, 255, 255,
                           255), // Set the color of the selected tab label
                       unselectedLabelColor: Colors.blueAccent,
-                      padding:
-                          EdgeInsets.symmetric(vertical: 5, horizontal: 70),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 5, horizontal: 70),
                       dividerHeight: 0,
                       tabs: const [
                         Tab(text: 'Sign Up'),

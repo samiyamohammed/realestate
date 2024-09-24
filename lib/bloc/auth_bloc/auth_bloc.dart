@@ -3,7 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:logger/logger.dart';
 import 'package:real_estate_marketplace/services/token.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:real_estate_marketplace/utility/constants.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
@@ -19,10 +19,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       final passwordConfirmation = event.passwordConfirmation;
       final Dio dio = Dio();
       // final Logger logger = Logger();
+      // Uri.parse('$base_url/api/login'),
 
       try {
         final response = await dio.post(
-          'https://realestateadmin.redshiftbusinessgroup.com/api/auth/register',
+          // 'https://realestateadmin.redshiftbusinessgroup.com/api/auth/register',
+          '$baseUrl/api/auth/register',
           data: {
             'name': name,
             'email': email,
@@ -138,7 +140,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
       try {
         final response = await dio.post(
-          'https://realestateadmin.redshiftbusinessgroup.com/api/auth/login',
+          '$baseUrl/api/auth/login',
           data: {
             'email': email,
             'password': password,

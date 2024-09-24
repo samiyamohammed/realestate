@@ -17,7 +17,7 @@ class DeactivateAccount extends ProfileEvent {}
 class ChangePassword extends ProfileEvent {
   final String currentPassword;
 
-  ChangePassword(this.currentPassword);
+  const ChangePassword(this.currentPassword);
 
   @override
   List<Object?> get props => [currentPassword];
@@ -50,7 +50,7 @@ class SubmitNewPassword extends ProfileEvent {
   final String newPassword;
   final String confirmPassword;
 
-  SubmitNewPassword(this.newPassword, this.confirmPassword);
+  const SubmitNewPassword(this.newPassword, this.confirmPassword);
 
   @override
   List<Object?> get props => [newPassword, confirmPassword];
@@ -63,4 +63,9 @@ class ValidatePassword extends ProfileEvent {
 
   @override
   List<Object> get props => [enteredPassword];
+}
+
+class UpdateProfilePage extends ProfileEvent {
+  final int index;
+  const UpdateProfilePage({required this.index});
 }

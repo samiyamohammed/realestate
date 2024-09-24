@@ -16,7 +16,7 @@ class _NotificationPageState extends State<NotificationPage> {
         actions: [
           IconButton(
             onPressed: () {},
-            icon: Icon(Icons.notification_add_outlined),
+            icon: const Icon(Icons.notification_add_outlined),
           )
         ],
       ),
@@ -24,19 +24,19 @@ class _NotificationPageState extends State<NotificationPage> {
         itemCount: 5,
         itemBuilder: (context, index) {
           return Container(
-            margin: EdgeInsets.all(8),
+            margin: const EdgeInsets.all(8),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-              color: Color.fromARGB(255, 147, 198, 241),
+              color: const Color.fromARGB(255, 147, 198, 241),
             ),
             child: ListTile(
               selectedTileColor: Colors.red,
               onTap: () {},
-              leading: Icon(Icons.maps_home_work_outlined),
+              leading: const Icon(Icons.maps_home_work_outlined),
               title: Text("New Listing in $index"),
-              subtitle: Text(
+              subtitle: const Text(
                   "This is a notification This is a notificationThis is a notification This is a notificationThis is a notification"),
-              trailing: Text('2 hours', textAlign: TextAlign.start),
+              trailing: const Text('2 hours', textAlign: TextAlign.start),
             ),
           );
         },

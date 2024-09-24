@@ -1,4 +1,7 @@
+// ignore_for_file: use_key_in_widget_constructors, library_private_types_in_public_api, avoid_print
+
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class SettingsScreen extends StatefulWidget {
   @override
@@ -12,36 +15,36 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Settings'),
+        title: const Text('Settings'),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.of(context).pop();
+            context.go('/home');
           },
         ),
       ),
       body: ListView(
         children: <Widget>[
-          ListTile(
+          const ListTile(
             title: Text('Configuration',
                 style: TextStyle(fontWeight: FontWeight.bold)),
           ),
           ListTile(
-            title: Text('Language Preference'),
-            trailing: Icon(Icons.arrow_forward_ios),
+            title: const Text('Language Preference'),
+            trailing: const Icon(Icons.arrow_forward_ios),
             onTap: () {
-              // Navigate to Language Preference screen
+              context.go('/language-preferences');
             },
           ),
           ListTile(
-            title: Text('Onboard Intro'),
-            trailing: Icon(Icons.arrow_forward_ios),
+            title: const Text('Onboard Intro'),
+            trailing: const Icon(Icons.arrow_forward_ios),
             onTap: () {
               // Navigate to Onboard Intro screen
             },
           ),
           SwitchListTile(
-            title: Text('Push Notification'),
+            title: const Text('Push Notification'),
             value: _isPushNotificationEnabled,
             onChanged: (bool value) {
               setState(() {
@@ -50,24 +53,67 @@ class _SettingsScreenState extends State<SettingsScreen> {
               print('Push Notification Enabled: $value');
             },
           ),
-          ListTile(
+          const ListTile(
             title: Text('About', style: TextStyle(fontWeight: FontWeight.bold)),
           ),
           ListTile(
-            title: Text('Terms and Conditions'),
-            trailing: Icon(Icons.arrow_forward_ios),
+            title: const Text('Terms and Conditions'),
+            trailing: const Icon(Icons.arrow_forward_ios),
             onTap: () {
               // Navigate to Terms and Conditions screen
             },
           ),
           ListTile(
-            title: Text('Privacy Policy'),
-            trailing: Icon(Icons.arrow_forward_ios),
+            title: const Text('Privacy Policy'),
+            trailing: const Icon(Icons.arrow_forward_ios),
             onTap: () {
               // Navigate to Privacy Policy screen
             },
           ),
         ],
+      ),
+    );
+  }
+}
+
+class LanguagePreferencesPage extends StatelessWidget {
+  final List<String> languages = [
+    'English',
+    'Amharic',
+    'Afar',
+    'Arabic',
+    'Oromifa',
+    'Somali',
+    'Tigray',
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Language Preferences'),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            context.go('/settings');
+          },
+        ),
+      ),
+      body: ListView.builder(
+        itemCount: languages.length,
+        itemBuilder: (context, index) {
+          return Column(
+            children: [
+              ListTile(
+                title: Text(languages[index]),
+                onTap: () {
+                  // Handle language selection here
+                },
+              ),
+              const Divider(),
+            ],
+          );
+        },
       ),
     );
   }

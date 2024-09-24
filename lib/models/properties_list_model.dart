@@ -2,10 +2,10 @@ class Property {
   final String name;
   final double price;
   final String locationName;
-  final String status; // "Rent" or "Sale"
+  final String status;
   bool isFavourite;
   final String image;
-  final String type; // "villa", "land", "commercial", "condo", "apartment"
+  final String type;
   final double bedroom;
   final double bathroom;
   final DateTime dateAdded;
@@ -29,7 +29,7 @@ List<Property> properties = [
     name: 'Luxury Villa',
     price: 5000000.00,
     locationName: 'Addis Sefer',
-    status: 'For Sale',
+    status: 'For Investment',
     image: 'assets/images/Luxury_villa.png',
     type: 'villa',
     bedroom: 4,
@@ -40,7 +40,7 @@ List<Property> properties = [
     name: 'Commercial Space',
     price: 15000.00,
     locationName: 'Jemo',
-    status: 'For Rent',
+    status: 'For Sale',
     image: 'assets/images/commercial_space.png',
     type: 'commercial',
     bedroom: 0,
@@ -51,7 +51,7 @@ List<Property> properties = [
     name: 'AB Realestate',
     price: 30000.00,
     locationName: 'Semmit',
-    status: 'For Rent',
+    status: 'For Sale',
     image: 'assets/images/commercial_space.png',
     type: 'villa',
     isFavourite: true,
@@ -63,7 +63,7 @@ List<Property> properties = [
     name: 'Commercial Space',
     price: 26000.00,
     locationName: 'Megenagna',
-    status: 'For Rent',
+    status: 'For Sale',
     image: 'assets/images/commercial_space.png',
     type: 'commercial',
     bedroom: 0,
@@ -74,7 +74,7 @@ List<Property> properties = [
     name: 'Land',
     price: 300000.00,
     locationName: 'Koye',
-    status: 'For Sale',
+    status: 'For Investment',
     image: 'assets/images/Luxury_villa.png',
     type: 'land',
     bedroom: 0,
@@ -85,7 +85,7 @@ List<Property> properties = [
     name: 'CD Apartments',
     price: 10000.00,
     locationName: 'Tulu dimtu',
-    status: 'For Rent',
+    status: 'For Investment',
     image: 'assets/images/commercial_space.png',
     type: 'apartment',
     bedroom: 4,

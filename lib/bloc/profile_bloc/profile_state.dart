@@ -84,3 +84,9 @@ class PasswordChangeFailure extends ProfileState {
   @override
   List<Object?> get props => [errorMessage];
 }
+
+class ProfilePageUpdated extends ProfileState {
+  final int index;
+
+  const ProfilePageUpdated({required this.index});
+}

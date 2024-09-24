@@ -1,10 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:real_estate_marketplace/models/properties_list_model.dart';
 
-class PropertyCard extends StatelessWidget {
+class PropertyCard extends StatefulWidget {
   final Property property;
 
   const PropertyCard({super.key, required this.property});
+
+  @override
+  // ignore: library_private_types_in_public_api
+  _PropertyCardState createState() => _PropertyCardState();
+}
+
+class _PropertyCardState extends State<PropertyCard> {
+  late bool isFavourite;
+
+  @override
+  void initState() {
+    super.initState();
+    isFavourite =
+        widget.property.isFavourite; // Initialize with the current state
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +49,7 @@ class PropertyCard extends StatelessWidget {
                     ClipRRect(
                       borderRadius: BorderRadius.circular(10.0),
                       child: Image.asset(
-                        property.image,
+                        widget.property.image,
                         fit: BoxFit.cover,
                         width: double.infinity,
                         height: double.infinity,
@@ -61,7 +76,8 @@ class PropertyCard extends StatelessWidget {
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                         child: Text(
-                          property.status, // "For Rent" or "For Sale"
+                          widget.property
+                              .status, // "For Rent" , "For Sale" or "Sold"
                           style: const TextStyle(
                             fontSize: 10.0,
                             fontWeight: FontWeight.bold,
@@ -79,7 +95,7 @@ class PropertyCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      property.name,
+                      widget.property.name,
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -94,7 +110,7 @@ class PropertyCard extends StatelessWidget {
                         const SizedBox(width: 4),
                         Expanded(
                           child: Text(
-                            property.locationName,
+                            widget.property.locationName,
                             style: const TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w400,
@@ -112,7 +128,7 @@ class PropertyCard extends StatelessWidget {
                         const SizedBox(width: 2),
                         Expanded(
                           child: Text(
-                            '${property.price} ETB',
+                            '${widget.property.price} ETB',
                             style: const TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w400,
@@ -127,15 +143,18 @@ class PropertyCard extends StatelessWidget {
                       children: [
                         IconButton(
                           icon: Icon(
-                            property.isFavourite
+                            isFavourite
                                 ? Icons.favorite
                                 : Icons.favorite_border,
-                            color: property.isFavourite
+                            color: isFavourite
                                 ? Colors.red
                                 : const Color.fromARGB(255, 255, 0, 0),
                           ),
                           onPressed: () {
-                            // Handle favourite toggle
+                            setState(() {
+                              isFavourite = !isFavourite;
+                              widget.property.isFavourite = isFavourite;
+                            });
                           },
                         ),
                         IconButton(

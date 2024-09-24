@@ -1,11 +1,19 @@
+// ignore_for_file: unused_import, sort_child_properties_last, no_leading_underscores_for_local_identifiers, avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
+import 'package:real_estate_marketplace/bloc/BottomNavigationBloc.dart';
+import 'package:real_estate_marketplace/bloc/home_bloc.dart';
 import 'package:real_estate_marketplace/bloc/profile_bloc/profile_bloc.dart';
 import 'package:real_estate_marketplace/bloc/profile_bloc/profile_event.dart';
 import 'package:real_estate_marketplace/bloc/profile_bloc/profile_state.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:real_estate_marketplace/models/demo_users.dart';
+import 'package:real_estate_marketplace/widgets/bottom_navigation.dart';
 
+// ignore: use_key_in_widget_constructors
 class ProfilePage extends StatelessWidget {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
@@ -14,243 +22,279 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-        title: Text('Profile'),
-        actions: [
-          TextButton(
+        appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
             onPressed: () {
-              // Handle save action
+              context.go('/home');
             },
-            child: Text(
-              'SAVE',
-              style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
+          ),
+          title: const Text('Profile'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                // Handle save action
+              },
+              child: const Text(
+                'SAVE',
+                style:
+                    TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
+              ),
             ),
-          ),
-          PopupMenuButton<String>(
-            onSelected: (value) {
-              if (value == 'delete') {
-                _confirmdelete(context);
-              }
-            },
-            itemBuilder: (BuildContext context) {
-              return [
-                PopupMenuItem<String>(
-                  value: 'delete',
-                  child: Text('Delete Profile'),
-                ),
-              ];
-            },
-          ),
-        ],
-      ),
-      body: BlocBuilder<ProfileBloc, ProfileState>(
-        builder: (context, state) {
-          if (state is ProfileLoading) {
-            return Center(child: CircularProgressIndicator());
-          } else if (state is ProfileLoaded) {
-            _nameController.text = state.name;
-            _emailController.text = state.email;
-            _phoneNumberController.text = state.phonenumber;
-            return SingleChildScrollView(
-              padding: EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Stack(
-                    children: [
-                      CircleAvatar(
-                        radius: 50,
-                        backgroundImage: NetworkImage(state.image),
-                      ),
-                      Positioned(
-                        bottom: 0,
-                        right: 0,
-                        child: CircleAvatar(
-                          backgroundColor: Colors.white,
-                          child: IconButton(
-                            icon: Icon(Icons.camera_alt),
-                            onPressed: () {
-                              _pickImageFromGallery(context);
-                            },
-                          ),
-                        ),
-                      ),
-                    ],
+            PopupMenuButton<String>(
+              onSelected: (value) {
+                if (value == 'delete') {
+                  _confirmdelete(context);
+                }
+              },
+              itemBuilder: (BuildContext context) {
+                return [
+                  const PopupMenuItem<String>(
+                    value: 'delete',
+                    child: Text('Delete Profile'),
                   ),
-                  SizedBox(height: 16),
-                  Container(
-                    padding: EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: Colors.purple,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Column(
+                ];
+              },
+            ),
+          ],
+        ),
+        body: BlocBuilder<ProfileBloc, ProfileState>(
+          builder: (context, state) {
+            if (state is ProfileLoading) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (state is ProfileLoaded) {
+              _nameController.text = state.name;
+              _emailController.text = state.email;
+              _phoneNumberController.text = state.phonenumber;
+              return SingleChildScrollView(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Stack(
                       children: [
-                        Align(
-                          alignment: Alignment.center,
+                        CircleAvatar(
+                          radius: 50,
+                          backgroundImage: NetworkImage(state.image),
+                        ),
+                        Positioned(
+                          bottom: 0,
+                          right: 0,
                           child: CircleAvatar(
                             backgroundColor: Colors.white,
                             child: IconButton(
-                              icon: Icon(Icons.edit, color: Colors.purple),
+                              icon: const Icon(Icons.camera_alt),
+                              color: Colors.grey,
                               onPressed: () {
-                                // Handle edit action
+                                _pickImageFromGallery(context);
                               },
                             ),
                           ),
                         ),
-                        SizedBox(height: 16),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Full Name',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            SizedBox(height: 8),
-                            TextFormField(
-                              //initialValue: state.name,
-                              controller: _nameController,
-                              decoration: InputDecoration(
-                                border: OutlineInputBorder(),
-                                filled: true,
-                                fillColor: Colors.white,
+                      ],
+                    ),
+                    const SizedBox(height: 16),
+                    Container(
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: const Color.fromARGB(255, 91, 53, 175),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Column(
+                        children: [
+                          Align(
+                            alignment: Alignment.center,
+                            child: CircleAvatar(
+                              backgroundColor: Colors.white,
+                              child: IconButton(
+                                icon: const Icon(
+                                  Icons.edit,
+                                  color: Color.fromARGB(255, 91, 53, 175),
+                                ),
+                                onPressed: () {
+                                  // Handle edit action
+                                },
                               ),
                             ),
-                            SizedBox(height: 16),
-                            Text(
-                              'Password',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            SizedBox(height: 8),
-                            TextFormField(
-                                initialValue: '••••••••••••',
-                                obscureText: true,
-                                readOnly: true,
-                                decoration: InputDecoration(
+                          ),
+                          const SizedBox(height: 16),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                'Full Name',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              const SizedBox(height: 8),
+                              TextFormField(
+                                //initialValue: state.name,
+                                controller: _nameController,
+                                decoration: const InputDecoration(
                                   border: OutlineInputBorder(),
                                   filled: true,
                                   fillColor: Colors.white,
                                 ),
-                                onTap: () {
-                                  _showPasswordDialog(context);
-                                  _showPasswordDialog(context);
-                                }),
-                            SizedBox(height: 16),
-                            Text(
-                              'Email',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            SizedBox(height: 8),
-                            TextFormField(
-                              //initialValue: state.email,
-                              controller: _emailController,
-                              decoration: InputDecoration(
-                                border: OutlineInputBorder(),
-                                filled: true,
-                                fillColor: Colors.white,
                               ),
-                            ),
-                            SizedBox(height: 16),
-                            Text(
-                              'Phone Number',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            SizedBox(height: 8),
-                            InternationalPhoneNumberInput(
-                              initialValue: PhoneNumber(
-                                dialCode: '+251',
-                                phoneNumber: state.phonenumber,
+                              const SizedBox(height: 16),
+                              const Text(
+                                'Password',
+                                style: TextStyle(color: Colors.white),
                               ),
-                              onInputChanged: (PhoneNumber number) {
-                                _phoneNumberController.text =
-                                    number.phoneNumber ?? '';
-                              },
-                              selectorConfig: SelectorConfig(
-                                selectorType: PhoneInputSelectorType.DIALOG,
-                                showFlags: true,
+                              const SizedBox(height: 8),
+                              TextFormField(
+                                  initialValue: '••••••••••••',
+                                  obscureText: true,
+                                  readOnly: true,
+                                  decoration: const InputDecoration(
+                                    border: OutlineInputBorder(),
+                                    filled: true,
+                                    fillColor: Colors.white,
+                                  ),
+                                  onTap: () {
+                                    _showPasswordDialog(context);
+                                    _showPasswordDialog(context);
+                                  }),
+                              const SizedBox(height: 16),
+                              const Text(
+                                'Email',
+                                style: TextStyle(color: Colors.white),
                               ),
-                              ignoreBlank: false,
-                              autoValidateMode: AutovalidateMode.disabled,
-                              selectorTextStyle: TextStyle(
-                                  color:
-                                      const Color.fromARGB(255, 255, 255, 255)),
-                              textFieldController: TextEditingController()
-                                ..text = state.phonenumber,
-                              formatInput: true,
-                              keyboardType: TextInputType.numberWithOptions(
-                                signed: true,
-                                decimal: true,
+                              const SizedBox(height: 8),
+                              TextFormField(
+                                //initialValue: state.email,
+                                controller: _emailController,
+                                decoration: const InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                ),
                               ),
-                              inputDecoration: InputDecoration(
-                                border: OutlineInputBorder(),
-                                filled: true,
-                                fillColor: Colors.white,
+                              const SizedBox(height: 16),
+                              const Text(
+                                'Phone Number',
+                                style: TextStyle(color: Colors.white),
                               ),
-                              inputBorder: OutlineInputBorder(),
-                              onSaved: (PhoneNumber number) {
-                                // Handle phone number save
-                              },
-                            )
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 32),
-                  ListTile(
-                    title: Text('Recently Viewed Properties'),
-                    trailing: Icon(Icons.arrow_forward_ios),
-                    onTap: () {
-                      // Navigate to recently viewed properties page
-                    },
-                  ),
-                  ListTile(
-                    title: Text('Need Help?'),
-                    trailing: Icon(Icons.arrow_forward_ios),
-                    onTap: () {
-                      // Navigate to help page
-                    },
-                  ),
-                  SizedBox(height: 32),
-                  ElevatedButton.icon(
-                    onPressed: () {
-                      _confirmLogout(context);
-                    },
-                    icon: Icon(Icons.logout, color: Colors.red),
-                    label: Text(
-                      'Log Out',
-                      style: TextStyle(color: Colors.red),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      elevation: 0,
-                      padding: EdgeInsets.symmetric(vertical: 16),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
+                              const SizedBox(height: 8),
+                              InternationalPhoneNumberInput(
+                                initialValue: PhoneNumber(
+                                  dialCode: '+251',
+                                  phoneNumber: state.phonenumber,
+                                ),
+                                onInputChanged: (PhoneNumber number) {
+                                  _phoneNumberController.text =
+                                      number.phoneNumber ?? '';
+                                },
+                                selectorConfig: const SelectorConfig(
+                                  selectorType: PhoneInputSelectorType.DIALOG,
+                                  showFlags: true,
+                                ),
+                                ignoreBlank: false,
+                                autoValidateMode: AutovalidateMode.disabled,
+                                selectorTextStyle: const TextStyle(
+                                    color: Color.fromARGB(
+                                        255, 255, 255, 255)),
+                                textFieldController: TextEditingController()
+                                  ..text = state.phonenumber,
+                                formatInput: true,
+                                keyboardType: const TextInputType.numberWithOptions(
+                                  signed: true,
+                                  decimal: true,
+                                ),
+                                inputDecoration: const InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                ),
+                                inputBorder: const OutlineInputBorder(),
+                                onSaved: (PhoneNumber number) {
+                                  // Handle phone number save
+                                },
+                              )
+                            ],
+                          ),
+                        ],
                       ),
                     ),
-                  ),
-                ],
-              ),
-            );
-          } else if (state is ProfileError) {
-            return Center(
-              child: Text(
-                'Error: ${state.message}',
-                style: TextStyle(color: Colors.red, fontSize: 18),
-              ),
-            );
-          } else {
-            return Center(child: Text('Unknown state'));
+                    const SizedBox(height: 32),
+                    ListTile(
+                      title: const Text('Recently Viewed Properties'),
+                      trailing: const Icon(Icons.arrow_forward_ios),
+                      onTap: () {
+                        // Navigate to recently viewed properties page
+                      },
+                    ),
+                    ListTile(
+                      title: const Text('Need Help?'),
+                      trailing: const Icon(Icons.arrow_forward_ios),
+                      onTap: () {
+                        // Navigate to help page
+                      },
+                    ),
+                    const SizedBox(height: 32),
+                    ElevatedButton.icon(
+                      onPressed: () {
+                        _confirmLogout(context);
+                      },
+                      icon: const Icon(Icons.logout, color: Colors.red),
+                      label: const Text(
+                        'Log Out',
+                        style: TextStyle(color: Colors.red),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        elevation: 0,
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            } else if (state is ProfileError) {
+              return Center(
+                child: Text(
+                  'Error: ${state.message}',
+                  style: const TextStyle(color: Colors.red, fontSize: 18),
+                ),
+              );
+            } else {
+              return const Center(child: Text('Unknown state'));
+            }
+          },
+        ),
+        bottomNavigationBar:
+            BlocBuilder<BottomNavigationBloc, BottomNavigationState>(
+                builder: (context, state) {
+          int currentIndex = 4;
+          if (state is BottomNavigationUpdated) {
+            currentIndex = state.selectedIndex;
           }
-        },
-      ),
-    );
+
+          return BottomNavigation(
+            currentIndex: currentIndex,
+            onItemSelected: (index) {
+              context.read<ProfileBloc>().add(UpdateProfilePage(index: index));
+              switch (index) {
+                case 0:
+                  context.go('/home'); // Navigate to Home Page
+                  break;
+                case 1:
+                  context.go('/favorite'); // Navigate to Favorite Page
+                  break;
+                case 2:
+                  context.go('/chat'); // Navigate to Chat Page
+                  break;
+                case 3:
+                  context.go('/notifications'); // Navigate to Notification Page
+                  break;
+                case 4:
+                  context.go('/profile'); // Stay in Profile Page
+                  break;
+              }
+            },
+          );
+        }));
   }
 
   void _confirmdelete(BuildContext context) {
@@ -258,13 +302,13 @@ class ProfilePage extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          content: Column(
+          content: const Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Icon(
                 Icons.cancel,
                 size: 48,
-                color: const Color.fromARGB(255, 243, 33, 33),
+                color: Color.fromARGB(255, 243, 33, 33),
               ),
               SizedBox(height: 16),
               Text(
@@ -282,7 +326,7 @@ class ProfilePage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 TextButton(
-                  child: Text('Cancel'),
+                  child: const Text('Cancel'),
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
@@ -291,7 +335,7 @@ class ProfilePage extends StatelessWidget {
                   ),
                 ),
                 TextButton(
-                  child: Text('Confirm'),
+                  child: const Text('Confirm'),
                   onPressed: () {
                     Navigator.of(context).pop();
                     _confirmDeleteProfile(context);
@@ -314,7 +358,7 @@ class ProfilePage extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          content: Column(
+          content: const Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Icon(
@@ -343,7 +387,7 @@ class ProfilePage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 TextButton(
-                  child: Text('Cancel'),
+                  child: const Text('Cancel'),
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
@@ -352,7 +396,7 @@ class ProfilePage extends StatelessWidget {
                   ),
                 ),
                 TextButton(
-                  child: Text('Confirm'),
+                  child: const Text('Confirm'),
                   onPressed: () {
                     // Tell the backend to deactivate the profile
                     Navigator.of(context).pop();
@@ -377,7 +421,7 @@ void _confirmLogout(BuildContext context) {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        content: Column(
+        content: const Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(
@@ -401,7 +445,7 @@ void _confirmLogout(BuildContext context) {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               TextButton(
-                child: Text('Cancel'),
+                child: const Text('Cancel'),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
@@ -410,7 +454,7 @@ void _confirmLogout(BuildContext context) {
                 ),
               ),
               TextButton(
-                child: Text('Confirm'),
+                child: const Text('Confirm'),
                 onPressed: () {
                   Navigator.of(context).pop();
                   profileBloc.add(LogOutUser());
@@ -434,27 +478,28 @@ void _showPasswordDialog(BuildContext context) {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: Text('Enter Current Password'),
+        title: const Text('Enter Current Password'),
         content: TextField(
           controller: passwordController,
           obscureText: true,
-          decoration: InputDecoration(hintText: 'Current Password'),
+          decoration: const InputDecoration(hintText: 'Current Password'),
         ),
         actions: <Widget>[
           TextButton(
             onPressed: () {
               Navigator.of(context).pop();
+              Navigator.of(context).pop();
               String enteredPassword = passwordController.text;
               _validatePassword(context, enteredPassword);
             },
-            child: Text('Submit'),
+            child: const Text('Submit'),
           ),
           TextButton(
             onPressed: () {
               Navigator.of(context).pop();
               Navigator.of(context).pop();
             },
-            child: Text('Cancel'),
+            child: const Text('Cancel'),
           ),
         ],
       );
@@ -471,19 +516,19 @@ void _showNewPasswordDialog(BuildContext context) {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: Text('Enter New Password'),
+        title: const Text('Enter New Password'),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             TextField(
               controller: _newPasswordController,
               obscureText: true,
-              decoration: InputDecoration(hintText: 'New Password'),
+              decoration: const InputDecoration(hintText: 'New Password'),
             ),
             TextField(
               controller: _confirmPasswordController,
               obscureText: true,
-              decoration: InputDecoration(hintText: 'Confirm Password'),
+              decoration: const InputDecoration(hintText: 'Confirm Password'),
             ),
           ],
         ),
@@ -496,13 +541,13 @@ void _showNewPasswordDialog(BuildContext context) {
               _changePassword(context, newPassword, confirmPassword);
               Navigator.of(context).pop();
             },
-            child: Text('Submit'),
+            child: const Text('Submit'),
           ),
           TextButton(
             onPressed: () {
               Navigator.of(context).pop();
             },
-            child: Text('Cancel'),
+            child: const Text('Cancel'),
           ),
         ],
       );
@@ -542,29 +587,8 @@ void _pickImageFromGallery(BuildContext context) async {
 
   if (pickedFile != null) {
     print('Picked image path: ${pickedFile.path}');
-    //IMAGE SETTING CODE
+    //IMAGE SETTING AS PROFILE CODE
   } else {
     print('No image selected.');
-  }
-}
-
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Real Estate Marketplace',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: BlocProvider(
-        create: (context) => ProfileBloc()..add(LoadProfile()),
-        child: ProfilePage(),
-      ),
-    );
   }
 }
