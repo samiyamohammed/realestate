@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:real_estate_marketplace/pages/account_page/Signin_page.dart';
 import 'package:real_estate_marketplace/pages/account_page/signup_page.dart';
+import 'package:real_estate_marketplace/pages/account_page/signup_page2.dart';
 
 class AccountPage extends StatefulWidget {
   @override

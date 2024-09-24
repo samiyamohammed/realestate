@@ -1,29 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lucide_icons/lucide_icons.dart';
-import 'package:dropdown_button2/dropdown_button2.dart';
-// ignore: unused_import
 import 'package:real_estate_marketplace/pages/account_page/Signin_page.dart';
 
-class SignUpPage extends StatefulWidget {
+class SignUpPage1 extends StatefulWidget {
   final TabController tabController;
-  const SignUpPage({super.key, required this.tabController});
+  const SignUpPage1({super.key, required this.tabController});
 
   @override
-  State<SignUpPage> createState() => _SignUpPageState();
+  State<SignUpPage1> createState() => _SignUpPage1State();
 }
 
-class _SignUpPageState extends State<SignUpPage> {
+class _SignUpPage1State extends State<SignUpPage1> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _obscureText = true;
   bool _obscureConfirmationText = true;
-  final List<String> items = [
-    'Buyer/Renter',
-    'Agent',
-    'Investor',
-    'Seller/Renter',
-  ];
-  String? selectedValue;
 
   @override
   Widget build(BuildContext context) {
@@ -223,112 +214,10 @@ class _SignUpPageState extends State<SignUpPage> {
                   // onChanged: (value) => name = value,
                 ),
               ),
-              const SizedBox(
-                height: 16,
-              ),
-              const Padding(
-                padding: EdgeInsets.only(left: 30),
-                child: Text("Sign Up as"),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              // const SizedBox(height: 5),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 50),
-                child: DropdownButtonHideUnderline(
-                  child: DropdownButton2<String>(
-                    isExpanded: true,
-                    hint: const Row(
-                      children: [
-                        SizedBox(
-                          width: 4,
-                        ),
-                        Expanded(
-                          child: Text(
-                            'Select Item',
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                            ),
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                      ],
-                    ),
-                    items: items
-                        .map(
-                          (String item) => DropdownMenuItem<String>(
-                            value: item,
-                            child: Text(
-                              item,
-                              style: const TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                              ),
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                        )
-                        .toList(),
-                    value: selectedValue,
-                    onChanged: (String? value) {
-                      setState(() {
-                        selectedValue = value;
-                      });
-                    },
-                    buttonStyleData: ButtonStyleData(
-                      // height: 50,
-                      // width: 200,
-                      padding: const EdgeInsets.only(left: 14, right: 14),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(14),
-                        border: Border.all(
-                            // color: Colors.black26,
-                            ),
-                        // color: Colors.redAccent,
-                      ),
-                      // elevation: 3,
-                    ),
-                    iconStyleData: const IconStyleData(
-                      icon: Icon(
-                        Icons.arrow_forward_ios_outlined,
-                      ),
-                      iconSize: 14,
-                      iconEnabledColor: Colors.grey,
-                      iconDisabledColor: Colors.grey,
-                    ),
-                    dropdownStyleData: DropdownStyleData(
-                      // maxHeight: 300,
-                      // width: 300,
+              // const SizedBox(
+              //   height: 16,
+              // ),
 
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(14),
-                          border: Border.all(
-                            color: Colors.black,
-                            width: 0,
-                          )
-                          // color: Colors.redAccent,
-                          ),
-                      offset: const Offset(0, -30),
-
-                      scrollbarTheme: ScrollbarThemeData(
-                        radius: const Radius.circular(40),
-                        thickness: WidgetStateProperty.all<double>(6),
-                        thumbVisibility: WidgetStateProperty.all<bool>(true),
-                      ),
-                    ),
-                    menuItemStyleData: const MenuItemStyleData(
-                      height: 40,
-                      // overlayColor: WidgetStatePropertyAll(Colors.red),
-
-                      padding: EdgeInsets.only(left: 14, right: 14),
-                    ),
-                  ),
-                ),
-              ),
               const SizedBox(
                 height: 25,
               ),

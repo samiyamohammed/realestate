@@ -11,7 +11,7 @@ class FavoritePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => HomeBloc(), 
+      create: (context) => HomeBloc(),
       child: BlocBuilder<HomeBloc, HomeState>(
         builder: (context, state) {
           int selectedIndex = 1;
@@ -22,7 +22,6 @@ class FavoritePage extends StatelessWidget {
 
           // ignore: no_leading_underscores_for_local_identifiers
           void _onItemTapped(int index) {
-          
             context.read<HomeBloc>().add(HomeIndexChanged(index));
 
             // Navigate to the appropriate page based on the selected index
@@ -31,16 +30,15 @@ class FavoritePage extends StatelessWidget {
                 context.go('/home');
                 break;
               case 1:
-             
                 break;
               case 2:
-                context.go('/chat'); 
+                context.go('/chat');
                 break;
               case 3:
-                context.go('/notifications'); 
+                context.go('/notifications');
                 break;
               case 4:
-                context.go('/profile'); 
+                context.go('/profile');
                 break;
             }
           }
@@ -109,8 +107,8 @@ class FavoritePage extends StatelessWidget {
               ),
             ),
             bottomNavigationBar: BottomNavigation(
-              currentIndex: selectedIndex, 
-              onItemSelected: _onItemTapped, 
+              currentIndex: selectedIndex,
+              onItemSelected: _onItemTapped,
             ),
           );
         },

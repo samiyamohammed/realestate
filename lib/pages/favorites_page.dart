@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:real_estate_marketplace/bloc/favorite_bloc/favorite_bloc.dart';
 import 'package:real_estate_marketplace/bloc/favorite_bloc/favorite_state.dart';
-import 'package:real_estate_marketplace/samples/favorite_sample.dart';
+// import 'package:real_estate_marketplace/samples/favorite_sample.dart';
+import 'package:real_estate_marketplace/models/properties_list_model.dart';
 // ignore: unused_import
-import 'package:real_estate_marketplace/models/favorite_model.dart';
+// import 'package:real_estate_marketplace/models/favorite_model.dart';
 import 'package:real_estate_marketplace/utility/date_difference_calculator.dart';
 
 class FavoritesPage extends StatefulWidget {
@@ -32,9 +33,9 @@ class _FavoritesPageState extends State<FavoritesPage> {
             return Center(child: CircularProgressIndicator());
           } else if (state is FavoritesLoadedState) {
             return ListView.builder(
-              itemCount: sampleHouses.length,
+              itemCount: properties.length,
               itemBuilder: (context, index) {
-                final house = sampleHouses[index];
+                final house = properties[index];
                 return GestureDetector(
                   onTap: () {},
                   child: Container(
@@ -75,7 +76,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                                   color: Colors
                                       .white, // Set the background color to white
                                 ),
-                                child: Text('For ${house.sellOrRent}'),
+                                child: Text('For ${house.status}'),
                               ),
                               const Spacer(),
                               InkWell(
@@ -109,7 +110,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    house.houseName,
+                                    house.name,
                                     style:
                                         Theme.of(context).textTheme.titleMedium,
                                   ),
@@ -120,7 +121,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                                     children: [
                                       Icon(Icons.location_on_outlined),
                                       Text(
-                                        house.location,
+                                        house.locationName,
                                       ),
                                     ],
                                   ),
@@ -145,7 +146,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
                                     Text(
-                                      'Listed ${DateDifferenceCalculator.daysBetween(house.postedDate)} days ago',
+                                      'Listed ${DateDifferenceCalculator.daysBetween(house.dateAdded)} days ago',
                                       style:
                                           Theme.of(context).textTheme.bodySmall,
                                     ),
@@ -175,9 +176,9 @@ class _FavoritesPageState extends State<FavoritesPage> {
           }
 
           return ListView.builder(
-            itemCount: sampleHouses.length,
+            itemCount: properties.length,
             itemBuilder: (context, index) {
-              final house = sampleHouses[index];
+              final house = properties[index];
               return GestureDetector(
                 onTap: () {},
                 child: Container(
@@ -197,11 +198,12 @@ class _FavoritesPageState extends State<FavoritesPage> {
                             horizontal: 20, vertical: 10),
                         height: 150,
                         // width: 200,
-                        decoration: const BoxDecoration(
+                        decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(20)),
                           image: DecorationImage(
                             image: AssetImage(
-                                'assets/images/favorite1.png'), // Path to the image asset
+                              house.image,
+                            ), // Path to the image asset
                             fit: BoxFit
                                 .cover, // How the image should fit within the container
                           ),
@@ -218,7 +220,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                                 color: Colors
                                     .white, // Set the background color to white
                               ),
-                              child: Text('For ${house.sellOrRent}'),
+                              child: Text('For ${house.status}'),
                             ),
                             const Spacer(),
                             InkWell(
@@ -252,7 +254,8 @@ class _FavoritesPageState extends State<FavoritesPage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  house.houseName,
+                                  // house.locationName,
+                                  "Name of Property",
                                   style:
                                       Theme.of(context).textTheme.titleMedium,
                                 ),
@@ -263,7 +266,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                                   children: [
                                     Icon(Icons.location_on_outlined),
                                     Text(
-                                      house.location,
+                                      house.locationName,
                                     ),
                                   ],
                                 ),
@@ -288,7 +291,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
                                   Text(
-                                    'Listed ${DateDifferenceCalculator.daysBetween(house.postedDate)} days ago',
+                                    'Listed ${DateDifferenceCalculator.daysBetween(house.dateAdded)} days ago',
                                     style:
                                         Theme.of(context).textTheme.bodySmall,
                                   ),

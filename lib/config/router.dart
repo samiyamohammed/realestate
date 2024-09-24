@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:real_estate_marketplace/pages/aboutus_page.dart';
 import 'package:real_estate_marketplace/pages/draft_properties_page.dart';
 import 'package:real_estate_marketplace/pages/faq_page.dart';
+import 'package:real_estate_marketplace/pages/favorites_page.dart';
 import 'package:real_estate_marketplace/pages/home_page.dart';
 import 'package:real_estate_marketplace/pages/posted_properties_page.dart';
 import 'package:real_estate_marketplace/pages/unsighned_notification_page.dart';
@@ -12,7 +13,7 @@ import 'package:real_estate_marketplace/pages/unsighned_message_page.dart';
 import 'package:real_estate_marketplace/pages/agent_page.dart';
 
 final GoRouter router = GoRouter(
-  initialLocation: '/aboutus',
+  initialLocation: '/home',
   routes: [
     GoRoute(
       path: '/home',
@@ -36,7 +37,8 @@ final GoRouter router = GoRouter(
     ),
     GoRoute(
       path: '/favorite',
-      builder: (context, state) => const FavoritePage(),
+      builder: (context, state) => const FavoritesPage(),
+      // builder: (context, state) => const FavoritePage(),
     ),
     GoRoute(
       path: '/posted-properties',

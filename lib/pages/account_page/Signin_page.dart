@@ -4,8 +4,13 @@
 // ignore: unused_import
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lucide_icons/lucide_icons.dart';
+import 'package:real_estate_marketplace/bloc/auth_bloc/auth_bloc.dart';
+import 'package:real_estate_marketplace/pages/faq_page.dart';
+import 'package:real_estate_marketplace/widgets/account_button.dart';
+import 'package:real_estate_marketplace/widgets/custom_textfield.dart';
+import 'package:real_estate_marketplace/widgets/social_buttons.dart';
 
 class SignInPage extends StatefulWidget {
   final TabController tabController;
@@ -22,247 +27,190 @@ class _SignInPageState extends State<SignInPage> {
   bool _obscureConfirmationText = true;
 
   String? selectedValue;
+  late String email;
+  late String password;
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Container(
-        padding: const EdgeInsets.all(8),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Email
-              const Padding(
-                padding: EdgeInsets.only(left: 30),
-                child: Text("Email Address"),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              // const SizedBox(height: 5),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 50),
-                child: TextFormField(
-                  decoration: InputDecoration(
-                    // hintText: 'Full Name',
-                    hintStyle: TextStyle(color: Colors.grey[500], fontSize: 12),
-                    contentPadding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                    filled: true,
-                    // fillColor: Colors.grey[300],
-                    labelText: "Email Address",
-                    border: const OutlineInputBorder(
-                      // borderSide: BorderSide.none,
+    return BlocConsumer<AuthBloc, AuthState>(
+      listener: (context, state) {
+        // TODO: implement listener
+        if (state is AuthLoginFailure) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('${state.errorMessage}'),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
 
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(10),
-                      ),
-                    ),
-                  ),
-                  validator: (value) {
-                    if (value == null ||
-                        value.isEmpty ||
-                        value.trim().length <= 1 ||
-                        value.trim().length > 50) {
-                      return 'Must be 1 and 50 characters.';
-                    }
-                    return null;
-                  },
-                  // onChanged: (value) => name = value,
-                ),
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              //password
-              const Padding(
-                padding: EdgeInsets.only(left: 30),
-                child: Text("Password"),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              // const SizedBox(height: 5),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 50),
-                child: TextFormField(
-                  obscureText: _obscureText,
-                  decoration: InputDecoration(
-                    suffixIcon: IconButton(
-                      // icon: Icon(_obscureText
-                      //     ? LucideIcons.eyeOff
-                      //     : LucideIcons.eye),
-                      icon: Icon(_obscureText
-                          ? Icons.remove_red_eye_rounded
-                          : LucideIcons.eye),
-                      // tooltip: _obscureText ? 'Show password' : 'Hide password',
-                      onPressed: () =>
-                          setState(() => _obscureText = !_obscureText),
-                    ),
-                    // hintText: 'Full Name',
-                    hintStyle: TextStyle(color: Colors.grey[500], fontSize: 12),
-                    contentPadding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                    filled: true,
-                    // fillColor: Colors.grey[300],
-                    // labelText: "Full Name",
-                    border: const OutlineInputBorder(
-                      // borderSide: BorderSide.none,
+        if (state is AuthLoginSuccess) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              backgroundColor: Colors.green,
+              content: Text('success'),
+            ),
+          );
 
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(10),
-                      ),
-                    ),
-                  ),
-                  validator: (value) {
-                    if (value == null ||
-                        value.isEmpty ||
-                        value.trim().length <= 1 ||
-                        value.trim().length > 50) {
-                      return 'Must be 1 and 50 characters.';
-                    }
-                    return null;
-                  },
-                  // onChanged: (value) => name = value,
-                ),
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              //confirm password
-              Padding(
-                padding: const EdgeInsets.only(right: 50),
-                child: Row(
-                  children: [
-                    const Spacer(),
-                    InkWell(
-                      onTap: () {},
-                      child: const Text(
-                        "Forgot Password?",
-                        textAlign: TextAlign.end,
-                        style: TextStyle(
-                          decoration: TextDecoration.underline,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              // const SizedBox(height: 5),
+          // @override
+          // void dispose() {
+          //   super.dispose();
+          //   _internetConnectionStreamSubscription?.cancel();
+          // }
 
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 50),
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                    // fixedSize: MaterialStatePropertyAll(),
-
-                    foregroundColor: const WidgetStatePropertyAll(Colors.white),
-                    // backgroundColor:
-                    //     WidgetStatePropertyAll(Colors.blueAccent[700]),
-                    shape: WidgetStatePropertyAll(
-                      RoundedRectangleBorder(
-                        side: const BorderSide(color: Colors.black),
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                    ),
-                  ),
-                  onPressed: () {},
-                  child: Center(
-                    child: Text(
-                      'Log in',
-                      style: GoogleFonts.poppins(
-                          // fontWeight: FontWeight.w400,
-                          fontSize: 16,
-                          color: const Color.fromARGB(255, 173, 157, 247)),
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 50.0, vertical: 40),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(8),
-                      height: 60,
-                      width: 60,
-                      decoration: BoxDecoration(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(20)),
-                        border: Border.all(
-                          color: Colors.black, // Set border color
-                          width: 1.0, // Set border width
-                        ),
-                      ),
-                      child: Image.asset("assets/images/google.png"),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.all(8),
-                      height: 60,
-                      width: 60,
-                      decoration: BoxDecoration(
-                        // color: Colors.red,
-                        border: Border.all(
-                          color: Colors.black, // Set border color
-                          width: 1.0, // Set border width
-                        ),
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(20),
-                        ),
-                      ),
-                      child: Image.asset(
-                        "assets/images/apple.png",
-                        fit: BoxFit.scaleDown,
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.all(8),
-                      height: 60,
-                      width: 60,
-                      decoration: BoxDecoration(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(20)),
-                        color: Colors.white,
-                        border: Border.all(
-                          color: Colors.black, // Set border color
-                          width: 1.0, // Set border width
-                        ),
-                      ),
-                      child: Image.asset(
-                        "assets/images/call.png",
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const FaqPage(),
+            ),
+          );
+        }
+      },
+      builder: (context, state) {
+        if (state is AuthLoading) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+        return SingleChildScrollView(
+          child: Container(
+            padding: const EdgeInsets.all(8),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text("Don't have an account? "),
-                  InkWell(
-                    onTap: () {
-                      widget.tabController
-                          .animateTo(0); // Switch back to Sign In page
+                  const SizedBox(height: 16),
+                  const Padding(
+                    padding: EdgeInsets.only(left: 30),
+                    child: Text("Email Address"),
+                  ),
+                  const SizedBox(height: 15),
+                  CustomTextFormField(
+                    labelText: 'Email Address',
+                    validator: (value) {
+                      if (value == null || value.trim().isEmpty) {
+                        return 'Email is required';
+                      } else if (!RegExp(
+                              r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$")
+                          .hasMatch(value)) {
+                        return 'Enter a valid email address';
+                      }
+                      return null;
                     },
-                    child: const Text(
-                      "Sign up",
-                      style: TextStyle(
-                          color: Colors.brown,
-                          decoration: TextDecoration.underline),
+                    onChanged: (value) => email = value,
+                  ),
+                  const SizedBox(height: 16),
+                  const Padding(
+                    padding: EdgeInsets.only(left: 30),
+                    child: Text("Password"),
+                  ),
+                  const SizedBox(height: 15),
+                  CustomTextFormField(
+                      labelText: 'Password',
+                      obscureText: _obscureText,
+                      suffixIcon: IconButton(
+                        icon: Icon(_obscureText
+                            ? Icons.remove_red_eye_rounded
+                            : LucideIcons.eye),
+                        onPressed: () =>
+                            setState(() => _obscureText = !_obscureText),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty
+                            // value.trim().length <= 7 ||
+                            // value.trim().length > 50
+                            ) {
+                          return 'Password is required.';
+                        }
+                        // else if (!RegExp(
+                        //         r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#]).*$')
+                        //     .hasMatch(value)) {
+                        //   return 'Password must have:\n'
+                        //       '- At least one uppercase letter\n'
+                        //       '- At least one lowercase letter\n'
+                        //       '- At least one number\n'
+                        //       '- At least one special character (@, \$, !, %, *, ?, & or #)';
+                        // }
+
+                        return null;
+                      },
+                      onChanged: (value) {
+                        setState(() {
+                          password = value;
+                        });
+                      }),
+                  const SizedBox(height: 16),
+
+                  Padding(
+                    padding: const EdgeInsets.only(right: 50),
+                    child: Row(
+                      children: [
+                        const Spacer(),
+                        InkWell(
+                          onTap: () {},
+                          child: const Text(
+                            "Forgot Password?",
+                            textAlign: TextAlign.end,
+                            style: TextStyle(
+                              decoration: TextDecoration.underline,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  const SizedBox(height: 25),
+                  // SignUpButton(onPressed: () => _submitForm()),
+                  AccountButton(
+                      title: "Log in",
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          context.read<AuthBloc>().add(AuthLoginRequested(
+                                email: email,
+                                password: password,
+                              ));
+                        }
+                      }),
+                  const Padding(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 50.0, vertical: 40),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SocialLoginButton(
+                            imagePath: "assets/images/google.png"),
+                        SocialLoginButton(imagePath: "assets/images/apple.png"),
+                        SocialLoginButton(imagePath: "assets/images/call.png"),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 20.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text("Don't have an account? "),
+                        InkWell(
+                          onTap: () => widget.tabController.animateTo(1),
+                          child: const Text(
+                            "Sign Up",
+                            style: TextStyle(
+                              color: Colors.brown,
+                              decoration: TextDecoration.underline,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
               ),
-            ],
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }
