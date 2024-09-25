@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 // import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
@@ -92,6 +93,16 @@ class Auth {
         'password': password,
       },
     );
+  }
+
+  Future<void> googleAuth() async {
+    final GoogleSignIn googleSignIn = GoogleSignIn();
+    try {
+      var user = await googleSignIn.signIn();
+      print(user);
+    } catch (e) {
+      print(e);
+    }
   }
 
   // static Future<bool> isValidToken() async {

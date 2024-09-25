@@ -3,6 +3,8 @@
 import 'package:go_router/go_router.dart';
 import 'package:real_estate_marketplace/pages/Home%20page/home_page.dart';
 import 'package:real_estate_marketplace/pages/aboutus_page.dart';
+import 'package:real_estate_marketplace/pages/account_page/Signin_page.dart';
+import 'package:real_estate_marketplace/pages/account_page/account_page.dart';
 import 'package:real_estate_marketplace/pages/draft_properties_page.dart';
 import 'package:real_estate_marketplace/pages/faq_page.dart';
 import 'package:real_estate_marketplace/pages/favorites_page.dart';
@@ -19,7 +21,8 @@ import 'package:real_estate_marketplace/pages/agent_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 GoRouter router = GoRouter(
-  initialLocation: '/home',
+  // initialLocation: '/home',
+  initialLocation: '/auth',
   routes: [
     GoRoute(
       path: '/home',
@@ -85,6 +88,12 @@ GoRouter router = GoRouter(
       path: '/onboardingpages',
       builder: (context, state) => const OnboardingPage(),
     ),
+
+    GoRoute(
+      path: '/auth',
+      name: '/auth',
+      builder: (context, state) => AccountPage(),
+    )
     // Add other routes here as needed
   ],
 );

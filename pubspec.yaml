@@ -55,6 +55,7 @@ dependencies:
   permission_handler: ^11.3.1
   lottie: ^3.1.2
   google_sign_in: ^6.2.1
+  flutter_svg: ^2.0.10+1
 
 dev_dependencies:
   flutter_test:
@@ -89,6 +90,7 @@ flutter:
     - assets/schooll.json
     - assets/edited_invest_animation.json
     - assets/Deal.json
+    - assets/social_media_icons/google.svg
 
   #   - images/a_dot_ham.jpeg
 
