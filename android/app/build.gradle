@@ -23,6 +23,15 @@ if (flutterVersionName == null) {
     flutterVersionName = "1.0"
 }
 
+signingConfigs {
+    deubg{
+        keyAlias 'helder'
+        keyPassword 'helder'
+        storeFile file('helder.jks')
+        storePassword 'helder'
+    }
+}
+
 android {
     namespace = "com.example.real_estate_marketplace"
     compileSdk = flutter.compileSdkVersion
