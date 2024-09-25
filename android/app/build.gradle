@@ -35,12 +35,22 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
 
-    signingConfigs {
-        deubg{
-            keyAlias 'helder'
-            keyPassword 'helder'
-            storeFile file('helder.jks')
-            storePassword 'helder'
+    // signingConfigs{
+    //     debug{
+    //         keyAlias 'helder'
+    //         keyPassword 'helder'
+    //         storeFile file('helder.jks')
+    //         storePassword 'helder'
+    //     }
+    // }
+
+
+    signingConfigs{
+        debug{
+            keyAlias 'realest'
+            keyPassword 'code .'
+            storeFile file('./upload-keystore.jks')
+            storePassword 'code .'
         }
     }
 
