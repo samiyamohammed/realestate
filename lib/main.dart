@@ -51,9 +51,9 @@ class RealEstateApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             theme: themeState.themeData,
             // home: const AgentPage(),
-            // routerConfig:
-            //router, // Use the router from the imported router file
-            routerConfig: router(isOnboardingCompleted),
+            routerConfig:
+                router, // Use the router from the imported router file
+            // routerConfig: router(isOnboardingCompleted),
           );
         },
       ),

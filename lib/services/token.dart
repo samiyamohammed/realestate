@@ -10,7 +10,7 @@ class Token {
   // get the token
   Future<String?> getToken() async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.getString('token') ?? null;
+    return prefs.getString('token');
   }
 
   // remove token

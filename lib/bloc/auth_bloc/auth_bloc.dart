@@ -113,14 +113,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         } else if (error.type == DioExceptionType.connectionTimeout ||
             error.type == DioExceptionType.receiveTimeout) {
           errorMessage = "The connection timed out. Please try again later.";
-          Logger().f('${errorMessage}');
+          Logger().f(errorMessage);
           Logger().e(
               'DioError: ${error.response?.statusCode}, ${error.response?.data}');
           return emit(AuthCreateAccountFailure(errorMessage));
         } else if (error.type == DioExceptionType.connectionError) {
           errorMessage =
               "No internet connection. Please check your connection and try again.";
-          Logger().f('${errorMessage}');
+          Logger().f(errorMessage);
           Logger().e(
               'DioError: ${error.response?.statusCode}, ${error.response?.data}');
           return emit(AuthCreateAccountFailure(errorMessage));
@@ -227,14 +227,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         } else if (error.type == DioExceptionType.connectionTimeout ||
             error.type == DioExceptionType.receiveTimeout) {
           errorMessage = "The connection timed out. Please try again later.";
-          Logger().f('${errorMessage}');
+          Logger().f(errorMessage);
           Logger().e(
               'DioError: ${error.response?.statusCode}, ${error.response?.data}');
           return emit(AuthLoginFailure(errorMessage));
         } else if (error.type == DioExceptionType.connectionError) {
           errorMessage =
               "No internet connection. Please check your connection and try again.";
-          Logger().f('${errorMessage}');
+          Logger().f(errorMessage);
           Logger().e(
               'DioError: ${error.response?.statusCode}, ${error.response?.data}');
           return emit(AuthLoginFailure(errorMessage));

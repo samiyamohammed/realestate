@@ -55,7 +55,7 @@ class _SignUpPageState extends State<SignUpPage> {
             isConnectedToInternet = false;
           });
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
+            const SnackBar(
               content: Text('Internet Connection Lost'),
               backgroundColor: Colors.red,
               duration: Duration(days: 1),
@@ -64,7 +64,7 @@ class _SignUpPageState extends State<SignUpPage> {
           break;
         default:
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
+            const SnackBar(
               content: Text('There Is No Internet Connection'),
               backgroundColor: Colors.red,
               duration: Duration(days: 1),
@@ -92,7 +92,7 @@ class _SignUpPageState extends State<SignUpPage> {
         if (state is AuthCreateAccountFailure) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text('${state.errorMessage}'),
+              content: Text(state.errorMessage),
               backgroundColor: Colors.red,
             ),
           );

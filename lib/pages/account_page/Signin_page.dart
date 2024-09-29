@@ -38,7 +38,7 @@ class _SignInPageState extends State<SignInPage> {
         if (state is AuthLoginFailure) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text('${state.errorMessage}'),
+              content: Text(state.errorMessage),
               backgroundColor: Colors.red,
             ),
           );
