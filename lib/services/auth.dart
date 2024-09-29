@@ -116,14 +116,19 @@ class Auth {
     }
   }
 
-  Future<Either<String, AuthResponse>> loginWithGoogle() async {
+  Future<Either<String, AuthResponse>> loginWithGoogle({
+    required String email,
+    required String google_id,
+    required String? name,
+     String? avatar,
+  }) async {
     try {
       Logger().w('loginWithGoogle');
       final response = await dio.post('$baseUrl/api/auth/google', data: {
-        'email': 'test@gmail.com',
-        'google_id': '232343',
-        'name': 'test',
-        'avatar': '/weweorwe',
+        'email': email,
+        'google_id': google_id,
+        'name': name ?? "user" ,
+        'avatar': avatar,
       });
       Logger().d(response.data);
 

@@ -38,7 +38,7 @@ class RealEstateApp extends StatelessWidget {
           return MaterialApp.router(
             debugShowCheckedModeBanner: false,
             theme: themeState.themeData,
-            routerConfig: router(isOnboardingCompleted),
+            // routerConfig: router(isOnboardingCompleted),
           );
         },
       ),

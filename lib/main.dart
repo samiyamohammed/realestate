@@ -10,6 +10,7 @@ import 'package:real_estate_marketplace/bloc/profile_bloc/profile_bloc.dart';
 import 'package:real_estate_marketplace/bloc/profile_bloc/profile_event.dart';
 import 'package:real_estate_marketplace/bloc/search_filter_bloc/search_filter_bloc.dart';
 import 'package:real_estate_marketplace/bloc/theme_bloc/theme_bloc.dart';
+import 'package:real_estate_marketplace/bloc/user_bloc/user_bloc.dart';
 import 'package:real_estate_marketplace/config/router.dart';
 // import 'package:real_estate_marketplace/pages/account_page/account_page.dart';
 // import 'package:real_estate_marketplace/pages/agent_page.dart';
@@ -43,6 +44,7 @@ class RealEstateApp extends StatelessWidget {
         BlocProvider(create: (context) => ProfileBloc()..add(LoadProfile())),
         BlocProvider(create: (context) => BottomNavigationBloc()),
         BlocProvider(create: (context) => SearchFilterBloc()),
+        BlocProvider(create: (context) => UserBloc()),
       ],
       child: BlocBuilder<ThemeBloc, ThemeState>(
         builder: (context, themeState) {
