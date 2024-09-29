@@ -24,7 +24,7 @@ class SocialLoginButton extends StatelessWidget {
     //   case 'apple':
     //     break;
     //   default:
-    //     break;
+    //     break;m
     // }
 
     await auth.googleAuth();

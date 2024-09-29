@@ -98,8 +98,15 @@ class Auth {
   Future<void> googleAuth() async {
     final GoogleSignIn googleSignIn = GoogleSignIn();
     try {
+      Logger().w('googleAuth');
       var user = await googleSignIn.signIn();
-      print(user);
+      if (user == null) {
+        Logger().w('user is null');
+        return;
+      } else {
+        Logger().w(user);
+        Logger().w('user is not null');
+      }
     } catch (e) {
       print(e);
     }
