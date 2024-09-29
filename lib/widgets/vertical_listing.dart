@@ -172,8 +172,9 @@ class _PropertyCardState extends State<PropertyCard> {
                             child: const Text(
                               'See Details',
                               style: TextStyle(
+                                color: Colors.black,
                                 fontSize: 12,
-                                fontWeight: FontWeight.w200,
+                                fontWeight: FontWeight.w400,
                                 decoration: TextDecoration.underline,
                               ),
                             ),
