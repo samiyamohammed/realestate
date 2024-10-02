@@ -5,8 +5,10 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 import 'package:real_estate_marketplace/bloc/auth_bloc/auth_bloc.dart';
+import 'package:real_estate_marketplace/bloc/side_bar_bloc.dart';
 import 'package:real_estate_marketplace/pages/faq_page.dart';
 import 'package:real_estate_marketplace/widgets/account_button.dart';
 import 'package:real_estate_marketplace/widgets/custom_textfield.dart';
@@ -57,7 +59,7 @@ class _SignInPageState extends State<SignInPage> {
           //   super.dispose();
           //   _internetConnectionStreamSubscription?.cancel();
           // }
-
+          context.go('/home');
           Navigator.push(
             context,
             MaterialPageRoute(

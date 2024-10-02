@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:real_estate_marketplace/bloc/auth_bloc/auth_bloc.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:logger/logger.dart';
@@ -24,6 +26,11 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _phoneNumberController = TextEditingController();
+  // final TextEditingController controller = TextEditingController();
+  String initialCountry = 'ET';
+  PhoneNumber number = PhoneNumber(isoCode: 'ET');
+
   bool _obscureText = true;
   bool _obscureConfirmationText = true;
   String _password = '';
@@ -55,8 +62,10 @@ class _SignUpPageState extends State<SignUpPage> {
             isConnectedToInternet = false;
           });
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
+            const SnackBar(
               content: Text('Internet Connection Lost'),
+              behavior: SnackBarBehavior.floating,
+              // elevation: 3,
               backgroundColor: Colors.red,
               duration: Duration(days: 1),
             ),
@@ -64,9 +73,10 @@ class _SignUpPageState extends State<SignUpPage> {
           break;
         default:
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
+            const SnackBar(
               content: Text('There Is No Internet Connection'),
               backgroundColor: Colors.red,
+              behavior: SnackBarBehavior.floating,
               duration: Duration(days: 1),
             ),
           );
@@ -83,6 +93,7 @@ class _SignUpPageState extends State<SignUpPage> {
   void dispose() {
     super.dispose();
     _internetConnectionStreamSubscription?.cancel();
+    _phoneNumberController.dispose();
   }
 
   @override
@@ -112,12 +123,13 @@ class _SignUpPageState extends State<SignUpPage> {
             _internetConnectionStreamSubscription?.cancel();
           }
 
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const FaqPage(),
-            ),
-          );
+          context.go('/home');
+          // Navigator.push(
+          //   context,
+          //   MaterialPageRoute(
+          //     builder: (context) => const FaqPage(),
+          //   ),
+          // );
         }
       },
       builder: (context, state) {
@@ -174,7 +186,118 @@ class _SignUpPageState extends State<SignUpPage> {
                     },
                     onChanged: (value) => email = value,
                   ),
+
                   const SizedBox(height: 16),
+                  // const Text(
+                  //   'Phone Number',
+                  //   style: TextStyle(color: Colors.white),
+                  // ),
+                  // const SizedBox(height: 8),
+                  // InternationalPhoneNumberInput(
+                  //   initialValue: PhoneNumber(
+                  //     dialCode: '+251',
+                  //     phoneNumber: "",
+                  //   ),
+                  //   onInputChanged: (PhoneNumber number) {
+                  //     _phoneNumberController.text =
+                  //         number.phoneNumber ?? '';
+                  //   },
+                  //   selectorConfig: const SelectorConfig(
+                  //     selectorType: PhoneInputSelectorType.DIALOG,
+                  //     showFlags: true,
+                  //   ),
+                  //   ignoreBlank: false,
+                  //   autoValidateMode: AutovalidateMode.disabled,
+                  //   selectorTextStyle: const TextStyle(
+                  //       color: Color.fromARGB(255, 255, 255, 255)),
+                  //   textFieldController: TextEditingController(),
+                  //     // ..text = state.phonenumber,
+                  //   formatInput: true,
+                  //   keyboardType:
+                  //       const TextInputType.numberWithOptions(
+                  //     signed: true,
+                  //     decimal: true,
+                  //   )
+                  //   inputDecoration: const InputDecoration(
+                  //     border: OutlineInputBorder(),
+                  //     filled: true,
+                  //     fillColor: Colors.white,
+                  //   ),
+                  //   inputBorder: const OutlineInputBorder(),
+                  //   onSaved: (PhoneNumber number) {
+                  //     // Handle phone number save
+                  //   },
+                  // ),
+                  const Padding(
+                    padding: EdgeInsets.only(left: 30.0),
+                    child: Text(
+                      'Phone Number',
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 50.0),
+                    child: InternationalPhoneNumberInput(
+                      // spaceBetweenSelectorAndTextField: 0,
+
+                      inputDecoration: const InputDecoration(
+                        labelText: "Phone Number",
+                        contentPadding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                        // suffixIcon: suffixIcon,
+                        filled: true,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                        ),
+                      ),
+
+                      onInputChanged: (PhoneNumber newNumber) {
+                        // _phoneNumberController.text =
+                        //     newNumber.phoneNumber ?? '';
+
+                        number = newNumber;
+
+                        Logger().i(number.phoneNumber);
+                        Logger().i(number.isoCode);
+                        Logger().i(_phoneNumberController.text);
+                      },
+
+                      onInputValidated: (bool value) {
+                        print(value);
+                      },
+
+                      selectorConfig: const SelectorConfig(
+                        useEmoji: true,
+                        selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
+                        useBottomSheetSafeArea: true,
+                        setSelectorButtonAsPrefixIcon: true,
+                        leadingPadding: 10,
+                      ),
+                      ignoreBlank: false,
+                      autoValidateMode: AutovalidateMode.disabled,
+                      selectorTextStyle: const TextStyle(color: Colors.black),
+                      initialValue: number,
+                      textFieldController: _phoneNumberController,
+                      formatInput: true,
+                      keyboardType: const TextInputType.numberWithOptions(
+                          signed: true, decimal: true),
+                      // inputBorder: OutlineInputBorder(),
+                      inputBorder: const OutlineInputBorder(),
+                      onSaved: (PhoneNumber number) {
+                        print('On Saved: $number');
+                      },
+                    ),
+                  ),
+
+                  // ElevatedButton(
+                  //   onPressed: () {
+                  //     _formKey.currentState?.save();
+                  //   },
+                  //   child: Text('Save'),
+                  // ),
+                  const SizedBox(height: 16),
+
                   const Padding(
                     padding: EdgeInsets.only(left: 30),
                     child: Text("Password"),
@@ -249,14 +372,18 @@ class _SignUpPageState extends State<SignUpPage> {
                   AccountButton(
                       title: "Register",
                       onPressed: () {
+                        // Logger().i(number);
+                        Logger().i(number.phoneNumber);
                         if (_formKey.currentState!.validate()) {
                           context.read<AuthBloc>().add(
                               AuthCreateAccountRequested(
                                   name: name,
                                   email: email,
+                                  number: number.phoneNumber!,
                                   password: password,
                                   passwordConfirmation: passwordConfirmation));
                         }
+                        Logger().i('this number${number.phoneNumber}');
                       }),
                   const Padding(
                     padding:

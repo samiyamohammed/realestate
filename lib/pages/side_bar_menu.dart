@@ -44,6 +44,8 @@ class CustomDrawer extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: () {
                     // Implement Sign In functionality
+                    Navigator.pop(context);
+                    context.push('/account');
                   },
                   style: ElevatedButton.styleFrom(
                     foregroundColor: Colors.orange,

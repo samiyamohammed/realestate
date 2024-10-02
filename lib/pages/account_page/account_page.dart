@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:real_estate_marketplace/pages/account_page/Signin_page.dart';
-// import 'package:real_estate_marketplace/pages/account_page/signup_page.dart';
+import 'package:go_router/go_router.dart';
+
 import 'package:real_estate_marketplace/pages/account_page/signup_page2.dart';
 
 class AccountPage extends StatefulWidget {
@@ -32,14 +33,33 @@ class _AccountPageState extends State<AccountPage>
     double width = MediaQuery.of(context).size.width;
 
     return Scaffold(
+      // resizeToAvoidBottomInset: false,
       body: DefaultTabController(
-        length: 2, // Number of tabs
-
+        length: 2,
         child: GestureDetector(
           onTap: () {
             FocusScope.of(context).unfocus(); // Dismisses the keyboard
           },
           child: Scaffold(
+            bottomSheet: Container(
+              height: 60,
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Color.fromARGB(255, 27, 0, 82), // Second color
+                    // const Color.fromARGB(255, 27, 0, 82), // Second color
+                    // Colors.deepPurple, // Second color
+                    Colors.deepPurpleAccent, // First color
+                  ],
+                ),
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(30),
+                  topRight: Radius.circular(30),
+                ),
+              ),
+            ),
             appBar: AppBar(
               flexibleSpace: Container(
                 decoration: const BoxDecoration(
@@ -79,6 +99,7 @@ class _AccountPageState extends State<AccountPage>
                       padding: const EdgeInsets.symmetric(
                           vertical: 5, horizontal: 70),
                       dividerHeight: 0,
+
                       tabs: const [
                         Tab(text: 'Sign Up'),
                         Tab(text: 'Sign In'),
@@ -106,25 +127,25 @@ class _AccountPageState extends State<AccountPage>
                     ],
                   ),
                 ),
-                Container(
-                  height: 60,
-                  decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        Color.fromARGB(255, 27, 0, 82), // Second color
-                        // const Color.fromARGB(255, 27, 0, 82), // Second color
-                        // Colors.deepPurple, // Second color
-                        Colors.deepPurpleAccent, // First color
-                      ],
-                    ),
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(30),
-                      topRight: Radius.circular(30),
-                    ),
-                  ),
-                ),
+                // Container(
+                //   height: 60,
+                //   decoration: const BoxDecoration(
+                //     gradient: LinearGradient(
+                //       begin: Alignment.topCenter,
+                //       end: Alignment.bottomCenter,
+                //       colors: [
+                //         Color.fromARGB(255, 27, 0, 82), // Second color
+                //         // const Color.fromARGB(255, 27, 0, 82), // Second color
+                //         // Colors.deepPurple, // Second color
+                //         Colors.deepPurpleAccent, // First color
+                //       ],
+                //     ),
+                //     borderRadius: BorderRadius.only(
+                //       topLeft: Radius.circular(30),
+                //       topRight: Radius.circular(30),
+                //     ),
+                //   ),
+                // ),
               ],
             ),
           ),

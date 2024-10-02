@@ -3,6 +3,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:real_estate_marketplace/pages/Home%20page/home_page.dart';
 import 'package:real_estate_marketplace/pages/aboutus_page.dart';
+import 'package:real_estate_marketplace/pages/account_page/account_page.dart';
 import 'package:real_estate_marketplace/pages/draft_properties_page.dart';
 import 'package:real_estate_marketplace/pages/faq_page.dart';
 import 'package:real_estate_marketplace/pages/favorites_page.dart';
@@ -77,6 +78,11 @@ GoRouter router = GoRouter(
       path: '/searchandfilter',
       builder: (context, state) => const SearchAndFilterPage(),
     ),
+    GoRoute(
+      path: '/account',
+      builder: (context, state) => const AccountPage(),
+    ),
+
     // GoRoute(
     //   path: '/propertydetail',
     //   builder: (context, state) => const PropertyDetailPage(),
