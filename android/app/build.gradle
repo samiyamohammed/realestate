@@ -23,6 +23,8 @@ if (flutterVersionName == null) {
     flutterVersionName = "1.0"
 }
 
+
+
 android {
     namespace = "com.example.real_estate_marketplace"
     compileSdk = flutter.compileSdkVersion
@@ -31,6 +33,25 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    // signingConfigs{
+    //     debug{
+    //         keyAlias 'helder'
+    //         keyPassword 'helder'
+    //         storeFile file('helder.jks')
+    //         storePassword 'helder'
+    //     }
+    // }
+
+
+    signingConfigs{
+        debug{
+            keyAlias 'realest'
+            keyPassword 'code .'
+            storeFile file('./upload-keystore.jks')
+            storePassword 'code .'
+        }
     }
 
     defaultConfig {

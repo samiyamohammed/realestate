@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:real_estate_marketplace/bloc/BottomNavigationBloc.dart';
+import 'package:real_estate_marketplace/bloc/auth_bloc/auth_bloc.dart';
 import 'package:real_estate_marketplace/bloc/home_bloc.dart';
+import 'package:real_estate_marketplace/bloc/user_bloc/user_bloc.dart';
+import 'package:real_estate_marketplace/models/auth_response_model.dart';
 import 'package:real_estate_marketplace/pages/side_bar_menu.dart';
 import '../../widgets/bottom_navigation.dart';
 import '../../models/properties_list_model.dart';
@@ -75,31 +78,35 @@ class _HomePageState extends State<HomePage> {
               _scaffoldKey.currentState?.openDrawer();
             },
           ),
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              GestureDetector(
-                onTap: () {
-                  // Implement navigation to profile page
-                },
-                child: const Row(
-                  children: [
-                    CircleAvatar(
-                      backgroundImage:
-                          AssetImage('assets/images/profile_icon.png'),
-                      radius: 16,
+          title: BlocBuilder<UserBloc, AuthResponse>(
+            builder: (context, state) {
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      // Implement navigation to profile page
+                    },
+                    child:  Row(
+                      children: [
+                        CircleAvatar(
+                          backgroundImage:
+                             state.user.avatar != null ? NetworkImage(state.user.avatar) : AssetImage('assets/images/profile_icon.png'),
+                          radius: 16,
+                        ),
+                        SizedBox(width: 8),
+                        Text(
+                          state.user.name,
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w500),
+                        ),
+                      ],
                     ),
-                    SizedBox(width: 8),
-                    Text(
-                      'Name',
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(width: 8),
-            ],
+                  ),
+                  const SizedBox(width: 8),
+                ],
+              );
+            },
           ),
           centerTitle: false,
         ),

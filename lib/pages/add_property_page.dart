@@ -25,7 +25,7 @@ class _AddPropertyPageState extends State<AddPropertyPage> {
         child: Column(
           children: [
             const Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: EdgeInsets.all(8.0),
               child: Text(
                 'Upload Images',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),

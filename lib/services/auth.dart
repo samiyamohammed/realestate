@@ -1,7 +1,13 @@
+import 'dart:convert';
+
+import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 // import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
+import 'package:real_estate_marketplace/models/auth_response_model.dart';
+import 'package:real_estate_marketplace/models/user_model.dart';
 import 'package:real_estate_marketplace/utility/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:yess/services/onboarding_helper.dart';
@@ -92,6 +98,72 @@ class Auth {
         'password': password,
       },
     );
+  }
+
+  Future<Either<GoogleSignInAccount, String>> googleAuth() async {
+    final GoogleSignIn googleSignIn = GoogleSignIn();
+    try {
+      Logger().w('googleAuth');
+      var user = await googleSignIn.signIn();
+      if (user == null) {
+        return right('User is null');
+      } else {
+        return left(user);
+      }
+    } catch (e) {
+      print(e);
+      return right(e.toString());
+    }
+  }
+
+  Future<Either<String, AuthResponse>> loginWithGoogle({
+    required String email,
+    required String google_id,
+    required String? name,
+     String? avatar,
+  }) async {
+    try {
+      Logger().w('loginWithGoogle');
+      final response = await dio.post('$baseUrl/api/auth/google', data: {
+        'email': email,
+        'google_id': google_id,
+        'name': name ?? "user" ,
+        'avatar': avatar,
+      });
+      Logger().d(response.data);
+
+      if (response.statusCode == 201) {
+        // Determine if response.data is a String or already a Map
+        Map<String, dynamic> json;
+
+        if (response.data is String) {
+          // If response.data is a JSON string, decode it
+          json = jsonDecode(response.data);
+        } else if (response.data is Map<String, dynamic>) {
+          // If it's already a Map, cast it
+          json = response.data;
+        } else {
+          throw 'Unexpected response format';
+        }
+
+        final authResponse = AuthResponse.fromJson(json);
+        return right(authResponse);
+      }
+      throw 'Something went wrong';
+    } on DioException catch (e) {
+      if (e.response != null) {
+        // Server responded with a non-200 status code (like 401)
+        print('Dio error status: ${e.response?.statusCode}');
+        print('Dio error data: ${e.response?.data}');
+        // Check if the error response contains a message from the backend
+        return left(e.response?.data['message'] ?? 'Unknown error');
+      } else {
+        // Error during the request (e.g., network issue)
+        return left('Network error or server did not respond');
+      }
+    } catch (e) {
+      return left(e.toString());
+    }
   }
 
   // static Future<bool> isValidToken() async {

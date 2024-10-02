@@ -1,5 +1,6 @@
 // ignore_for_file: use_key_in_widget_constructors, library_private_types_in_public_api, avoid_print
 
+import 'package:app_settings/app_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -40,7 +41,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             title: const Text('Onboard Intro'),
             trailing: const Icon(Icons.arrow_forward_ios),
             onTap: () {
-              // Navigate to Onboard Intro screen
+              context.go('/onboardingpages');
             },
           ),
           SwitchListTile(
@@ -50,6 +51,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
               setState(() {
                 _isPushNotificationEnabled = value;
               });
+              if (!value) {
+                print('Push Notification Disabled');
+              } else {
+                AppSettings.openAppSettings();
+              }
               print('Push Notification Enabled: $value');
             },
           ),

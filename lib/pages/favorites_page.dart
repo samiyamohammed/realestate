@@ -199,7 +199,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                         height: 150,
                         // width: 200,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                          borderRadius: const BorderRadius.all(Radius.circular(20)),
                           image: DecorationImage(
                             image: AssetImage(
                               house.image,

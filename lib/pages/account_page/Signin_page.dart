@@ -40,7 +40,7 @@ class _SignInPageState extends State<SignInPage> {
         if (state is AuthLoginFailure) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text('${state.errorMessage}'),
+              content: Text(state.errorMessage),
               backgroundColor: Colors.red,
             ),
           );
@@ -175,16 +175,24 @@ class _SignInPageState extends State<SignInPage> {
                               ));
                         }
                       }),
-                  const Padding(
+                  Padding(
                     padding:
-                        EdgeInsets.symmetric(horizontal: 50.0, vertical: 40),
+                        const EdgeInsets.symmetric(horizontal: 50.0, vertical: 40),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         SocialLoginButton(
-                            imagePath: "assets/images/google.png"),
-                        SocialLoginButton(imagePath: "assets/images/apple.png"),
-                        SocialLoginButton(imagePath: "assets/images/call.png"),
+                          imagePath: "assets/social_media_icons/google.svg",
+                          provider: 'google',
+                        ),
+                         SocialLoginButton(
+                          imagePath: "assets/images/apple.png",
+                          provider: 'apple',
+                        ),
+                         SocialLoginButton(
+                          imagePath: "assets/images/call.png",
+                          provider: 'call',
+                        ),
                       ],
                     ),
                   ),
