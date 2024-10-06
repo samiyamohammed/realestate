@@ -24,8 +24,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../models/propertydetail.dart';
 
 GoRouter router = GoRouter(
-  // initialLocation: '/home',
-  initialLocation: '/auth',
+  initialLocation: '/home',
+  // initialLocation: '/auth',
   routes: [
     GoRoute(
       path: '/home',

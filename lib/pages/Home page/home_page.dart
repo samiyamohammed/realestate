@@ -2,12 +2,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:logger/logger.dart';
 import 'package:real_estate_marketplace/bloc/BottomNavigationBloc.dart';
 import 'package:real_estate_marketplace/bloc/auth_bloc/auth_bloc.dart';
 import 'package:real_estate_marketplace/bloc/home_bloc.dart';
 import 'package:real_estate_marketplace/bloc/user_bloc/user_bloc.dart';
 import 'package:real_estate_marketplace/models/auth_response_model.dart';
 import 'package:real_estate_marketplace/pages/side_bar_menu.dart';
+import 'package:real_estate_marketplace/services/property/get_property_service.dart';
+import 'package:real_estate_marketplace/utility/show_snackbar.dart';
 import '../../widgets/bottom_navigation.dart';
 import '../../models/properties_list_model.dart';
 import '../../widgets/property_card.dart';
@@ -35,9 +38,17 @@ class _HomePageState extends State<HomePage> {
   List<Property> filteredProperties = properties;
   List<FeaturedProperty> filteredFeaturedProperties = featuredPropertyList;
 
+  GetPropertyService getPropertyService = GetPropertyService();
+
+  getProperties() async {
+    final response = await getPropertyService.getAllProperties();
+    Logger().d('response: $response');
+  }
+
   @override
   void initState() {
     super.initState();
+    getProperties();
     applyFilters();
   }
 
@@ -87,11 +98,12 @@ class _HomePageState extends State<HomePage> {
                     onTap: () {
                       // Implement navigation to profile page
                     },
-                    child:  Row(
+                    child: Row(
                       children: [
                         CircleAvatar(
-                          backgroundImage:
-                             state.user.avatar != null ? NetworkImage(state.user.avatar) : AssetImage('assets/images/profile_icon.png'),
+                          backgroundImage: state.user.avatar != null
+                              ? NetworkImage(state.user.avatar)
+                              : AssetImage('assets/images/profile_icon.png'),
                           radius: 16,
                         ),
                         SizedBox(width: 8),
