@@ -8,6 +8,7 @@ import 'package:real_estate_marketplace/bloc/favorite_bloc/favorite_bloc.dart';
 // import 'package:real_estate_marketplace/bloc/home_bloc.dart';
 import 'package:real_estate_marketplace/bloc/profile_bloc/profile_bloc.dart';
 import 'package:real_estate_marketplace/bloc/profile_bloc/profile_event.dart';
+import 'package:real_estate_marketplace/bloc/property/property_bloc.dart';
 import 'package:real_estate_marketplace/bloc/search_filter_bloc/search_filter_bloc.dart';
 import 'package:real_estate_marketplace/bloc/theme_bloc/theme_bloc.dart';
 import 'package:real_estate_marketplace/bloc/user_bloc/user_bloc.dart';
@@ -37,6 +38,7 @@ class RealEstateApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider(create: (context) => PropertyBloc()),
         BlocProvider(create: (context) => FavoritesBloc()),
         BlocProvider(create: (context) => ThemeBloc()),
         BlocProvider(create: (context) => HomeBloc()),

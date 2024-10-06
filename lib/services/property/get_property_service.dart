@@ -6,19 +6,20 @@ import 'package:real_estate_marketplace/models/property/property_model.dart';
 // import 'package:real_estate_marketplace/models/property/property_model.dart';
 
 class GetPropertyService {
-  Future<Either<void, String>> getAllProperties() async {
+  Future<Either<List<PropertyModel>?, String>> getAllProperties() async {
     try {
       final response = await dioInstance.get('/properties');
       if (response.statusCode == 200) {
         Logger().d('Get properties success');
         Logger().d(response.data['data']);
         Logger().d(response.data['data'].length);
-        List properties = response.data['data']
+        List<PropertyModel> properties = (response.data['data'] as List)
             .map((e) => PropertyModel.fromJson(e))
             .toList();
+
         Logger().d("Log after trying to convert the task");
-        Logger().d(properties);
-        return left(properties);
+        Logger().d(properties.runtimeType);
+        return left(properties as List<PropertyModel>);
       }
       throw Exception('Failed to get properties');
     } on DioException catch (e) {
