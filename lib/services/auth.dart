@@ -120,14 +120,14 @@ class Auth {
     required String email,
     required String google_id,
     required String? name,
-     String? avatar,
+    String? avatar,
   }) async {
     try {
       Logger().w('loginWithGoogle');
       final response = await dio.post('$baseUrl/api/auth/google', data: {
         'email': email,
         'google_id': google_id,
-        'name': name ?? "user" ,
+        'name': name ?? "user",
         'avatar': avatar,
       });
       Logger().d(response.data);

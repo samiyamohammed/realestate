@@ -3,8 +3,8 @@
     {
       "name": "so_nov22",
       "request": "launch",
-      "type": "dart",
-      "deviceId": "edge"
+      "type": "dart"
+      // "deviceId": "edge"
     }
   ]
 }
