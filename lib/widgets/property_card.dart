@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../models/properties_list_model.dart';
+import 'package:real_estate_marketplace/models/property/property_model.dart';
 
 class PropertyCard extends StatefulWidget {
-  final Property property;
+  final PropertyModel property;
   final bool showStatusTag;
 
   const PropertyCard({
@@ -22,8 +22,8 @@ class _PropertyCardState extends State<PropertyCard> {
   @override
   void initState() {
     super.initState();
-    isFavourite =
-        widget.property.isFavourite; // Initialize with the current state
+    // isFavourite =
+    //     widget.property.isFavourite; // Initialize with the current state
   }
 
   @override
@@ -44,7 +44,7 @@ class _PropertyCardState extends State<PropertyCard> {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15.0),
                 image: DecorationImage(
-                  image: AssetImage(widget.property.image),
+                  image: AssetImage(widget.property.propertyImages?[0] ?? ''),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -66,7 +66,7 @@ class _PropertyCardState extends State<PropertyCard> {
                   children: [
                     Expanded(
                       child: Text(
-                        widget.property.name,
+                        widget.property.propertyCategory.category ?? 'N/A',
                         style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
@@ -84,8 +84,8 @@ class _PropertyCardState extends State<PropertyCard> {
                       ),
                       onPressed: () {
                         setState(() {
-                          isFavourite = !isFavourite;
-                          widget.property.isFavourite = isFavourite;
+                          // isFavourite = !isFavourite;
+                          // widget.property.isFavourite = isFavourite;
                         });
                       },
                     ),
@@ -105,7 +105,7 @@ class _PropertyCardState extends State<PropertyCard> {
                       const SizedBox(width: 4),
                       Expanded(
                         child: Text(
-                          widget.property.locationName,
+                          widget.property.propertyAddress.city ?? "N/A",
                           style: const TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.bold,
@@ -131,7 +131,7 @@ class _PropertyCardState extends State<PropertyCard> {
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        '${widget.property.price.toStringAsFixed(2)} ETB',
+                        '${widget.property.sellingPrice} ETB',
                         style: const TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.bold,
