@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:real_estate_marketplace/models/property/property_model.dart';
 import '../models/featured_property_model.dart';
 
 class FeaturedPropertyCard extends StatefulWidget {
-  final FeaturedProperty property;
+  final PropertyModel property;
   final bool showStatusTag;
 
   const FeaturedPropertyCard({
@@ -22,8 +23,8 @@ class _FeaturedPropertyCardState extends State<FeaturedPropertyCard> {
   @override
   void initState() {
     super.initState();
-    isFavourite =
-        widget.property.isFavourite; // Initialize with the current state
+    // isFavourite =
+    //     widget.property.isFavourite; // Initialize with the current state
   }
 
   @override
@@ -45,14 +46,14 @@ class _FeaturedPropertyCardState extends State<FeaturedPropertyCard> {
                   Radius.circular(15.0),
                 ),
                 image: DecorationImage(
-                  image: AssetImage(widget.property.image),
+                  image: AssetImage(widget.property.propertyImages?[0] ?? ''),
                   fit: BoxFit.cover,
                 ),
               ),
               child: Container(
                 alignment: Alignment.topRight,
                 padding: const EdgeInsets.all(3.0),
-                child: widget.showStatusTag && widget.property.status.isNotEmpty
+                child: widget.showStatusTag && widget.property.status!.isNotEmpty
                     ? Container(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 8.0, vertical: 4.0),
@@ -68,7 +69,7 @@ class _FeaturedPropertyCardState extends State<FeaturedPropertyCard> {
                           ],
                         ),
                         child: Text(
-                          widget.property.status,
+                          widget.property.status ?? "N/A",
                           style: const TextStyle(
                             color: Color.fromARGB(255, 0, 0, 0),
                             fontSize: 10,
@@ -90,7 +91,7 @@ class _FeaturedPropertyCardState extends State<FeaturedPropertyCard> {
                   children: [
                     Expanded(
                       child: Text(
-                        widget.property.name,
+                        widget.property.propertyCategory.category ?? 'N/A',
                         style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
@@ -106,10 +107,10 @@ class _FeaturedPropertyCardState extends State<FeaturedPropertyCard> {
                             : const Color.fromARGB(255, 255, 0, 0),
                       ),
                       onPressed: () {
-                        setState(() {
-                          isFavourite = !isFavourite;
-                          widget.property.isFavourite = isFavourite;
-                        });
+                        // setState(() {
+                        //   isFavourite = !isFavourite;
+                        //   widget.property.isFavourite = isFavourite;
+                        // });
                       },
                     ),
                   ],
@@ -124,7 +125,7 @@ class _FeaturedPropertyCardState extends State<FeaturedPropertyCard> {
                     const SizedBox(width: 4),
                     Expanded(
                       child: Text(
-                        widget.property.locationName,
+                        widget.property.propertyAddress.city ?? "N/A",
                         style: const TextStyle(
                           fontSize: 12,
                           color: Colors.grey,
@@ -141,7 +142,7 @@ class _FeaturedPropertyCardState extends State<FeaturedPropertyCard> {
                     const SizedBox(width: 4),
                     Expanded(
                       child: Text(
-                        '${widget.property.price.toStringAsFixed(2)} ETB',
+                        '${widget.property.pricePerSquare} ETB',
                         style: const TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.bold,

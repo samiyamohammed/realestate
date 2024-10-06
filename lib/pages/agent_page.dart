@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:real_estate_marketplace/bloc/property/property_bloc.dart';
 import 'package:real_estate_marketplace/models/properties_list_model.dart';
+import 'package:real_estate_marketplace/models/property/property_model.dart';
+import 'package:real_estate_marketplace/pages/search_filter_page.dart';
 import 'package:real_estate_marketplace/widgets/property_card.dart';
 
 class AgentPage extends StatelessWidget {
@@ -8,7 +12,7 @@ class AgentPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Property> filteredProperties = properties;
+    List<PropertyModel> filteredProperties = context.watch<PropertyBloc>().state;
 
     return Scaffold(
       appBar: AppBar(),
