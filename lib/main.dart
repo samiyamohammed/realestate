@@ -17,6 +17,7 @@ import 'package:real_estate_marketplace/config/router.dart';
 // import 'package:real_estate_marketplace/pages/agent_page.dart';
 // ignore: unused_import
 import 'package:real_estate_marketplace/pages/favorites_page.dart';
+import 'package:real_estate_marketplace/theme/theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:real_estate_marketplace/pages/home_page.dart';
 // ignore: unused_import
@@ -53,7 +54,7 @@ class RealEstateApp extends StatelessWidget {
           return MaterialApp.router(
             // return MaterialApp(
             debugShowCheckedModeBanner: false,
-            theme: themeState.themeData,
+            theme: lightTheme,
             // home: const AgentPage(),
             routerConfig:
                 router, // Use the router from the imported router file

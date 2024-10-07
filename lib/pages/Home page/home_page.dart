@@ -1,4 +1,3 @@
-// ignore_for_file: library_private_types_in_public_api
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -231,12 +230,11 @@ class _HomePageState extends State<HomePage> {
                     const SizedBox(height: 10),
 
                     // Featured Properties Section
-                    const Padding(
+                    Padding(
                       padding: EdgeInsets.all(8.0),
                       child: Text(
                         'Featured Properties',
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
+                        style: Theme.of(context).textTheme.titleMedium,
                       ),
                     ),
                     SizedBox(
@@ -312,12 +310,11 @@ class _HomePageState extends State<HomePage> {
 
                     // For Rent Section
                     // For Rent Section
-                    const Padding(
+                    Padding(
                       padding: EdgeInsets.all(8.0),
                       child: Text(
                         'For Rent',
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
+                        style: Theme.of(context).textTheme.titleMedium,
                       ),
                     ),
                     SizedBox(
@@ -393,12 +390,11 @@ class _HomePageState extends State<HomePage> {
                     ),
 
                     // For Sale Section
-                    const Padding(
+                    Padding(
                       padding: EdgeInsets.all(8.0),
                       child: Text(
                         'For Sale',
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
+                        style: Theme.of(context).textTheme.titleMedium,
                       ),
                     ),
                     SizedBox(
@@ -475,12 +471,11 @@ class _HomePageState extends State<HomePage> {
 
                     // For Investment Section
                     // For Investment Section
-                    const Padding(
+                    Padding(
                       padding: EdgeInsets.all(8.0),
                       child: Text(
                         'For Investment',
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
+                        style: Theme.of(context).textTheme.titleMedium,
                       ),
                     ),
                     SizedBox(
