@@ -10,6 +10,7 @@ class FaqPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('FAQ'),
+        centerTitle: true,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
