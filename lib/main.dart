@@ -11,6 +11,7 @@ import 'package:real_estate_marketplace/bloc/profile_bloc/profile_event.dart';
 import 'package:real_estate_marketplace/bloc/property/property_bloc.dart';
 import 'package:real_estate_marketplace/bloc/search_filter_bloc/search_filter_bloc.dart';
 import 'package:real_estate_marketplace/bloc/theme_bloc/theme_bloc.dart';
+import 'package:real_estate_marketplace/bloc/theme_bloc/theme_state.dart';
 import 'package:real_estate_marketplace/bloc/user_bloc/user_bloc.dart';
 import 'package:real_estate_marketplace/config/router.dart';
 // import 'package:real_estate_marketplace/pages/account_page/account_page.dart';
@@ -41,7 +42,7 @@ class RealEstateApp extends StatelessWidget {
       providers: [
         BlocProvider(create: (context) => PropertyBloc()),
         BlocProvider(create: (context) => FavoritesBloc()),
-        BlocProvider(create: (context) => ThemeBloc()),
+        BlocProvider(create: (context) => ThemeBloc(lightTheme: lightTheme, darkTheme: darkTheme)),
         BlocProvider(create: (context) => HomeBloc()),
         BlocProvider(create: (context) => AuthBloc()),
         BlocProvider(create: (context) => ProfileBloc()..add(LoadProfile())),
@@ -49,12 +50,23 @@ class RealEstateApp extends StatelessWidget {
         BlocProvider(create: (context) => SearchFilterBloc()),
         BlocProvider(create: (context) => UserBloc()),
       ],
-      child: BlocBuilder<ThemeBloc, ThemeState>(
+      child: BlocBuilder<ThemeBloc, AppThemeState>(
         builder: (context, themeState) {
+          ThemeData appTheme;
+
+          if (themeState is LightThemeState) {
+            appTheme = themeState.themeData;
+          }else if (themeState is DarkThemeState) {
+            appTheme = themeState.themeData;
+          } else  {
+            appTheme = ThemeData( brightness:  WidgetsBinding.instance.window.platformBrightness);
+          }
+
           return MaterialApp.router(
             // return MaterialApp(
             debugShowCheckedModeBanner: false,
-            theme: lightTheme,
+            themeMode: ThemeMode.dark,
+            theme: appTheme,
             // home: const AgentPage(),
             routerConfig:
                 router, // Use the router from the imported router file

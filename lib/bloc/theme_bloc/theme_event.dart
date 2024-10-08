@@ -1,6 +1,7 @@
-part of 'theme_bloc.dart';
 
-@immutable
-sealed class ThemeEvent {}
 
-class ToggleThemeEvent extends ThemeEvent {}
+sealed class ToggleThemeEvent {}
+
+class ToggleLightTheme extends ToggleThemeEvent {}
+class ToggleDarkTheme extends ToggleThemeEvent {}
+
