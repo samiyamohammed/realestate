@@ -45,14 +45,14 @@ android {
     // }
 
 
-    signingConfigs{
-        debug{
-            keyAlias 'realest'
-            keyPassword 'code .'
-            storeFile file('./upload-keystore.jks')
-            storePassword 'code .'
-        }
-    }
+    // signingConfigs{
+    //     debug{
+    //         keyAlias 'realest'
+    //         keyPassword 'code .'
+    //         storeFile file('./upload-keystore.jks')
+    //         storePassword 'code .'
+    //     }
+    // }
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
