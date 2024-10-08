@@ -7,6 +7,8 @@ import 'package:real_estate_marketplace/bloc/auth_bloc/auth_bloc.dart';
 import 'package:real_estate_marketplace/bloc/home_bloc.dart';
 import 'package:real_estate_marketplace/bloc/property/property_bloc.dart';
 import 'package:real_estate_marketplace/bloc/property/property_event.dart';
+import 'package:real_estate_marketplace/bloc/theme_bloc/theme_bloc.dart';
+import 'package:real_estate_marketplace/bloc/theme_bloc/theme_state.dart';
 import 'package:real_estate_marketplace/bloc/user_bloc/user_bloc.dart';
 import 'package:real_estate_marketplace/models/auth_response_model.dart';
 import 'package:real_estate_marketplace/models/property/property_model.dart';
@@ -48,11 +50,12 @@ class _HomePageState extends State<HomePage> {
     response.fold(
         (l) => {context.read<PropertyBloc>().add(FetchedPropertyListEvent(l!))},
         (r) => {
-              showSnackBar(
-                context,
-                r,
-                Colors.red,
-              )
+              Logger().e(r.toString())
+              // showSnackBar(
+              //   context,
+              //   r,
+              //   Colors.red,
+              // )
             });
   }
 
@@ -94,8 +97,19 @@ class _HomePageState extends State<HomePage> {
       child: Scaffold(
         key: _scaffoldKey,
         appBar: AppBar(
+          backgroundColor: Theme.of(context).canvasColor,
           leading: IconButton(
-            icon: const Icon(Icons.menu),
+            icon: BlocConsumer<ThemeBloc, AppThemeState>(
+              listener: (context, state) {
+                // TODO: implement listener
+              },
+              builder: (context, state) {
+                return Icon(
+                  Icons.menu,
+                  color: state is LightThemeState ? Colors.black : Colors.white,
+                );
+              },
+            ),
             onPressed: () {
               _scaffoldKey.currentState?.openDrawer();
             },

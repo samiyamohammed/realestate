@@ -9,13 +9,13 @@ class PropertyModel {
   final PropertyAddressModel propertyAddress;
   final String? title;
   final String? description;
-  final String? amenities;
+  final List<String>? amenities;
   final String? quantities;
   final String? floor;
   final String? area;
   final String? status;
   final bool? isFeatured;
-  final String? neighborhood;
+  final List<String>? neighborhood;
   final String? livingRooms;
   final String? numberOfBedrooms;
   final String? numberOfBathrooms;
@@ -25,10 +25,10 @@ class PropertyModel {
   final String? furnishingState;
   final String? kitchenAppliances;
   final String? laundryFacilities;
-  final String? heatingType;
-  final String? coolingType;
-  final String? waterSupply;
-  final String? electricitySupply;
+  final List<String>? heatingType;
+  final List<String>? coolingType;
+  final List<String>? waterSupply;
+  final List<String>? electricitySupply;
   final String? securitySystem;
   final String? securitySystemDetail;
   final String? electricityAccess;
@@ -40,7 +40,7 @@ class PropertyModel {
   final String? googleLink;
   final String? videoLink;
   final String? virtualTourLink;
-  final String? parking;
+  final List<String>? parking;
   final List<String>? propertyImages;
   final String? propertyLicense;
   final bool? isVerified;
@@ -99,47 +99,51 @@ class PropertyModel {
             PropertyCategoryModel.fromJson(json['property_Category']),
         propertyAddress:
             PropertyAddressModel.fromJson(json['property_address']),
-        title: json['title'],
-        description: json['description'],
-        amenities: json['amenities'],
-        quantities: json['quantities'],
-        floor: json['floor'],
-        area: json['area'],
-        status: json['status'],
+        title: json['title'] as String?,
+        description: json['description'] as String?,
+        amenities: (json['amenities'] as List<dynamic>?)?.cast<String>(),
+        quantities: json['quantities'] as String?,
+        floor: json['floor'] as String?,
+        area: json['area'] as String?,
+        status: json['status'] as String?,
         isFeatured: json['is_featured'] == '1',
-        neighborhood: json['neighborhood'],
-        livingRooms: json['living_rooms'],
-        numberOfBedrooms: json['number_of_bedrooms'],
-        numberOfBathrooms: json['number_of_bathrooms'],
-        kitchens: json['kitchens'],
-        ageOfBuilding: json['age_of_building'],
-        numberOfBalconies: json['number_of_balconies'],
-        furnishingState: json['furnishing_state'],
-        kitchenAppliances: json['kitchen_appliances'],
-        laundryFacilities: json['laundry_facilities'],
-        heatingType: json['heating_type'],
-        coolingType: json['cooling_type'],
-        waterSupply: json['water_supply'],
-        electricitySupply: json['electricity_supply'],
-        securitySystem: json['security_system'],
-        securitySystemDetail: json['security_system_detail'],
-        electricityAccess: json['electricity_access'],
-        parkingSize: json['parking_size'],
-        pricePerSquare: json['price_per_square'],
-        sellingPrice: json['selling_price'],
-        computingPrice: json['computing_price'],
-        monthlyRentPrice: json['monthly_rent_price'],
-        googleLink: json['google_link'],
-        videoLink: json['video_link'],
-        virtualTourLink: json['virtual_tour_link'],
-        parking: json['parking'],
-        propertyImages: (json['property_images'] is List)
-          ? List<String>.from(json['property_images'])
-          : json['property_images'] != null ? [json['property_images']] : null,
-        propertyLicense: json['property_license'],
+        neighborhood: (json['neighborhood'] as List<dynamic>?)?.cast<String>(),
+        livingRooms: json['living_rooms'] as String?,
+        numberOfBedrooms: json['number_of_bedrooms'] as String?,
+        numberOfBathrooms: json['number_of_bathrooms'] as String?,
+        kitchens: json['kitchens'] as String?,
+        ageOfBuilding: json['age_of_building'] as String?,
+        numberOfBalconies: json['number_of_balconies'] as String?,
+        furnishingState: json['furnishing_state'] as String?,
+        kitchenAppliances: json['kitchen_appliances'] as String?,
+        laundryFacilities: json['laundry_facilities'] as String?,
+        heatingType: (json['heating_type'] as List<dynamic>?)?.cast<String>(),
+        coolingType: (json['cooling_type'] as List<dynamic>?)?.cast<String>(),
+        waterSupply: (json['water_supply'] as List<dynamic>?)?.cast<String>(),
+        electricitySupply:
+            (json['electricity_supply'] as List<dynamic>?)?.cast<String>(),
+        securitySystem: json['security_system'] as String?,
+        securitySystemDetail: json['security_system_detail'] as String?,
+        electricityAccess: json['electricity_access'] as String?,
+        parkingSize: json['parking_size'] as String?,
+        pricePerSquare: json['price_per_square'] as String?,
+        sellingPrice: json['selling_price'] as String?,
+        computingPrice: json['computing_price'] as String?,
+        monthlyRentPrice: json['monthly_rent_price'] as String?,
+        googleLink: json['google_link'] as String?,
+        videoLink: json['video_link'] as String?,
+        virtualTourLink: json['virtual_tour_link'] as String?,
+        parking: (json['parking'] as List<dynamic>?)?.cast<String>(),
+        propertyImages:
+            (json['property_images'] as List<dynamic>?)?.cast<String>(),
+        propertyLicense: json['property_license'] as String?,
         isVerified: json['is_verified'] == '1',
-        createdAt: DateTime.parse(json['created_at']),
-        updatedAt: DateTime.parse(json['updated_at']),
+        createdAt: json['created_at'] != null
+            ? DateTime.parse(json['created_at'])
+            : null,
+        updatedAt: json['updated_at'] != null
+            ? DateTime.parse(json['updated_at'])
+            : null,
       );
 
   Map<String, dynamic> toJson() => {
@@ -181,7 +185,7 @@ class PropertyModel {
         'property_images': propertyImages,
         'property_license': propertyLicense,
         'is_verified': isVerified,
-        'created_at': createdAt!.toIso8601String(),
-        'updated_at': updatedAt!.toIso8601String(),
+        'created_at': createdAt?.toIso8601String(),
+        'updated_at': updatedAt?.toIso8601String(),
       };
 }
