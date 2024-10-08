@@ -13,6 +13,7 @@ import 'package:real_estate_marketplace/bloc/user_bloc/user_bloc.dart';
 import 'package:real_estate_marketplace/models/auth_response_model.dart';
 import 'package:real_estate_marketplace/models/property/property_model.dart';
 import 'package:real_estate_marketplace/pages/side_bar_menu.dart';
+import 'package:real_estate_marketplace/services/property/get_property_category.dart';
 import 'package:real_estate_marketplace/services/property/get_property_service.dart';
 import 'package:real_estate_marketplace/utility/show_snackbar.dart';
 import 'package:real_estate_marketplace/widgets/empty_property_card.dart';
@@ -44,8 +45,11 @@ class _HomePageState extends State<HomePage> {
   List<FeaturedProperty> filteredFeaturedProperties = featuredPropertyList;
 
   GetPropertyService getPropertyService = GetPropertyService();
+  GetPropertyCategoryService getPropertyCategoryService =
+      GetPropertyCategoryService();
 
   getProperties() async {
+    final res = await getPropertyCategoryService.getPropertyCategory();
     final response = await getPropertyService.getAllProperties();
     response.fold(
         (l) => {context.read<PropertyBloc>().add(FetchedPropertyListEvent(l!))},
