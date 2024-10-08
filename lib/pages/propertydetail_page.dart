@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:real_estate_marketplace/models/propertydetail.dart';
+import 'package:real_estate_marketplace/models/property/property_model.dart';
+// import 'package:real_estate_marketplace/models/propertydetail.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:real_estate_marketplace/pages/Home%20page/for_sale_properties.dart';
 import 'package:video_player/video_player.dart';
@@ -8,7 +9,7 @@ import 'package:video_player/video_player.dart';
 import '../models/properties_list_model.dart';
 
 class PropertyDetailPage extends StatefulWidget {
-  final PropertySample property;
+  final PropertyModel property;
 
   const PropertyDetailPage({super.key, required this.property});
 
@@ -29,7 +30,7 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
   void initState() {
     super.initState();
     _videoController =
-        VideoPlayerController.networkUrl(Uri.parse(widget.property.videoLink))
+        VideoPlayerController.networkUrl(Uri.parse(widget.property.videoLink!))
           ..initialize().then((_) {
             setState(() {});
           });
@@ -65,16 +66,18 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
           ),
           IconButton(
             icon: Icon(
-              widget.property.isFavourite
+              // widget.property.isFavorited!
+              widget.property.isFeatured!
                   ? Icons.favorite
                   : Icons.favorite_border,
-              color: widget.property.isFavourite
+              // color: widget.property.isFavorited!
+              color: widget.property.isFeatured!
                   ? Colors.red
                   : const Color.fromARGB(255, 255, 0, 0),
             ),
             onPressed: () {
               setState(() {
-                widget.property.isFavourite = !widget.property.isFavourite;
+                // widget.property.isFavourite = !widget.property.isFavourite;
               });
             },
           ),
@@ -104,7 +107,7 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
                       enlargeCenterPage: true,
                       enableInfiniteScroll: true,
                     ),
-                    items: widget.property.images.map((image) {
+                    items: widget.property.propertyImages!.map((image) {
                       return ClipRRect(
                         borderRadius: BorderRadius.circular(8.0),
                         child: Image.network(
@@ -122,7 +125,8 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        widget.property.name,
+                        // widget.property.name,
+                        "property name",
                         style: const TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
@@ -136,7 +140,7 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
                           borderRadius: BorderRadius.circular(16),
                         ),
                         child: Text(
-                          widget.property.status,
+                          widget.property.status!,
                           style: const TextStyle(color: Colors.black),
                         ),
                       ),
@@ -155,7 +159,8 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    widget.property.location,
+                    // widget.property.location!,
+                    'location',
                     style: TextStyle(
                       fontSize: 16,
                       color: Colors.grey[600],
@@ -187,7 +192,8 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
                         children: [
                           const Icon(Icons.square_foot),
                           const SizedBox(width: 4),
-                          Text('${widget.property.pricePerSquareMeter} Sq ft'),
+                          Text('${widget.property.area} Sq ft'),
+                          // Text('${widget.property.pricePerSquare} Sq ft'),
                         ],
                       ),
                     ],
@@ -199,16 +205,20 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
                     spacing: 8,
                     runSpacing: 8,
                     children: [
-                      if (widget.property.hasDiscount)
-                        _buildInfoChip(
-                            'Discount: ${widget.property.sellingPrice - widget.property.computingPrice} ETB',
-                            Icons.discount),
-                      _buildInfoChip('1,450 sqft lot', Icons.aspect_ratio),
-                      _buildInfoChip('Real estate', Icons.business),
+                      // if (widget.property.hasDiscount)
+                      // if (widget.property.hasDiscount)
                       _buildInfoChip(
-                          '${widget.property.pricePerSquareMeter} / sqft',
+                          'Discount: ${double.parse(widget.property.sellingPrice!) - double.parse(widget.property.computingPrice!)} ETB',
+                          Icons.discount),
+                      _buildInfoChip('${widget.property.area} sqft lot',
+                          Icons.aspect_ratio),
+                      _buildInfoChip(
+                          '${widget.property.propertyCategory.category}',
+                          Icons.business),
+                      _buildInfoChip('${widget.property.pricePerSquare} / sqft',
                           Icons.attach_money),
-                      _buildInfoChip('Built in ${widget.property.builtYear}',
+                      _buildInfoChip(
+                          'Built in ${widget.property.ageOfBuilding}',
                           Icons.construction),
                       _buildInfoChip('HOA', Icons.home_work),
                     ],
@@ -249,7 +259,7 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
                               maxHeight: isExpanded ? double.infinity : 60.0,
                             ),
                             child: Text(
-                              widget.property.description,
+                              widget.property.description!,
                               style: const TextStyle(fontSize: 16),
                               maxLines: isExpanded ? null : maxLines,
                               overflow: isExpanded

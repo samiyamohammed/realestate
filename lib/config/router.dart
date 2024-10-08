@@ -1,6 +1,7 @@
 // ignore_for_file: unused_import
 
 import 'package:go_router/go_router.dart';
+import 'package:real_estate_marketplace/models/property/property_model.dart';
 import 'package:real_estate_marketplace/pages/Home%20page/home_page.dart';
 import 'package:real_estate_marketplace/pages/aboutus_page.dart';
 import 'package:real_estate_marketplace/pages/account_page/account_page.dart';
@@ -87,10 +88,15 @@ GoRouter router = GoRouter(
       builder: (context, state) => const AccountPage(),
     ),
 
-    // GoRoute(
-    //   path: '/propertydetail',
-    //   builder: (context, state) => const PropertyDetailPage(),
-    // ),
+    GoRoute(
+      path: '/propertydetail',
+      // builder: (context, state) => const PropertyDetailPage(property: ,),
+      builder: (context, state) {
+        // Extract the scholarship from the state extra
+        final property = state.extra as PropertyModel;
+        return PropertyDetailPage(property: property);
+      },
+    ),
     GoRoute(
       path: '/onboardingpages',
       builder: (context, state) => const OnboardingPage(),

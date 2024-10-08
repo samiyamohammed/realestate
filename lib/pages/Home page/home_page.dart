@@ -335,6 +335,7 @@ class _HomePageState extends State<HomePage> {
                                 // Check if this is the last item, which will be the "See All" button
                                 if (index == forRentProperties.length ||
                                     index == 5) {
+                                  //todo ****
                                   return GestureDetector(
                                     onTap: () {
                                       // Implement navigation to the page with all "For Rent" properties
@@ -459,14 +460,22 @@ class _HomePageState extends State<HomePage> {
                                 }
 
                                 // Display the For Sale property cards
-                                return Container(
-                                  width: 150,
-                                  margin: const EdgeInsets.symmetric(
-                                      horizontal: 8.0),
-                                  child: PropertyCard(
-                                    property: forSaleProperties[index],
-                                    showStatusTag:
-                                        false, // Hide status tag in For Sale section
+                                return GestureDetector(
+                                  onTap: () {
+                                    context.push(
+                                      '/propertydetail',
+                                      extra: forSaleProperties[index],
+                                    );
+                                  },
+                                  child: Container(
+                                    width: 150,
+                                    margin: const EdgeInsets.symmetric(
+                                        horizontal: 8.0),
+                                    child: PropertyCard(
+                                      property: forSaleProperties[index],
+                                      showStatusTag:
+                                          false, // Hide status tag in For Sale section
+                                    ),
                                   ),
                                 );
                               },
