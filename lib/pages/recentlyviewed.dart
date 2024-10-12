@@ -45,3 +45,48 @@
 //     );
 //   }
 // }
+
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:real_estate_marketplace/models/properties_list_model.dart';
+import 'package:real_estate_marketplace/widgets/vertical_listing.dart';
+
+class RecentlyViewedPropertiesPage extends StatelessWidget {
+  const RecentlyViewedPropertiesPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Recently Viewed Properties'),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            context.go('/profile');
+          },
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              // ignore: avoid_print
+              print('Clear button pressed');
+            },
+            child: Text(
+              'CLEAR',
+              style: Theme.of(context).textTheme.labelLarge,
+            ),
+          ),
+        ],
+      ),
+      body: ListView.builder(
+        itemCount: properties.length,
+        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+        itemBuilder: (context, index) {
+          return PropertyCard(
+            property: properties[index],
+          );
+        },
+      ),
+    );
+  }
+}
