@@ -6,6 +6,17 @@ import 'package:real_estate_marketplace/pages/Home%20page/home_page.dart';
 import 'package:real_estate_marketplace/pages/aboutus_page.dart';
 import 'package:real_estate_marketplace/pages/account_page/account_page.dart';
 import 'package:real_estate_marketplace/pages/account_page/Signin_page.dart';
+import 'package:real_estate_marketplace/pages/add%20property/add_property_page_1.dart';
+import 'package:real_estate_marketplace/pages/add%20property/add_property_page_2_commercial.dart';
+import 'package:real_estate_marketplace/pages/add%20property/add_property_page_2_lease.dart';
+import 'package:real_estate_marketplace/pages/add%20property/add_property_page_2_residential.dart';
+import 'package:real_estate_marketplace/pages/add%20property/add_property_page_3.dart';
+import 'package:real_estate_marketplace/pages/add%20property/add_property_page_4.dart';
+import 'package:real_estate_marketplace/pages/add%20property/add_property_page_5.dart';
+import 'package:real_estate_marketplace/pages/add%20property/add_property_page_6.dart';
+import 'package:real_estate_marketplace/pages/add%20property/add_property_page_7.dart';
+import 'package:real_estate_marketplace/pages/add%20property/add_property_page_8.dart';
+import 'package:real_estate_marketplace/pages/add%20property/add_property_page_9.dart';
 
 import 'package:real_estate_marketplace/pages/draft_properties_page.dart';
 import 'package:real_estate_marketplace/pages/faq_page.dart';
@@ -106,7 +117,52 @@ GoRouter router = GoRouter(
       path: '/auth',
       name: '/auth',
       builder: (context, state) => AccountPage(),
-    )
+    ),
+    GoRoute(
+      path: '/addproperty',
+      builder: (context, state) => const AddPropertyPage(),
+    ),
+    GoRoute(
+      path: '/addpropertyres',
+      builder: (context, state) => const AddPropertyPageres(),
+    ),
+    GoRoute(
+      path: '/addpropertycom',
+      builder: (context, state) => const AddPropertyPagecom(),
+    ),
+    GoRoute(
+      path: '/addpropertylease',
+      builder: (context, state) => const AddPropertyPagelease(),
+    ),
+    GoRoute(
+      path: '/addproperty3',
+      builder: (context, state) => AddPropertyPage3(),
+    ),
+    GoRoute(
+      path: '/addproperty4',
+      builder: (context, state) => AddPropertyPage4(),
+    ),
+    GoRoute(
+      path: '/addproperty5',
+      builder: (context, state) => AddPropertyPage5(),
+    ),
+    GoRoute(
+      path: '/addproperty6',
+      builder: (context, state) => AddPropertyPage6(),
+    ),
+    GoRoute(
+      path: '/addproperty7',
+      builder: (context, state) => AddPropertyPage7(),
+    ),
+    GoRoute(
+      path: '/addproperty8',
+      builder: (context, state) => AddPropertyPage8(),
+    ),
+
+    GoRoute(
+      path: '/addproperty9',
+      builder: (context, state) => AddPropertyPage9(),
+    ),
     // Add other routes here as needed
   ],
 );
