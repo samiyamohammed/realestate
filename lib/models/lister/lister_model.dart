@@ -1,77 +1,82 @@
-import 'package:real_estate_marketplace/models/lister/lister_user_model.dart';
-
 class ListerModel {
-  final int id;
-  final ListerUserModel user;
-  final String? agencyName;
-  final bool isVerified;
-  final String? bio;
-  final String? solledOrRentedHouse;
-  final String? status;
-  final DateTime? createdAt;
+  int? id;
+  User? user;
+  String? agencyName;
+  String? isVerified;
+  String? bio;
+  String? license;
+  String? isVisible;
+  String? status;
+  String? createdAt;
+  String? updatedAt;
 
+  ListerModel(
+      {this.id,
+      required this.user,
+      this.agencyName,
+      this.isVerified,
+      this.bio,
+      this.license,
+      this.isVisible,
+      this.status,
+      this.createdAt,
+      this.updatedAt});
 
-  const ListerModel({
-    required this.id,
-    this.agencyName,
-    required this.user,
-    this.isVerified = false,
-    this.bio,
-    this.solledOrRentedHouse,
-    this.status,
-    this.createdAt,
-  });
-
-
-  factory ListerModel.fromJson(Map<String, dynamic> json) => ListerModel(
-    id: json['id'],
-    user: ListerUserModel.fromJson(json['user']),
-    agencyName: json['agency_name'],
-    isVerified: json['is_verified'] == '1',
-    bio: json['bio'],
-    solledOrRentedHouse: json['solled_or_rented_house'],
-    status: json['status'],
-    createdAt: DateTime.parse(json['created_at']),
-  );
-
-  Map<String, dynamic> toJson() => {
-    'id': id,
-    'user': user.toJson(),
-    'agency_name': agencyName,
-    'is_verified': isVerified,
-    'bio': bio,
-    'solled_or_rented_house': solledOrRentedHouse,
-    'status': status,
-    'created_at': createdAt!.toIso8601String(),
-  };
-
-  ListerModel copyWith({
-    int? id,
-    ListerUserModel? user,
-    String? agencyName,
-    bool? isVerified,
-    String? bio,
-    String? solledOrRentedHouse,
-    String? status,
-    DateTime? createdAt,
-  }) {
-    return ListerModel(
-      id: id ?? this.id,
-      user: user ?? this.user,
-      agencyName: agencyName ?? this.agencyName,
-      isVerified: isVerified ?? this.isVerified,
-      bio: bio ?? this.bio,
-      solledOrRentedHouse: solledOrRentedHouse ?? this.solledOrRentedHouse,
-      status: status ?? this.status,
-      createdAt: createdAt ?? this.createdAt,
-    );
+  ListerModel.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    user = User.fromJson(json['user']);
+    agencyName = json['agency_name'];
+    isVerified = json['is_verified'];
+    bio = json['bio'];
+    license = json['license'];
+    isVisible = json['is_visible'];
+    status = json['status'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
   }
 
-  @override
-  String toString() {
-    return 'ListerModel(id: $id, user: $user, agencyName: $agencyName, isVerified: $isVerified, bio: $bio, solledOrRentedHouse: $solledOrRentedHouse, status: $status, createdAt: $createdAt)';
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    if (this.user != null) {
+      data['user'] = this.user!.toJson();
+    }
+    data['agency_name'] = this.agencyName;
+    data['is_verified'] = this.isVerified;
+    data['bio'] = this.bio;
+    data['license'] = this.license;
+    data['is_visible'] = this.isVisible;
+    data['status'] = this.status;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
+    return data;
   }
-
-  
 }
 
+class User {
+  String? name;
+  String? email;
+  String? phone;
+  String? avatar;
+  String? role;
+
+  User({this.name, this.email, this.phone, this.avatar, this.role});
+
+  User.fromJson(Map<String, dynamic> json) {
+    name = json['name'];
+    email = json['email'];
+    phone = json['phone'];
+    avatar = json['avatar'];
+    role = json['role'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['name'] = this.name;
+    data['email'] = this.email;
+    data['phone'] = this.phone;
+    data['avatar'] = this.avatar;
+    data['role'] = this.role;
+    return data;
+  }
+}

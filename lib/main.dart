@@ -2,13 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:real_estate_marketplace/bloc/BottomNavigationBloc.dart';
 import 'package:real_estate_marketplace/bloc/auth_bloc/auth_bloc.dart';
+import 'package:real_estate_marketplace/bloc/bloc_category/category_bloc.dart';
+import 'package:real_estate_marketplace/bloc/bloc_category/category_event.dart';
+import 'package:real_estate_marketplace/bloc/bloc_property/property_event.dart';
 import 'package:real_estate_marketplace/bloc/home_bloc.dart';
 // import 'package:real_estate_marketplace/config/router.dart';
 import 'package:real_estate_marketplace/bloc/favorite_bloc/favorite_bloc.dart';
 // import 'package:real_estate_marketplace/bloc/home_bloc.dart';
 import 'package:real_estate_marketplace/bloc/profile_bloc/profile_bloc.dart';
 import 'package:real_estate_marketplace/bloc/profile_bloc/profile_event.dart';
-import 'package:real_estate_marketplace/bloc/property/property_bloc.dart';
+import 'package:real_estate_marketplace/bloc/bloc_property/property_bloc.dart';
 import 'package:real_estate_marketplace/bloc/search_filter_bloc/search_filter_bloc.dart';
 import 'package:real_estate_marketplace/bloc/theme_bloc/theme_bloc.dart';
 import 'package:real_estate_marketplace/bloc/theme_bloc/theme_state.dart';
@@ -18,6 +21,7 @@ import 'package:real_estate_marketplace/config/router.dart';
 // import 'package:real_estate_marketplace/pages/agent_page.dart';
 // ignore: unused_import
 import 'package:real_estate_marketplace/pages/favorites_page.dart';
+import 'package:real_estate_marketplace/services/cache/cache_service.dart';
 import 'package:real_estate_marketplace/theme/theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:real_estate_marketplace/pages/home_page.dart';
@@ -28,6 +32,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences prefs = await SharedPreferences.getInstance();
   bool isOnboardingCompleted = prefs.getBool('onboardingCompleted') ?? false;
+  await CacheService.setupCache();
   runApp(RealEstateApp(isOnboardingCompleted: isOnboardingCompleted));
 }
 
@@ -40,9 +45,18 @@ class RealEstateApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => PropertyBloc()),
+        BlocProvider(
+          create: (context) => PropertyBloc()..add(FetchedPropertyListEvent()),
+          lazy: false,
+        ),
+        BlocProvider(
+          create: (context) => CategoryBloc()..add(FetchedCategoryListEvent()),
+          lazy: false,
+        ),
         BlocProvider(create: (context) => FavoritesBloc()),
-        BlocProvider(create: (context) => ThemeBloc(lightTheme: lightTheme, darkTheme: darkTheme)),
+        BlocProvider(
+            create: (context) =>
+                ThemeBloc(lightTheme: lightTheme, darkTheme: darkTheme)),
         BlocProvider(create: (context) => HomeBloc()),
         BlocProvider(create: (context) => AuthBloc()),
         BlocProvider(create: (context) => ProfileBloc()..add(LoadProfile())),
@@ -56,10 +70,11 @@ class RealEstateApp extends StatelessWidget {
 
           if (themeState is LightThemeState) {
             appTheme = themeState.themeData;
-          }else if (themeState is DarkThemeState) {
+          } else if (themeState is DarkThemeState) {
             appTheme = themeState.themeData;
-          } else  {
-            appTheme = ThemeData( brightness:  WidgetsBinding.instance.window.platformBrightness);
+          } else {
+            appTheme = ThemeData(
+                brightness: WidgetsBinding.instance.window.platformBrightness);
           }
 
           return MaterialApp.router(

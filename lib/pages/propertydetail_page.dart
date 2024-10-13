@@ -185,12 +185,12 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
                       ),
                       Row(
                         children: [
-                          if (widget.property.area != null &&
-                              widget.property.area != 'null') ...[
+                          if (widget.property.totalArea != null &&
+                              widget.property.totalArea != 'null') ...[
                             const Icon(Icons.square_foot),
                             const SizedBox(width: 4),
                             Text(
-                              '${widget.property.area} Sq ft',
+                              '${widget.property.totalArea} Sq ft',
                               style: Theme.of(context).textTheme.bodySmall,
                             ),
                           ],
@@ -209,12 +209,12 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
                       _buildInfoChip(
                           'Discount: ${double.parse(widget.property.sellingPrice!) - double.parse(widget.property.computingPrice!)} ETB',
                           Icons.discount),
-                      if (widget.property.area != null &&
-                          widget.property.area != 'null')
-                        _buildInfoChip('${widget.property.area} sqft lot',
+                      if (widget.property.totalArea != null &&
+                          widget.property.totalArea != 'null')
+                        _buildInfoChip('${widget.property.totalArea} sqft lot',
                             Icons.aspect_ratio),
                       _buildInfoChip(
-                          '${widget.property.propertyCategory.category}',
+                          '${widget.property.propertyCategory?.category ?? "N/A"}',
                           Icons.business),
                       _buildInfoChip('${widget.property.pricePerSquare} / sqft',
                           Icons.attach_money),
@@ -328,7 +328,7 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
                           'Rooms',
                           style: Theme.of(context).textTheme.labelLarge,
                         ),
-                        Text('• ${widget.property.livingRooms}',
+                        Text('• ${widget.property.rooms}',
                             style: Theme.of(context).textTheme.bodyMedium),
                         // Text(
                         //   '• Living Room, Dining Room, Primary Bedroom, Bedroom 4, Bedroom 2, Kitchen - ${widget.property.kitchens}, Foyer, Breakfast Room, Primary Bathroom, Full Bath, Half Bath',

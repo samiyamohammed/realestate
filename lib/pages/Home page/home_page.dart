@@ -1,20 +1,24 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logger/logger.dart';
 import 'package:real_estate_marketplace/bloc/BottomNavigationBloc.dart';
 import 'package:real_estate_marketplace/bloc/auth_bloc/auth_bloc.dart';
+import 'package:real_estate_marketplace/bloc/bloc_category/category_bloc.dart';
+import 'package:real_estate_marketplace/bloc/bloc_category/category_state.dart';
+import 'package:real_estate_marketplace/bloc/bloc_property/property_state.dart';
 import 'package:real_estate_marketplace/bloc/home_bloc.dart';
-import 'package:real_estate_marketplace/bloc/property/property_bloc.dart';
-import 'package:real_estate_marketplace/bloc/property/property_event.dart';
+import 'package:real_estate_marketplace/bloc/bloc_property/property_bloc.dart';
+import 'package:real_estate_marketplace/bloc/bloc_property/property_event.dart';
 import 'package:real_estate_marketplace/bloc/theme_bloc/theme_bloc.dart';
 import 'package:real_estate_marketplace/bloc/theme_bloc/theme_state.dart';
 import 'package:real_estate_marketplace/bloc/user_bloc/user_bloc.dart';
 import 'package:real_estate_marketplace/models/auth_response_model.dart';
 import 'package:real_estate_marketplace/models/property/property_model.dart';
 import 'package:real_estate_marketplace/pages/side_bar_menu.dart';
-import 'package:real_estate_marketplace/services/property/get_property_category.dart';
-import 'package:real_estate_marketplace/services/property/get_property_service.dart';
+import 'package:real_estate_marketplace/services/api/property/get_property_category.dart';
+import 'package:real_estate_marketplace/services/api/property/get_property_service.dart';
 import 'package:real_estate_marketplace/utility/show_snackbar.dart';
 import 'package:real_estate_marketplace/widgets/empty_property_card.dart';
 import '../../widgets/bottom_navigation.dart';
@@ -48,25 +52,9 @@ class _HomePageState extends State<HomePage> {
   GetPropertyCategoryService getPropertyCategoryService =
       GetPropertyCategoryService();
 
-  getProperties() async {
-    final res = await getPropertyCategoryService.getPropertyCategory();
-    final response = await getPropertyService.getAllProperties();
-    response.fold(
-        (l) => {context.read<PropertyBloc>().add(FetchedPropertyListEvent(l!))},
-        (r) => {
-              Logger().e(r.toString())
-              // showSnackBar(
-              //   context,
-              //   r,
-              //   Colors.red,
-              // )
-            });
-  }
-
   @override
   void initState() {
     super.initState();
-    getProperties();
     applyFilters();
   }
 
@@ -162,487 +150,507 @@ class _HomePageState extends State<HomePage> {
             }
           },
           child: SingleChildScrollView(
-            child: BlocBuilder<PropertyBloc, List<PropertyModel>>(
+            child: BlocBuilder<PropertyBloc, PropertyState>(
               builder: (context, state) {
-                final featuredProperties = state
-                    .where((property) => property.isFeatured == true)
-                    .toList();
-                final forSaleProperties = state
-                    .where((property) => property.status == "for_sale")
-                    .toList();
-                final forRentProperties = state
-                    .where((property) => property.status == "for_rent")
-                    .toList();
-                final forInvestmentProperties = state
-                    .where((property) => property.status == "for_investment")
-                    .toList();
+                if (state is PropertyLoadingState) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (state is PropertyErrorState) {
+                  return const Center(child: Text("Error"));
+                } else if (state is PropertyDataState) {
+                  final featuredProperties = state.properties
+                      .where((property) => property.isFeatured == true)
+                      .toList();
+                  final forSaleProperties = state.properties
+                      .where((property) => property.status == "for_sale")
+                      .toList();
+                  final forRentProperties = state.properties
+                      .where((property) => property.status == "for_rent")
+                      .toList();
+                  final forInvestmentProperties = state.properties
+                      .where((property) => property.status == "for_investment")
+                      .toList();
 
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(height: 10),
-                    Center(
-                      child: Image.asset(
-                        'assets/images/banner_image.png',
-                        width: 429,
-                        height: 147,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: Container(
-                        width: double.infinity,
-                        height: 40,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.white,
-                          border: Border.all(
-                            color: Colors.black87,
-                            width: 2.0,
-                          ),
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(height: 10),
+                      Center(
+                        child: Image.asset(
+                          'assets/images/banner_image.png',
+                          width: 429,
+                          height: 147,
+                          fit: BoxFit.cover,
                         ),
-                        child: Row(
-                          children: [
-                            const Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 8.0),
-                              child: Icon(Icons.search, color: Colors.grey),
+                      ),
+                      const SizedBox(height: 10),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: Container(
+                          width: double.infinity,
+                          height: 40,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.white,
+                            border: Border.all(
+                              color: Colors.black87,
+                              width: 2.0,
                             ),
-                            Expanded(
-                              child: GestureDetector(
-                                onTap: () {
-                                  context.go('/search');
-                                },
-                                child: const Text(
-                                  'Search by location or address',
-                                  style: TextStyle(color: Colors.grey),
+                          ),
+                          child: Row(
+                            children: [
+                              const Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 8.0),
+                                child: Icon(Icons.search, color: Colors.grey),
+                              ),
+                              Expanded(
+                                child: GestureDetector(
+                                  onTap: () {
+                                    context.go('/search');
+                                  },
+                                  child: const Text(
+                                    'Search by location or address',
+                                    style: TextStyle(color: Colors.grey),
+                                  ),
                                 ),
                               ),
-                            ),
-                            const Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 8.0),
-                              child:
-                                  Icon(Icons.map_outlined, color: Colors.grey),
-                            ),
-                          ],
+                              const Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 8.0),
+                                child: Icon(Icons.map_outlined,
+                                    color: Colors.grey),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 10),
-                    SizedBox(
-                      height: 32,
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          children: selectedFilters.keys.map((label) {
-                            return _buildFilterChip(
-                              _getIconForLabel(label),
-                              label,
-                              selectedFilters[label]!,
-                            );
-                          }).toList(),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-
-                    // Featured Properties Section
-                    Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text(
-                        'Featured Properties',
-                        style: Theme.of(context).textTheme.titleMedium,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 164,
-                      child: featuredProperties.isEmpty
-                          ? const EmptyPropertyCard(
-                              title: 'No featured properties')
-                          : ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: featuredPropertyList.length > 5
-                                  ? 6 // 5 properties + 1 for the "See All" button
-                                  : featuredPropertyList.length +
-                                      1, // Show "See All" even if fewer than 5
-                              itemBuilder: (context, index) {
-                                // Check if this is the last item, which will be the "See All" button
-                                if (index == state.length || index == 5) {
-                                  return GestureDetector(
-                                    onTap: () {
-                                      // Implement navigation to the page with all featured properties
-                                      context.go('/featuredProperties');
-                                    },
-                                    child: Container(
-                                      width:
-                                          70, // Adjust to make the button circular
-                                      height: 70,
-                                      margin: const EdgeInsets.symmetric(
-                                          horizontal: 8.0),
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                            color: Colors.blueAccent),
-                                        shape: BoxShape
-                                            .circle, // Makes the container fully circular
-                                      ),
-                                      child: const Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Icon(
-                                            Icons.arrow_forward,
-                                            color: Colors.blueAccent,
-                                          ),
-                                          SizedBox(
-                                              height:
-                                                  4), // Add some spacing between the icon and text
-                                          Text(
-                                            'See All',
-                                            style: TextStyle(
-                                              fontSize:
-                                                  10, // Smaller font size for text under icon
-                                              color: Colors.blueAccent,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  );
-                                }
-
-                                // Display the featured property cards
-                                return Container(
-                                  width: 193,
-                                  margin: const EdgeInsets.symmetric(
-                                      horizontal: 8.0),
-                                  child: FeaturedPropertyCard(
-                                    property: featuredProperties[index],
-                                    showStatusTag:
-                                        true, // Ensure status tag is shown
-                                  ),
-                                );
-                              },
-                            ),
-                    ),
-
-                    // For Rent Section
-                    // For Rent Section
-                    Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text(
-                        'For Rent',
-                        style: Theme.of(context).textTheme.titleMedium,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 165,
-                      child: forRentProperties.isEmpty
-                          ? const EmptyPropertyCard(
-                              title: 'No properties for Rent')
-                          : ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: forRentProperties.length > 5
-                                  ? 6 // 5 properties + 1 for the "See All" button
-                                  : forRentProperties.length +
-                                      1, // Show "See All" even if fewer than 5
-                              itemBuilder: (context, index) {
-                                // Check if this is the last item, which will be the "See All" button
-                                if (index == forRentProperties.length ||
-                                    index == 5) {
-                                  //todo ****
-                                  return GestureDetector(
-                                    onTap: () {
-                                      // Implement navigation to the page with all "For Rent" properties
-                                      context.go('/rentProperties');
-                                    },
-                                    child: Container(
-                                      width:
-                                          70, // Adjust to make the button circular
-                                      height: 70,
-                                      margin: const EdgeInsets.symmetric(
-                                          horizontal: 8.0),
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                            color: Colors.blueAccent),
-                                        shape: BoxShape
-                                            .circle, // Makes the container fully circular
-                                      ),
-                                      child: const Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Icon(
-                                            Icons.arrow_forward,
-                                            color: Colors.blueAccent,
-                                          ),
-                                          SizedBox(
-                                              height:
-                                                  4), // Spacing between the icon and text
-                                          Text(
-                                            'See All',
-                                            style: TextStyle(
-                                              fontSize:
-                                                  10, // Smaller font size for text under icon
-                                              color: Colors.blueAccent,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  );
-                                }
-
-                                // Display the For Rent property cards
-                                return Container(
-                                  width: 150,
-                                  margin: const EdgeInsets.symmetric(
-                                      horizontal: 8.0),
-                                  child: PropertyCard(
-                                    property: forRentProperties[index],
-                                    showStatusTag:
-                                        false, // Hide status tag in For Rent section
-                                  ),
-                                );
-                              },
-                            ),
-                    ),
-
-                    // For Sale Section
-                    Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text(
-                        'For Sale',
-                        style: Theme.of(context).textTheme.titleMedium,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 165,
-                      child: forSaleProperties.isEmpty
-                          ? const EmptyPropertyCard(
-                              title: 'No properties for Sale')
-                          : ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: forSaleProperties.length > 5
-                                  ? 6 // 5 properties + 1 for the "See All" button
-                                  : forSaleProperties.length +
-                                      1, // Show "See All" even if fewer than 5
-                              itemBuilder: (context, index) {
-                                // Check if this is the last item, which will be the "See All" button
-                                if (index == forSaleProperties.length ||
-                                    index == 5) {
-                                  return GestureDetector(
-                                    onTap: () {
-                                      // Implement navigation to the page with all "For Sale" properties
-                                      context.go('/saleProperties');
-                                    },
-                                    child: Container(
-                                      width:
-                                          70, // Adjust to make the button circular
-                                      height: 70,
-                                      margin: const EdgeInsets.symmetric(
-                                          horizontal: 8.0),
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                            color: Colors.blueAccent),
-                                        shape: BoxShape
-                                            .circle, // Makes the container fully circular
-                                      ),
-                                      child: const Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Icon(
-                                            Icons.arrow_forward,
-                                            color: Colors.blueAccent,
-                                          ),
-                                          SizedBox(
-                                              height:
-                                                  4), // Spacing between the icon and text
-                                          Text(
-                                            'See All',
-                                            style: TextStyle(
-                                              fontSize:
-                                                  10, // Smaller font size for text under icon
-                                              color: Colors.blueAccent,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  );
-                                }
-
-                                // Display the For Sale property cards
-                                return GestureDetector(
-                                  onTap: () {
-                                    context.push(
-                                      '/propertydetail',
-                                      extra: forSaleProperties[index],
+                      const SizedBox(height: 10),
+                      BlocBuilder<CategoryBloc, CategoryState>(
+                        builder: (context, state) {
+                          if (state is CategoryLoadingState) {
+                            return const SizedBox(height: 32);
+                          } else if (state is CategoryDataState) {
+                            return SizedBox(
+                              height: 32,
+                              child: SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: Row(
+                                  children: state.categories.map((label) {
+                                    return Chip(
+                                      label: Text(label.title ?? 'N/A'),
                                     );
-                                  },
-                                  child: Container(
+                                  }).toList(),
+                                ),
+                              ),
+                            );
+                          } else if (state is CategoryErrorState) {
+                            return const Center(child: Text("Error"));
+                          } else {
+                            return const Center(child: Text("Initial State"));
+                          }
+                        },
+                      ),
+                      const SizedBox(height: 10),
+
+                      // Featured Properties Section
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Text(
+                          'Featured Properties',
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 164,
+                        child: featuredProperties.isEmpty
+                            ? const EmptyPropertyCard(
+                                title: 'No featured properties')
+                            : ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: featuredPropertyList.length > 5
+                                    ? 6 // 5 properties + 1 for the "See All" button
+                                    : featuredPropertyList.length +
+                                        1, // Show "See All" even if fewer than 5
+                                itemBuilder: (context, index) {
+                                  // Check if this is the last item, which will be the "See All" button
+                                  if (index == state.properties.length ||
+                                      index == 5) {
+                                    return GestureDetector(
+                                      onTap: () {
+                                        // Implement navigation to the page with all featured properties
+                                        context.go('/featuredProperties');
+                                      },
+                                      child: Container(
+                                        width:
+                                            70, // Adjust to make the button circular
+                                        height: 70,
+                                        margin: const EdgeInsets.symmetric(
+                                            horizontal: 8.0),
+                                        decoration: BoxDecoration(
+                                          border: Border.all(
+                                              color: Colors.blueAccent),
+                                          shape: BoxShape
+                                              .circle, // Makes the container fully circular
+                                        ),
+                                        child: const Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Icon(
+                                              Icons.arrow_forward,
+                                              color: Colors.blueAccent,
+                                            ),
+                                            SizedBox(
+                                                height:
+                                                    4), // Add some spacing between the icon and text
+                                            Text(
+                                              'See All',
+                                              style: TextStyle(
+                                                fontSize:
+                                                    10, // Smaller font size for text under icon
+                                                color: Colors.blueAccent,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  }
+
+                                  // Display the featured property cards
+                                  return Container(
+                                    width: 193,
+                                    margin: const EdgeInsets.symmetric(
+                                        horizontal: 8.0),
+                                    child: FeaturedPropertyCard(
+                                      property: featuredProperties[index],
+                                      showStatusTag:
+                                          true, // Ensure status tag is shown
+                                    ),
+                                  );
+                                },
+                              ),
+                      ),
+
+                      // For Rent Section
+                      // For Rent Section
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Text(
+                          'For Rent',
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 165,
+                        child: forRentProperties.isEmpty
+                            ? const EmptyPropertyCard(
+                                title: 'No properties for Rent')
+                            : ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: forRentProperties.length > 5
+                                    ? 6 // 5 properties + 1 for the "See All" button
+                                    : forRentProperties.length +
+                                        1, // Show "See All" even if fewer than 5
+                                itemBuilder: (context, index) {
+                                  // Check if this is the last item, which will be the "See All" button
+                                  if (index == forRentProperties.length ||
+                                      index == 5) {
+                                    //todo ****
+                                    return GestureDetector(
+                                      onTap: () {
+                                        // Implement navigation to the page with all "For Rent" properties
+                                        context.go('/rentProperties');
+                                      },
+                                      child: Container(
+                                        width:
+                                            70, // Adjust to make the button circular
+                                        height: 70,
+                                        margin: const EdgeInsets.symmetric(
+                                            horizontal: 8.0),
+                                        decoration: BoxDecoration(
+                                          border: Border.all(
+                                              color: Colors.blueAccent),
+                                          shape: BoxShape
+                                              .circle, // Makes the container fully circular
+                                        ),
+                                        child: const Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Icon(
+                                              Icons.arrow_forward,
+                                              color: Colors.blueAccent,
+                                            ),
+                                            SizedBox(
+                                                height:
+                                                    4), // Spacing between the icon and text
+                                            Text(
+                                              'See All',
+                                              style: TextStyle(
+                                                fontSize:
+                                                    10, // Smaller font size for text under icon
+                                                color: Colors.blueAccent,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  }
+
+                                  // Display the For Rent property cards
+                                  return Container(
                                     width: 150,
                                     margin: const EdgeInsets.symmetric(
                                         horizontal: 8.0),
                                     child: PropertyCard(
-                                      property: forSaleProperties[index],
+                                      property: forRentProperties[index],
                                       showStatusTag:
-                                          false, // Hide status tag in For Sale section
+                                          false, // Hide status tag in For Rent section
                                     ),
-                                  ),
-                                );
-                              },
-                            ),
-                    ),
-
-                    // For Investment Section
-                    // For Investment Section
-                    Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text(
-                        'For Investment',
-                        style: Theme.of(context).textTheme.titleMedium,
+                                  );
+                                },
+                              ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 165,
-                      child: forInvestmentProperties.isEmpty
-                          ? const EmptyPropertyCard(
-                              title: 'No properties for Investment')
-                          : ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: forInvestmentProperties.length > 5
-                                  ? 6 // 5 properties + 1 for the "See All" button
-                                  : forInvestmentProperties.length +
-                                      1, // Show "See All" even if fewer than 5
-                              itemBuilder: (context, index) {
-                                // Check if this is the last item, which will be the "See All" button
-                                if (index == forInvestmentProperties.length ||
-                                    index == 5) {
-                                  return GestureDetector(
-                                    onTap: () {
-                                      // Implement navigation to the page with all "For Investment" properties
-                                      context.go('/investmentProperties');
-                                    },
-                                    child: Container(
-                                      width:
-                                          70, // Adjust to make the button circular
-                                      height: 70,
-                                      margin: const EdgeInsets.symmetric(
-                                          horizontal: 8.0),
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                            color: Colors.blueAccent),
-                                        shape: BoxShape
-                                            .circle, // Makes the container fully circular
-                                      ),
-                                      child: const Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Icon(
-                                            Icons.arrow_forward,
-                                            color: Colors.blueAccent,
-                                          ),
-                                          SizedBox(
-                                              height:
-                                                  4), // Spacing between the icon and text
-                                          Text(
-                                            'See All',
-                                            style: TextStyle(
-                                              fontSize:
-                                                  10, // Smaller font size for text under icon
+
+                      // For Sale Section
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Text(
+                          'For Sale',
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 165,
+                        child: forSaleProperties.isEmpty
+                            ? const EmptyPropertyCard(
+                                title: 'No properties for Sale')
+                            : ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: forSaleProperties.length > 5
+                                    ? 6 // 5 properties + 1 for the "See All" button
+                                    : forSaleProperties.length +
+                                        1, // Show "See All" even if fewer than 5
+                                itemBuilder: (context, index) {
+                                  // Check if this is the last item, which will be the "See All" button
+                                  if (index == forSaleProperties.length ||
+                                      index == 5) {
+                                    return GestureDetector(
+                                      onTap: () {
+                                        // Implement navigation to the page with all "For Sale" properties
+                                        context.go('/saleProperties');
+                                      },
+                                      child: Container(
+                                        width:
+                                            70, // Adjust to make the button circular
+                                        height: 70,
+                                        margin: const EdgeInsets.symmetric(
+                                            horizontal: 8.0),
+                                        decoration: BoxDecoration(
+                                          border: Border.all(
+                                              color: Colors.blueAccent),
+                                          shape: BoxShape
+                                              .circle, // Makes the container fully circular
+                                        ),
+                                        child: const Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Icon(
+                                              Icons.arrow_forward,
                                               color: Colors.blueAccent,
                                             ),
-                                          ),
-                                        ],
+                                            SizedBox(
+                                                height:
+                                                    4), // Spacing between the icon and text
+                                            Text(
+                                              'See All',
+                                              style: TextStyle(
+                                                fontSize:
+                                                    10, // Smaller font size for text under icon
+                                                color: Colors.blueAccent,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  }
+
+                                  // Display the For Sale property cards
+                                  return GestureDetector(
+                                    onTap: () {
+                                      context.push(
+                                        '/propertydetail',
+                                        extra: forSaleProperties[index],
+                                      );
+                                    },
+                                    child: Container(
+                                      width: 150,
+                                      margin: const EdgeInsets.symmetric(
+                                          horizontal: 8.0),
+                                      child: PropertyCard(
+                                        property: forSaleProperties[index],
+                                        showStatusTag:
+                                            false, // Hide status tag in For Sale section
                                       ),
                                     ),
                                   );
-                                }
+                                },
+                              ),
+                      ),
 
-                                // Display the For Investment property cards
-                                return Container(
-                                  width: 150,
-                                  margin: const EdgeInsets.symmetric(
-                                      horizontal: 8.0),
-                                  child: PropertyCard(
-                                    property: forInvestmentProperties[index],
-                                    showStatusTag:
-                                        false, // Hide status tag in For Investment section
-                                  ),
-                                );
-                              },
-                            ),
-                    ),
-
-                    // add property section
-                    const SizedBox(height: 20),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(
-                            color: const Color.fromARGB(255, 91, 53, 175),
-                            width: 1.0,
-                          ),
-                        ),
-                        padding: const EdgeInsets.all(10.0),
-                        child: Row(
-                          children: [
-                            const Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Your Property Deserves the Spotlight",
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black),
-                                  ),
-                                  SizedBox(height: 5),
-                                  Text(
-                                    "Reach more buyers. Showcase your home. Free and easy.",
-                                    style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.normal,
-                                        color: Colors.black),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            ElevatedButton.icon(
-                              onPressed: () {
-                                // Implement add property functionality
-                              },
-                              icon: const Icon(Icons.add,
-                                  color: Color.fromARGB(255, 238, 235, 235)),
-                              label: const Text(
-                                "Add Property",
-                                style: TextStyle(
-                                    color: Color.fromARGB(255, 226, 223, 223)),
-                              ),
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor:
-                                    const Color.fromARGB(255, 91, 53, 175),
-                                foregroundColor: Colors.white,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                              ),
-                            ),
-                          ],
+                      // For Investment Section
+                      // For Investment Section
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Text(
+                          'For Investment',
+                          style: Theme.of(context).textTheme.titleMedium,
                         ),
                       ),
-                    ),
+                      SizedBox(
+                        height: 165,
+                        child: forInvestmentProperties.isEmpty
+                            ? const EmptyPropertyCard(
+                                title: 'No properties for Investment')
+                            : ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: forInvestmentProperties.length > 5
+                                    ? 6 // 5 properties + 1 for the "See All" button
+                                    : forInvestmentProperties.length +
+                                        1, // Show "See All" even if fewer than 5
+                                itemBuilder: (context, index) {
+                                  // Check if this is the last item, which will be the "See All" button
+                                  if (index == forInvestmentProperties.length ||
+                                      index == 5) {
+                                    return GestureDetector(
+                                      onTap: () {
+                                        // Implement navigation to the page with all "For Investment" properties
+                                        context.go('/investmentProperties');
+                                      },
+                                      child: Container(
+                                        width:
+                                            70, // Adjust to make the button circular
+                                        height: 70,
+                                        margin: const EdgeInsets.symmetric(
+                                            horizontal: 8.0),
+                                        decoration: BoxDecoration(
+                                          border: Border.all(
+                                              color: Colors.blueAccent),
+                                          shape: BoxShape
+                                              .circle, // Makes the container fully circular
+                                        ),
+                                        child: const Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Icon(
+                                              Icons.arrow_forward,
+                                              color: Colors.blueAccent,
+                                            ),
+                                            SizedBox(
+                                                height:
+                                                    4), // Spacing between the icon and text
+                                            Text(
+                                              'See All',
+                                              style: TextStyle(
+                                                fontSize:
+                                                    10, // Smaller font size for text under icon
+                                                color: Colors.blueAccent,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  }
 
-                    const SizedBox(height: 30),
-                  ],
-                );
+                                  // Display the For Investment property cards
+                                  return Container(
+                                    width: 150,
+                                    margin: const EdgeInsets.symmetric(
+                                        horizontal: 8.0),
+                                    child: PropertyCard(
+                                      property: forInvestmentProperties[index],
+                                      showStatusTag:
+                                          false, // Hide status tag in For Investment section
+                                    ),
+                                  );
+                                },
+                              ),
+                      ),
+
+                      // add property section
+                      const SizedBox(height: 20),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                              color: const Color.fromARGB(255, 91, 53, 175),
+                              width: 1.0,
+                            ),
+                          ),
+                          padding: const EdgeInsets.all(10.0),
+                          child: Row(
+                            children: [
+                              const Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Your Property Deserves the Spotlight",
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black),
+                                    ),
+                                    SizedBox(height: 5),
+                                    Text(
+                                      "Reach more buyers. Showcase your home. Free and easy.",
+                                      style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.normal,
+                                          color: Colors.black),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              ElevatedButton.icon(
+                                onPressed: () {
+                                  // Implement add property functionality
+                                },
+                                icon: const Icon(Icons.add,
+                                    color: Color.fromARGB(255, 238, 235, 235)),
+                                label: const Text(
+                                  "Add Property",
+                                  style: TextStyle(
+                                      color:
+                                          Color.fromARGB(255, 226, 223, 223)),
+                                ),
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor:
+                                      const Color.fromARGB(255, 91, 53, 175),
+                                  foregroundColor: Colors.white,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+
+                      const SizedBox(height: 30),
+                    ],
+                  );
+                } else {
+                  return const Center(child: Text("Initial State"));
+                }
               },
             ),
           ),
