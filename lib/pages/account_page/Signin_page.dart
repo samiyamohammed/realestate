@@ -150,7 +150,11 @@ class _SignInPageState extends State<SignInPage> {
                       children: [
                         const Spacer(),
                         InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            context.push(
+                              '/forget_password',
+                            );
+                          },
                           child: const Text(
                             "Forgot Password?",
                             textAlign: TextAlign.end,
@@ -176,8 +180,8 @@ class _SignInPageState extends State<SignInPage> {
                         }
                       }),
                   Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 50.0, vertical: 40),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 50.0, vertical: 40),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -185,11 +189,11 @@ class _SignInPageState extends State<SignInPage> {
                           imagePath: "assets/social_media_icons/google.svg",
                           provider: 'google',
                         ),
-                         SocialLoginButton(
+                        SocialLoginButton(
                           imagePath: "assets/images/apple.png",
                           provider: 'apple',
                         ),
-                         SocialLoginButton(
+                        SocialLoginButton(
                           imagePath: "assets/images/call.png",
                           provider: 'call',
                         ),

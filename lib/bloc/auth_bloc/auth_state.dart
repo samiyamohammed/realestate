@@ -24,3 +24,17 @@ final class AuthLoginFailure extends AuthState {
   final String errorMessage;
   const AuthLoginFailure(this.errorMessage);
 }
+
+final class AuthEmailCheckFailure extends AuthState {
+  final String errorMessage;
+  const AuthEmailCheckFailure(this.errorMessage);
+}
+
+final class AuthEmailCheckSuccess extends AuthState {}
+
+final class AuthChangePasswordSuccess extends AuthState {}
+
+final class AuthChangePasswordFailure extends AuthState {
+  final String errorMessage;
+  const AuthChangePasswordFailure(this.errorMessage);
+}

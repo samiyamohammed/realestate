@@ -35,6 +35,7 @@ class _AccountPageState extends State<AccountPage>
     return Scaffold(
       // resizeToAvoidBottomInset: false,
       body: DefaultTabController(
+        initialIndex: 1,
         length: 2,
         child: GestureDetector(
           onTap: () {
@@ -127,25 +128,6 @@ class _AccountPageState extends State<AccountPage>
                     ],
                   ),
                 ),
-                // Container(
-                //   height: 60,
-                //   decoration: const BoxDecoration(
-                //     gradient: LinearGradient(
-                //       begin: Alignment.topCenter,
-                //       end: Alignment.bottomCenter,
-                //       colors: [
-                //         Color.fromARGB(255, 27, 0, 82), // Second color
-                //         // const Color.fromARGB(255, 27, 0, 82), // Second color
-                //         // Colors.deepPurple, // Second color
-                //         Colors.deepPurpleAccent, // First color
-                //       ],
-                //     ),
-                //     borderRadius: BorderRadius.only(
-                //       topLeft: Radius.circular(30),
-                //       topRight: Radius.circular(30),
-                //     ),
-                //   ),
-                // ),
               ],
             ),
           ),

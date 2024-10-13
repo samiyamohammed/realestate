@@ -6,6 +6,8 @@ import 'package:real_estate_marketplace/pages/Home%20page/home_page.dart';
 import 'package:real_estate_marketplace/pages/aboutus_page.dart';
 import 'package:real_estate_marketplace/pages/account_page/account_page.dart';
 import 'package:real_estate_marketplace/pages/account_page/Signin_page.dart';
+import 'package:real_estate_marketplace/pages/account_page/forget_password_page.dart';
+import 'package:real_estate_marketplace/pages/account_page/create_new_password_page.dart';
 
 import 'package:real_estate_marketplace/pages/draft_properties_page.dart';
 import 'package:real_estate_marketplace/pages/faq_page.dart';
@@ -87,12 +89,19 @@ GoRouter router = GoRouter(
       path: '/account',
       builder: (context, state) => const AccountPage(),
     ),
+    GoRoute(
+      path: '/forget_password',
+      builder: (context, state) => const ForgetPasswordPage(),
+    ),
+    GoRoute(
+      path: '/create_new_password',
+      builder: (context, state) => const CreateNewPasswordPage(),
+    ),
 
     GoRoute(
       path: '/propertydetail',
       // builder: (context, state) => const PropertyDetailPage(property: ,),
       builder: (context, state) {
-        // Extract the scholarship from the state extra
         final property = state.extra as PropertyModel;
         return PropertyDetailPage(property: property);
       },

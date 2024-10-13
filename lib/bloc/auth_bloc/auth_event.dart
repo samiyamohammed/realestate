@@ -33,3 +33,21 @@ class AuthLoginRequested extends AuthEvent {
 }
 
 class AuthLogoutRequested extends AuthEvent {}
+
+class ForgetPasswordRequested extends AuthEvent {
+  final String email;
+
+  const ForgetPasswordRequested({
+    required this.email,
+  });
+}
+
+class ChangePasswordRequested extends AuthEvent {
+  final String password;
+  final String passwordConfirmation;
+
+  const ChangePasswordRequested({
+    required this.password,
+    required this.passwordConfirmation,
+  });
+}
