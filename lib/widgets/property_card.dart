@@ -66,7 +66,7 @@ class _PropertyCardState extends State<PropertyCard> {
                   children: [
                     Expanded(
                       child: Text(
-                        widget.property.propertyCategory.category ?? 'N/A',
+                        widget.property.propertyCategory?.category ?? 'N/A',
                         style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
@@ -105,7 +105,7 @@ class _PropertyCardState extends State<PropertyCard> {
                       const SizedBox(width: 4),
                       Expanded(
                         child: Text(
-                          widget.property.propertyAddress.city ?? "N/A",
+                          widget.property.propertyAddress?.city?.name ?? "N/A",
                           style: const TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.bold,

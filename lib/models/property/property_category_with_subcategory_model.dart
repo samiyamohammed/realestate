@@ -1,11 +1,11 @@
-class PropertyCategoryModel {
+class PropertyCategoryWithSubcategoryModel {
   final int id;
   final String? subCategory;
   final String? category;
   final String? categoryDescription;
   final String? subCategoryDescription;
 
-  const PropertyCategoryModel({
+  const PropertyCategoryWithSubcategoryModel({
     required this.id,
     this.subCategory,
     this.category,
@@ -13,7 +13,7 @@ class PropertyCategoryModel {
     this.subCategoryDescription,
   });
 
-  factory PropertyCategoryModel.fromJson(Map<String, dynamic> json) => PropertyCategoryModel(
+  factory PropertyCategoryWithSubcategoryModel.fromJson(Map<String, dynamic> json) => PropertyCategoryWithSubcategoryModel(
     id: json['id'],
     subCategory: json['Property_subcategory_name'],
     category: json['property_category']['title'],

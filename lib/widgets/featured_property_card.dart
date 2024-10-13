@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:real_estate_marketplace/models/property/property_model.dart';
-import '../models/featured_property_model.dart';
 
 class FeaturedPropertyCard extends StatefulWidget {
   final PropertyModel property;
@@ -91,7 +90,7 @@ class _FeaturedPropertyCardState extends State<FeaturedPropertyCard> {
                   children: [
                     Expanded(
                       child: Text(
-                        widget.property.propertyCategory.category ?? 'N/A',
+                        widget.property.propertyCategory?.category ?? 'N/A',
                         style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
@@ -125,7 +124,7 @@ class _FeaturedPropertyCardState extends State<FeaturedPropertyCard> {
                     const SizedBox(width: 4),
                     Expanded(
                       child: Text(
-                        widget.property.propertyAddress.city ?? "N/A",
+                        widget.property.propertyAddress?.city?.name ?? "N/A",
                         style: const TextStyle(
                           fontSize: 12,
                           color: Colors.grey,

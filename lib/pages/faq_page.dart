@@ -9,14 +9,12 @@ class FaqPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('FAQ'),
-        centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            context.go('/home');
-          },
+        backgroundColor: Theme.of(context).canvasColor,
+        title: Text(
+          'FAQ',
+          style: Theme.of(context).textTheme.titleMedium,
         ),
+        centerTitle: true,
       ),
       body: Padding(
         padding: const EdgeInsets.all(15.0),
@@ -31,15 +29,17 @@ class FaqPage extends StatelessWidget {
                 border: Border.all(color: Colors.grey[300]!),
               ),
               child: ExpansionTile(
-                title: Text(faq.question),
+                title: Text(
+                  faq.question,
+                  style: Theme.of(context).textTheme.labelMedium,
+                ),
                 leading: Icon(faq.icon, size: 22, color: Colors.black54),
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
                       faq.answer, // Display the answer here
-                      style:
-                          const TextStyle(fontSize: 14, color: Colors.black87),
+                      style: Theme.of(context).textTheme.bodySmall,
                     ),
                   ),
                 ],

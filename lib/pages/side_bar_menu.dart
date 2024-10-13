@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:real_estate_marketplace/bloc/theme_bloc/theme_bloc.dart';
+import 'package:real_estate_marketplace/bloc/theme_bloc/theme_event.dart';
+import 'package:real_estate_marketplace/bloc/theme_bloc/theme_state.dart';
+import 'package:real_estate_marketplace/widgets/toggle_theme_icon.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({super.key});
@@ -7,6 +12,7 @@ class CustomDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+      backgroundColor: Theme.of(context).canvasColor,
       width: MediaQuery.of(context).size.width * 0.7,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -23,18 +29,7 @@ class CustomDrawer extends StatelessWidget {
                 bottomRight: Radius.circular(40),
               ),
             ),
-            child: Align(
-              alignment: Alignment.topRight,
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: IconButton(
-                  icon: const Icon(Icons.wb_sunny, color: Colors.white),
-                  onPressed: () {
-                    // Implement day/night toggle functionality
-                  },
-                ),
-              ),
-            ),
+            child: ToggleThemeIcon(),
           ),
           Center(
             child: Padding(
@@ -67,25 +62,25 @@ class CustomDrawer extends StatelessWidget {
                 const SizedBox(height: 10),
                 _buildDrawerItem(Icons.settings, "Settings", () {
                   context.push('/settings');
-                }),
+                }, context),
                 _buildDrawerItem(Icons.add_box, "Add Property", () {
                   context.push('/add_property');
-                }),
+                }, context),
                 _buildDrawerItem(Icons.help_outline, "FAQs", () {
                   context.push('/faq');
-                }),
+                }, context),
                 _buildDrawerItem(Icons.info_outline, "About Us", () {
                   context.push('/aboutus');
-                }),
+                }, context),
                 _buildDrawerItem(Icons.share, "Share App", () {
                   // Implement sharing functionality here
-                }),
+                }, context),
                 _buildDrawerItem(Icons.star_rate, "Rate App", () {
                   // Implement rate app functionality here
-                }),
+                }, context),
                 _buildDrawerItem(Icons.support_agent, "Help and Support", () {
                   context.push('/help_support');
-                }),
+                }, context),
               ],
             ),
           ),
@@ -94,12 +89,13 @@ class CustomDrawer extends StatelessWidget {
     );
   }
 
-  Widget _buildDrawerItem(IconData icon, String title, Function() onTap) {
+  Widget _buildDrawerItem(
+      IconData icon, String title, Function() onTap, BuildContext context) {
     return ListTile(
-      leading: Icon(icon, color: const Color.fromARGB(255, 0, 0, 0)),
+      leading: Icon(icon),
       title: Text(
         title,
-        style: const TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
+        style: Theme.of(context).textTheme.titleSmall,
       ),
       onTap: onTap,
     );
