@@ -1,25 +1,19 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:logger/logger.dart';
 import 'package:real_estate_marketplace/bloc/BottomNavigationBloc.dart';
-import 'package:real_estate_marketplace/bloc/auth_bloc/auth_bloc.dart';
 import 'package:real_estate_marketplace/bloc/bloc_category/category_bloc.dart';
 import 'package:real_estate_marketplace/bloc/bloc_category/category_state.dart';
 import 'package:real_estate_marketplace/bloc/bloc_property/property_state.dart';
 import 'package:real_estate_marketplace/bloc/home_bloc.dart';
 import 'package:real_estate_marketplace/bloc/bloc_property/property_bloc.dart';
-import 'package:real_estate_marketplace/bloc/bloc_property/property_event.dart';
 import 'package:real_estate_marketplace/bloc/theme_bloc/theme_bloc.dart';
 import 'package:real_estate_marketplace/bloc/theme_bloc/theme_state.dart';
 import 'package:real_estate_marketplace/bloc/user_bloc/user_bloc.dart';
 import 'package:real_estate_marketplace/models/auth_response_model.dart';
-import 'package:real_estate_marketplace/models/property/property_model.dart';
 import 'package:real_estate_marketplace/pages/side_bar_menu.dart';
 import 'package:real_estate_marketplace/services/api/property/get_property_category.dart';
 import 'package:real_estate_marketplace/services/api/property/get_property_service.dart';
-import 'package:real_estate_marketplace/utility/show_snackbar.dart';
 import 'package:real_estate_marketplace/widgets/empty_property_card.dart';
 import '../../widgets/bottom_navigation.dart';
 import '../../models/properties_list_model.dart';
@@ -316,14 +310,22 @@ class _HomePageState extends State<HomePage> {
                                   }
 
                                   // Display the featured property cards
-                                  return Container(
-                                    width: 193,
-                                    margin: const EdgeInsets.symmetric(
-                                        horizontal: 8.0),
-                                    child: FeaturedPropertyCard(
-                                      property: featuredProperties[index],
-                                      showStatusTag:
-                                          true, // Ensure status tag is shown
+                                  return GestureDetector(
+                                    onTap: () {
+                                      context.push(
+                                        '/propertydetail',
+                                        extra: featuredProperties[index],
+                                      );
+                                    },
+                                    child: Container(
+                                      width: 193,
+                                      margin: const EdgeInsets.symmetric(
+                                          horizontal: 8.0),
+                                      child: FeaturedPropertyCard(
+                                        property: featuredProperties[index],
+                                        showStatusTag:
+                                            true, // Ensure status tag is shown
+                                      ),
                                     ),
                                   );
                                 },
@@ -398,14 +400,22 @@ class _HomePageState extends State<HomePage> {
                                   }
 
                                   // Display the For Rent property cards
-                                  return Container(
-                                    width: 150,
-                                    margin: const EdgeInsets.symmetric(
-                                        horizontal: 8.0),
-                                    child: PropertyCard(
-                                      property: forRentProperties[index],
-                                      showStatusTag:
-                                          false, // Hide status tag in For Rent section
+                                  return GestureDetector(
+                                    onTap: () {
+                                      context.push(
+                                        '/propertydetail',
+                                        extra: forRentProperties[index],
+                                      );
+                                    },
+                                    child: Container(
+                                      width: 150,
+                                      margin: const EdgeInsets.symmetric(
+                                          horizontal: 8.0),
+                                      child: PropertyCard(
+                                        property: forRentProperties[index],
+                                        showStatusTag:
+                                            false, // Hide status tag in For Rent section
+                                      ),
                                     ),
                                   );
                                 },
@@ -501,7 +511,6 @@ class _HomePageState extends State<HomePage> {
                       ),
 
                       // For Investment Section
-                      // For Investment Section
                       Padding(
                         padding: EdgeInsets.all(8.0),
                         child: Text(
@@ -567,14 +576,23 @@ class _HomePageState extends State<HomePage> {
                                   }
 
                                   // Display the For Investment property cards
-                                  return Container(
-                                    width: 150,
-                                    margin: const EdgeInsets.symmetric(
-                                        horizontal: 8.0),
-                                    child: PropertyCard(
-                                      property: forInvestmentProperties[index],
-                                      showStatusTag:
-                                          false, // Hide status tag in For Investment section
+                                  return GestureDetector(
+                                    onTap: () {
+                                      context.push(
+                                        '/propertydetail',
+                                        extra: forInvestmentProperties[index],
+                                      );
+                                    },
+                                    child: Container(
+                                      width: 150,
+                                      margin: const EdgeInsets.symmetric(
+                                          horizontal: 8.0),
+                                      child: PropertyCard(
+                                        property:
+                                            forInvestmentProperties[index],
+                                        showStatusTag:
+                                            false, // Hide status tag in For Investment section
+                                      ),
                                     ),
                                   );
                                 },

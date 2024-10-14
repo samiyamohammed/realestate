@@ -227,67 +227,6 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
                   ),
                   const SizedBox(height: 16),
                   // Property Description
-                  Text(
-                    'About House',
-                    style: Theme.of(context).textTheme.titleSmall,
-                  ),
-                  const SizedBox(height: 8),
-
-                  LayoutBuilder(
-                    builder: (context, constraints) {
-                      final textSpan = TextSpan(
-                        text: widget.property.description,
-                        style: const TextStyle(fontSize: 16),
-                      );
-                      final textPainter = TextPainter(
-                        text: textSpan,
-                        maxLines: maxLines,
-                        textDirection: TextDirection.ltr,
-                      );
-                      textPainter.layout(maxWidth: constraints.maxWidth);
-
-                      final isDescriptionTooLong =
-                          textPainter.didExceedMaxLines;
-
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            constraints: BoxConstraints(
-                              maxHeight: isExpanded ? double.infinity : 60.0,
-                            ),
-                            child: Text(
-                              widget.property.description!,
-                              style: const TextStyle(fontSize: 16),
-                              maxLines: isExpanded ? null : maxLines,
-                              overflow: isExpanded
-                                  ? TextOverflow.visible
-                                  : TextOverflow.ellipsis,
-                            ),
-                          ),
-                          const SizedBox(height: 8),
-                          if (isDescriptionTooLong)
-                            TextButton.icon(
-                              onPressed: () {
-                                setState(() {
-                                  isExpanded = !isExpanded;
-                                });
-                              },
-                              icon: Icon(
-                                isExpanded
-                                    ? Icons.expand_less
-                                    : Icons.expand_more,
-                                color: Colors.purple,
-                              ),
-                              label: Text(
-                                isExpanded ? 'See less' : 'See more',
-                                style: const TextStyle(color: Colors.purple),
-                              ),
-                            ),
-                        ],
-                      );
-                    },
-                  ),
 
                   const SizedBox(height: 16),
 
@@ -299,6 +238,24 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       if (isExpandedInterior) ...[
+                        Container(
+                          width: double.infinity,
+                          color: const Color.fromARGB(255, 236, 200, 241),
+                          child: Text('Property Type',
+                              style: Theme.of(context).textTheme.labelLarge),
+                        ),
+                        // Text('Commercial',
+                        Text(widget.property.propertyCategory!.category!,
+                            style: Theme.of(context).textTheme.labelLarge),
+                        Text(
+                            '• ${widget.property.propertyCategory!.subCategory!}',
+                            style: Theme.of(context).textTheme.bodyMedium),
+
+                        Text('Building G+',
+                            style: Theme.of(context).textTheme.labelLarge),
+                        Text('•${widget.property.floor} Floor Level',
+                            style: Theme.of(context).textTheme.bodyMedium),
+
                         Container(
                           width: double.infinity,
                           color: const Color.fromARGB(255, 236, 200, 241),
@@ -317,23 +274,38 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
                         Text('Bathrooms - ${widget.property.numberOfBathrooms}',
                             style: Theme.of(context).textTheme.bodyMedium),
                         const SizedBox(height: 8),
-                        Text(
-                          'Appliances',
-                          style: Theme.of(context).textTheme.labelLarge,
+
+                        // Text(
+                        //   'Appliances',
+                        //   style: Theme.of(context).textTheme.labelLarge,
+                        // ),
+                        // Text('• ${widget.property.amenities}',
+                        //     style: Theme.of(context).textTheme.bodyMedium),
+                        // const SizedBox(height: 8),
+                        const Divider(
+                          color: const Color.fromARGB(255, 236, 200, 241),
+                          thickness: 3,
                         ),
-                        Text('• ${widget.property.amenities}',
-                            style: Theme.of(context).textTheme.bodyMedium),
-                        const SizedBox(height: 8),
                         Text(
                           'Rooms',
                           style: Theme.of(context).textTheme.labelLarge,
                         ),
-                        Text('• ${widget.property.rooms}',
+                        Text('• Living Room: ${widget.property.kitchens!}',
+                            style: Theme.of(context).textTheme.bodyMedium),
+                        Text('• Kitchen: ${widget.property.kitchens!}',
+                            style: Theme.of(context).textTheme.bodyMedium),
+                        Text('• Ante Room: ${widget.property.kitchens!}',
                             style: Theme.of(context).textTheme.bodyMedium),
                         // Text(
                         //   '• Living Room, Dining Room, Primary Bedroom, Bedroom 4, Bedroom 2, Kitchen - ${widget.property.kitchens}, Foyer, Breakfast Room, Primary Bathroom, Full Bath, Half Bath',
                         //   style: Theme.of(context).textTheme.bodyMedium,
                         // ),
+                        Text(
+                          'Number of Balcony',
+                          style: Theme.of(context).textTheme.labelLarge,
+                        ),
+                        Text('• ${widget.property.numberOfBalconies!}',
+                            style: Theme.of(context).textTheme.bodyMedium),
                         const SizedBox(height: 8),
                         // Text(
                         //   'Basement',
@@ -526,34 +498,6 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
                         const SizedBox(
                           height: 8,
                         ),
-                        const Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            // Walking Distance
-                            Row(
-                              children: [
-                                Icon(Icons.directions_walk, color: Colors.blue),
-                                SizedBox(width: 4),
-                                Text('1.8 km (30 min left)'),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 8,
-                            ),
-                            // Biking Distance
-                            Row(
-                              children: [
-                                Icon(Icons.directions_bike,
-                                    color: Colors.green),
-                                SizedBox(width: 4),
-                                Text('1.8 km (15 min left)'),
-                              ],
-                            ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 8,
-                        ),
                         Container(
                           width: double.infinity,
                           color: const Color.fromARGB(255, 236, 200, 241),
@@ -574,34 +518,6 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
                         const SizedBox(
                           height: 8,
                         ),
-                        const Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            // Walking Distance
-                            Row(
-                              children: [
-                                Icon(Icons.directions_walk, color: Colors.blue),
-                                SizedBox(width: 4),
-                                Text('500 m (9 min left)'),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 8,
-                            ),
-                            // Biking Distance
-                            Row(
-                              children: [
-                                Icon(Icons.directions_bike,
-                                    color: Colors.green),
-                                SizedBox(width: 4),
-                                Text('500 m (5 min left)'),
-                              ],
-                            ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 8,
-                        ),
                         Container(
                           width: double.infinity,
                           color: const Color.fromARGB(255, 236, 200, 241),
@@ -619,31 +535,6 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
                         const Text(
                             '• Lideta Mariam Betkristian is an Ethiopian Orthodox Tewahedo Church, serving as a place of worship and spiritual guidance for followers of the Orthodox Tewahedo faith. This church is deeply rooted in the rich traditions and beliefs of the Ethiopian Orthodox Tewahedo Church, one of the oldest Christian denominations in the world. It plays a significant role in the religious life of its community, offering regular liturgical services, sacraments, and religious education.',
                             style: TextStyle(fontSize: 15)),
-                        const Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            // Walking Distance
-                            Row(
-                              children: [
-                                Icon(Icons.directions_walk, color: Colors.blue),
-                                SizedBox(width: 4),
-                                Text('1.6 km (20 min left)'),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 8,
-                            ),
-                            // Biking Distance
-                            Row(
-                              children: [
-                                Icon(Icons.directions_bike,
-                                    color: Colors.green),
-                                SizedBox(width: 4),
-                                Text('1.6 km (10 min left)'),
-                              ],
-                            ),
-                          ],
-                        ),
                       ],
                       TextButton.icon(
                         onPressed: () {
@@ -664,6 +555,70 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
                       ),
                     ],
                   ),
+
+                  //*********************************************** */
+                  Text(
+                    'About House',
+                    style: Theme.of(context).textTheme.titleSmall,
+                  ),
+                  const SizedBox(height: 8),
+
+                  LayoutBuilder(
+                    builder: (context, constraints) {
+                      final textSpan = TextSpan(
+                        text: widget.property.description,
+                        style: const TextStyle(fontSize: 16),
+                      );
+                      final textPainter = TextPainter(
+                        text: textSpan,
+                        maxLines: maxLines,
+                        textDirection: TextDirection.ltr,
+                      );
+                      textPainter.layout(maxWidth: constraints.maxWidth);
+
+                      final isDescriptionTooLong =
+                          textPainter.didExceedMaxLines;
+
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            constraints: BoxConstraints(
+                              maxHeight: isExpanded ? double.infinity : 60.0,
+                            ),
+                            child: Text(
+                              widget.property.description!,
+                              style: const TextStyle(fontSize: 16),
+                              maxLines: isExpanded ? null : maxLines,
+                              overflow: isExpanded
+                                  ? TextOverflow.visible
+                                  : TextOverflow.ellipsis,
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          if (isDescriptionTooLong)
+                            TextButton.icon(
+                              onPressed: () {
+                                setState(() {
+                                  isExpanded = !isExpanded;
+                                });
+                              },
+                              icon: Icon(
+                                isExpanded
+                                    ? Icons.expand_less
+                                    : Icons.expand_more,
+                                color: Colors.purple,
+                              ),
+                              label: Text(
+                                isExpanded ? 'See less' : 'See more',
+                                style: const TextStyle(color: Colors.purple),
+                              ),
+                            ),
+                        ],
+                      );
+                    },
+                  ),
+                  //********************************************** */
                   Container(
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
@@ -682,7 +637,7 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         // Agent Image and Name
-                        const Row(
+                        Row(
                           children: [
                             CircleAvatar(
                               radius: 30,
@@ -692,7 +647,7 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
                             SizedBox(width: 10),
                             Expanded(
                               child: Text(
-                                'Name of the property owner/poster',
+                                widget.property.listor!.user!.name!,
                                 style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
@@ -704,20 +659,20 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
                         ),
                         const SizedBox(height: 8),
                         // Agent Description
-                        const Text(
-                          'Description of the agent or the personnel who posted the property',
+                        Text(
+                          widget.property.listor!.bio!,
                           style: TextStyle(fontSize: 14, color: Colors.grey),
                         ),
                         const SizedBox(height: 8),
                         // Contact Info
-                        const Row(
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('+251###-###-###'),
-                                Text('posteremail@sth.com'),
+                                Text(widget.property.listor!.user!.phone!),
+                                Text(widget.property.listor!.user!.email!),
                               ],
                             ),
                           ],
@@ -816,7 +771,7 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
                     side: const BorderSide(color: Colors.purple, width: 2),
                   ),
                   onPressed: () {
-                    context.go('/agent');
+                    context.push('/agent');
                   },
                   child: const Text(
                     'Contact',

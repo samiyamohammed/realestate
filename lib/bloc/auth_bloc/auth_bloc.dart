@@ -153,6 +153,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           data: {
             'name': name,
             'email': email,
+            'phone': number,
             'password': password,
             'password_confirmation': passwordConfirmation,
           },
